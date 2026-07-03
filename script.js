@@ -30,6 +30,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function setFilter(filter, activeButton) {
+    stage.dataset.filter = filter;
+
     cards.forEach((card) => {
       const categories = card.dataset.category.split(" ");
       const isVisible = filter === "all" || categories.includes(filter);

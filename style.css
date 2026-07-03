@@ -232,6 +232,36 @@ main {
   height: 190px;
 }
 
+.gallery-view[data-filter="academic"] .card-d {
+  top: 426px;
+  left: -38px;
+}
+
+.gallery-view[data-filter="academic"] .card-f {
+  top: 426px;
+  left: 214px;
+}
+
+.gallery-view[data-filter="professional"] .card-e {
+  top: 196px;
+  left: -36px;
+}
+
+.gallery-view[data-filter="professional"] .card-f {
+  top: 196px;
+  left: 158px;
+}
+
+.gallery-view[data-filter="professional"] .card-c {
+  top: 200px;
+  left: 412px;
+}
+
+.gallery-view[data-filter="professional"] .card-g {
+  top: 426px;
+  left: 92px;
+}
+
 .project-image {
   position: absolute;
   inset: 0;
