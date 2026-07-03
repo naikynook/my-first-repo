@@ -82,6 +82,7 @@ a:focus-visible {
 
 .site-name {
   letter-spacing: 0.01em;
+  font-size: 15px;
 }
 
 .view-nav {
