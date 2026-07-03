@@ -477,6 +477,20 @@ main {
     margin: 132px 18px 80px;
   }
 
+  .list-view .project-card {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .list-view .project-card.is-selected a {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 112px;
+    gap: 14px;
+    align-items: start;
+    width: 100%;
+    text-decoration: none;
+  }
+
   .gallery-view .project-card {
     position: relative;
     top: auto;
@@ -494,11 +508,20 @@ main {
   .list-view .project-card.is-selected .project-image {
     position: relative;
     top: auto;
+    left: auto;
     right: auto;
-    width: min(100%, 320px);
-    height: auto;
+    order: 2;
+    width: 112px;
+    height: 112px;
     aspect-ratio: 1;
-    margin: 12px 0 18px;
+    margin: 0;
+    transform: none;
+  }
+
+  .list-view .project-card.is-selected .project-label {
+    order: 1;
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 }
 
