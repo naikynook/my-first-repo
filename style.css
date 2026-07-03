@@ -4,6 +4,9 @@
   --muted: #767676;
   --line: #d8d8d2;
   --hover: #ecece6;
+  --pink-glow: rgba(255, 145, 198, 0.42);
+  --pink-glow-soft: rgba(255, 181, 215, 0.22);
+  --pink-hover: rgba(255, 236, 246, 0.78);
 }
 
 * {
@@ -17,7 +20,10 @@ html {
 body {
   min-height: 100vh;
   margin: 0;
-  background: var(--background);
+  background:
+    radial-gradient(circle at 12% 8%, var(--pink-glow-soft), transparent 26rem),
+    radial-gradient(circle at 88% 18%, rgba(255, 145, 198, 0.13), transparent 22rem),
+    var(--background);
   color: var(--text);
   font-family: Arial, Helvetica, sans-serif;
   font-size: 15px;
@@ -34,6 +40,13 @@ button:hover {
   text-decoration: underline;
 }
 
+a:focus-visible,
+button:focus-visible {
+  outline: 1px solid rgba(255, 91, 170, 0.7);
+  outline-offset: 4px;
+  box-shadow: 0 0 18px var(--pink-glow);
+}
+
 .site-header {
   display: flex;
   justify-content: space-between;
@@ -46,6 +59,7 @@ button:hover {
   font-size: 26px;
   font-weight: 400;
   line-height: 1;
+  text-shadow: 0 0 18px var(--pink-glow);
 }
 
 .site-nav {
@@ -109,6 +123,7 @@ h2 {
   margin-bottom: 24px;
   padding-bottom: 12px;
   border-bottom: 1px solid var(--line);
+  filter: drop-shadow(0 0 18px var(--pink-glow-soft));
 }
 
 .view-controls,
@@ -125,12 +140,14 @@ h2 {
   color: var(--muted);
   font: inherit;
   cursor: pointer;
+  transition: color 160ms ease, text-shadow 160ms ease;
 }
 
 .text-control.is-active {
   color: var(--text);
   text-decoration: underline;
   text-underline-offset: 3px;
+  text-shadow: 0 0 14px var(--pink-glow);
 }
 
 .project-archive {
@@ -150,11 +167,15 @@ h2 {
   display: grid;
   grid-template-columns: minmax(180px, 1.1fr) minmax(130px, 0.45fr) minmax(220px, 1fr);
   gap: 20px;
-  padding: 14px 0;
+  margin: 0 -10px;
+  padding: 14px 10px;
+  border-radius: 12px;
+  transition: background 160ms ease, box-shadow 160ms ease;
 }
 
 .project-link:hover {
-  background: var(--hover);
+  background: var(--pink-hover);
+  box-shadow: 0 0 28px var(--pink-glow);
   text-decoration: none;
 }
 
@@ -174,6 +195,7 @@ h2 {
 .gallery-view .project-item {
   min-height: 210px;
   border: 1px solid var(--line);
+  box-shadow: 0 0 24px var(--pink-glow-soft);
 }
 
 .gallery-view .project-link {
@@ -182,6 +204,7 @@ h2 {
   align-content: space-between;
   gap: 18px;
   padding: 18px;
+  margin: 0;
 }
 
 .gallery-view .project-link::before {
@@ -199,6 +222,7 @@ h2 {
   padding-top: 16px;
   border-top: 1px solid var(--line);
   color: var(--muted);
+  filter: drop-shadow(0 0 16px var(--pink-glow-soft));
 }
 
 .about-section h2 {
