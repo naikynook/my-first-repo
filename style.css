@@ -1,129 +1,223 @@
-/* Import Google Fonts - this loads the Roboto font family from Google's servers */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+:root {
+  --background: #f7f7f4;
+  --text: #111;
+  --muted: #767676;
+  --line: #d8d8d2;
+  --hover: #ecece6;
+}
 
-/* Style the entire body of the webpage */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  font-family: 'Roboto', sans-serif;  /* Set the font to Roboto, with sans-serif as backup */
-  background: linear-gradient(135deg, #ff69b4, #ffff00);  /* Gradient from pink to yellow */
-  color: #111;                        /* Set text color to dark gray (almost black) */
-  margin: 0;                          /* Remove default spacing around the body */
-  padding: 0;                         /* Remove default internal spacing */
-  min-height: 100vh;                  /* Ensure gradient covers full viewport height */
+  min-height: 100vh;
+  margin: 0;
+  background: var(--background);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  line-height: 1.45;
 }
 
-/* Style the header section at the top of the page */
-header {
-  display: flex;                      /* Use flexbox layout for flexible positioning */
-  justify-content: space-between;     /* Spread items evenly across the header */
-  align-items: center;                /* Center items vertically */
-  padding: 24px 40px;                 /* Add 24px top/bottom, 40px left/right spacing inside */
-  border-bottom: 1px solid #ccc;      /* Add a light gray line at the bottom */
-  font-size: 14px;                    /* Set font size to 14 pixels */
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
-/* Style the left section of the header */
-header .left {
-  color: #aaa;                        /* Set text color to light gray */
-}
-
-/* Style the center section of the header */
-header .center {
-  font-weight: 400;                   /* Set font weight to normal (not bold) */
-  text-align: center;                 /* Center the text horizontally */
-}
-
-/* Style the span element inside the center section */
-header .center span {
-  font-size: 12px;                    /* Make this text smaller (12 pixels) */
-  color: #888;                        /* Set text color to medium gray */
-}
-
-/* Style links in the right section of the header */
-header .right a {
-  color: #000;                        /* Set link color to black */
-  text-decoration: none;              /* Remove the underline from links */
-  font-weight: 400;                   /* Set font weight to normal */
-}
-
-/* Style the main content area */
-main {
-  max-width: 800px;                   /* Limit the maximum width to 800 pixels */
-  margin: 60px auto;                  /* Add 60px top/bottom margin, center horizontally */
-  padding: 0 20px;                    /* Add 20px left/right padding, no top/bottom */
-}
-
-/* Style the project year/date */
-.project-meta {
-  font-size: 14px;                    /* Set font size to 14 pixels */
-  color: #999;                        /* Set text color to light gray */
-  margin-bottom: 8px;                 /* Add 8 pixels of space below this element */
-}
-
-/* Style the main project title */
-.project-title {
-  font-size: 24px;                    /* Set font size to 24 pixels (larger) */
-  font-weight: 400;                   /* Set font weight to normal (not bold) */
-  margin-bottom: 4px;                 /* Add 4 pixels of space below this element */
-}
-
-/* Style the project subtitle */
-.project-subtitle {
-  font-size: 16px;                    /* Set font size to 16 pixels */
-  color: #999;                        /* Set text color to light gray */
-  margin-bottom: 24px;                /* Add 24 pixels of space below this element */
-}
-
-/* Style the advisor information */
-.advisor {
-  font-size: 14px;                    /* Set font size to 14 pixels */
-  margin-bottom: 40px;                /* Add 40 pixels of space below this element */
-  color: #333;                        /* Set text color to dark gray */
-}
-
-/* Style section titles (like "Abstract", "Motivation") */
-.section-title {
-  font-weight: 700;                   /* Make the text bold */
-  text-transform: uppercase;          /* Convert text to all capital letters */
-  margin-top: 40px;                   /* Add 40 pixels of space above this element */
-  margin-bottom: 12px;                /* Add 12 pixels of space below this element */
-  font-size: 14px;                    /* Set font size to 14 pixels */
-}
-
-/* Style all paragraph elements */
-p {
-  font-size: 16px;                    /* Set font size to 16 pixels */
-  line-height: 1.6;                   /* Set space between lines to 1.6 times the font size */
-  margin-bottom: 24px;                /* Add 24 pixels of space below each paragraph */
-  color: #111;                        /* Set text color to dark gray (almost black) */
-}
-
-/* Style for our interactive button */
-button {
-  background-color: #111;             /* Set button background to dark gray */
-  color: white;                       /* Set button text color to white */
-  border: none;                       /* Remove the default button border */
-  padding: 12px 24px;                 /* Add 12px top/bottom, 24px left/right spacing inside */
-  font-size: 14px;                    /* Set button text size to 14 pixels */
-  font-weight: 400;                   /* Set font weight to normal */
-  cursor: pointer;                    /* Change mouse cursor to hand when hovering over button */
-  margin-bottom: 20px;                /* Add 20 pixels of space below the button */
-  transition: background-color 0.3s;  /* Smooth color change animation (0.3 seconds) */
-  border-radius: 4px;                 /* Add slightly rounded corners to the button */
-}
-
-/* Change button appearance when user hovers over it */
+a:hover,
 button:hover {
-  background-color: #333;             /* Change background to lighter gray on hover */
+  text-decoration: underline;
 }
 
-/* Style for the message display area */
-#messageDisplay {
-  font-size: 16px;                    /* Set font size to 16 pixels */
-  line-height: 1.6;                   /* Set space between lines */
-  margin-top: 20px;                   /* Add 20 pixels of space above this element */
-  padding: 16px;                      /* Add 16 pixels of spacing inside the element */
-  border: 1px solid #ccc;             /* Add a light gray border around the element */
-  background-color: #f9f9f9;          /* Set background color to very light gray */
-  border-radius: 4px;                 /* Add slightly rounded corners */
-  min-height: 20px;                   /* Set minimum height so the area is visible even when empty */
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 22px 28px;
+}
+
+.site-title {
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.site-nav {
+  margin-left: auto;
+}
+
+.site-nav a {
+  color: var(--text);
+}
+
+.archive {
+  width: min(100%, 1120px);
+  margin: 0 auto;
+  padding: 48px 28px 72px;
+}
+
+.intro {
+  max-width: 620px;
+  margin-bottom: 56px;
+}
+
+.eyebrow,
+.project-meta {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  max-width: 780px;
+  margin-bottom: 16px;
+  font-size: clamp(32px, 7vw, 74px);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+}
+
+h2 {
+  margin-bottom: 12px;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.intro-text {
+  max-width: 520px;
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
+.archive-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.view-controls,
+.category-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.text-control {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  cursor: pointer;
+}
+
+.text-control.is-active {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.project-archive {
+  display: grid;
+  gap: 0;
+}
+
+.project-item {
+  border-bottom: 1px solid var(--line);
+}
+
+.project-item.is-hidden {
+  display: none;
+}
+
+.project-link {
+  display: grid;
+  grid-template-columns: minmax(180px, 1.1fr) minmax(130px, 0.45fr) minmax(220px, 1fr);
+  gap: 20px;
+  padding: 14px 0;
+}
+
+.project-link:hover {
+  background: var(--hover);
+  text-decoration: none;
+}
+
+.project-title {
+  font-size: 16px;
+}
+
+.project-description {
+  color: var(--muted);
+}
+
+.gallery-view {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.gallery-view .project-item {
+  min-height: 210px;
+  border: 1px solid var(--line);
+}
+
+.gallery-view .project-link {
+  min-height: 100%;
+  grid-template-columns: 1fr;
+  align-content: space-between;
+  gap: 18px;
+  padding: 18px;
+}
+
+.gallery-view .project-link::before {
+  content: "";
+  display: block;
+  min-height: 90px;
+  background:
+    linear-gradient(135deg, transparent 49%, var(--line) 50%, transparent 51%),
+    linear-gradient(45deg, transparent 49%, var(--line) 50%, transparent 51%);
+}
+
+.about-section {
+  max-width: 560px;
+  margin-top: 72px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+}
+
+.about-section h2 {
+  color: var(--text);
+}
+
+@media (max-width: 760px) {
+  .site-header,
+  .archive-controls {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .archive {
+    padding-top: 36px;
+  }
+
+  .project-link,
+  .gallery-view {
+    grid-template-columns: 1fr;
+  }
 }
