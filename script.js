@@ -21,6 +21,12 @@ document.addEventListener("DOMContentLoaded", () => {
     stage.classList.toggle("gallery-view", view === "gallery");
     stage.classList.toggle("list-view", view === "list");
     setActive(viewButtons, activeButton);
+
+    if (view === "list") {
+      selectFirstVisibleCard();
+    } else {
+      cards.forEach((card) => card.classList.remove("is-selected"));
+    }
   }
 
   function setFilter(filter, activeButton) {
@@ -32,6 +38,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setActive(filterButtons, activeButton);
     aboutPanel.classList.remove("is-open");
+
+    if (stage.classList.contains("list-view")) {
+      selectFirstVisibleCard();
+    }
+  }
+
+  function selectCard(selectedCard) {
+    cards.forEach((card) => {
+      card.classList.toggle("is-selected", card === selectedCard);
+    });
+  }
+
+  function selectFirstVisibleCard() {
+    const firstVisibleCard = Array.from(cards).find((card) => {
+      return !card.classList.contains("is-hidden");
+    });
+
+    if (firstVisibleCard) {
+      selectCard(firstVisibleCard);
+    }
   }
 
   viewButtons.forEach((button) => {
@@ -42,6 +68,19 @@ document.addEventListener("DOMContentLoaded", () => {
   filterButtons.forEach((button) => {
     button.setAttribute("aria-pressed", String(button.classList.contains("is-active")));
     button.addEventListener("click", () => setFilter(button.dataset.filter, button));
+  });
+
+  cards.forEach((card) => {
+    const link = card.querySelector("a");
+
+    link.addEventListener("click", (event) => {
+      if (!stage.classList.contains("list-view")) {
+        return;
+      }
+
+      event.preventDefault();
+      selectCard(card);
+    });
   });
 
   aboutButton.addEventListener("click", () => {

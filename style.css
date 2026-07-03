@@ -69,7 +69,7 @@ a:focus-visible {
   z-index: 20;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: baseline;
   pointer-events: none;
 }
 
@@ -83,11 +83,13 @@ a:focus-visible {
 .site-name {
   letter-spacing: 0.01em;
   font-size: 15px;
+  line-height: 1;
 }
 
 .view-nav {
   display: flex;
   gap: 31px;
+  line-height: 1;
 }
 
 .filter-pill {
@@ -325,10 +327,10 @@ main {
 }
 
 .list-view {
-  width: max-content;
-  max-width: calc(100vw - 52px);
+  width: calc(100vw - 96px);
+  max-width: none;
   height: auto;
-  margin: 166px auto 120px;
+  margin: 166px 0 120px 48px;
 }
 
 .list-view .project-card {
@@ -348,8 +350,31 @@ main {
   text-underline-offset: 3px;
 }
 
+.list-view .project-card.is-selected a {
+  text-shadow:
+    0 0 14px var(--glow-strong),
+    0 0 42px var(--glow);
+}
+
 .list-view .project-image {
   display: none;
+}
+
+.list-view .project-card.is-selected .project-image {
+  position: fixed;
+  inset: auto;
+  top: 170px;
+  right: 88px;
+  z-index: 15;
+  display: block;
+  width: min(34vw, 360px);
+  height: min(34vw, 360px);
+  border-radius: 7px;
+  box-shadow:
+    0 0 22px var(--glow-strong),
+    0 0 56px var(--glow),
+    0 10px 22px rgba(0, 0, 0, 0.12);
+  pointer-events: none;
 }
 
 .list-view .project-label {
@@ -446,6 +471,11 @@ main {
     gap: 22px;
   }
 
+  .list-view {
+    width: calc(100vw - 36px);
+    margin: 132px 18px 80px;
+  }
+
   .gallery-view .project-card {
     position: relative;
     top: auto;
@@ -458,6 +488,16 @@ main {
 
   .gallery-view .project-card:hover {
     transform: translateY(-3px);
+  }
+
+  .list-view .project-card.is-selected .project-image {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: min(100%, 320px);
+    height: auto;
+    aspect-ratio: 1;
+    margin: 12px 0 18px;
   }
 }
 
