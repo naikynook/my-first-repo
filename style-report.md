@@ -1,81 +1,119 @@
-# Style Report: Portfolio Reference Direction
+# Style Report: Adam Vosburgh Reference Website
 
-Reference: [Adam Vosburgh](https://adamvosburgh.com/)
+Reference website: [adamvosburgh.com](https://adamvosburgh.com/)
 
-## What The Site Should Actually Look Like
+## Overall Impression
 
-The website should closely resemble the gallery view shown in the Adam Vosburgh reference screenshot. The page is mostly empty white space with a small amount of precise interface text placed near the top. The design should not look like a generic portfolio, a course template, or a modern landing page. It should look like a quiet personal web interface with floating controls and a glowing image cluster.
+The website has a quiet, experimental portfolio style. It feels like a minimal web interface rather than a traditional portfolio homepage. The page is mostly open white space, with small text controls, a floating navigation element, and a clustered gallery of project images.
 
-The strongest visual qualities are:
-
-- A plain white or very pale background.
-- Small black monospaced or typewriter-like text.
-- A small name in the upper-left corner.
-- `List View` and `Gallery View` controls in the upper-right area.
-- No large hero headline.
-- No large paragraph introduction at the top.
-- A floating rounded navigation pill centered near the top.
-- A stacked gallery of image-like project tiles underneath the pill.
-- A soft glow around the gallery tiles and navigation.
-- A small `×` mark near the lower-right edge.
+The design should feel precise, lightweight, and slightly mysterious. It is not colorful in the usual sense, but it uses glow, overlap, and image placement to create atmosphere.
 
 ## Layout
 
-The top of the page should feel like a sparse browser-based interface. The name sits on the left, while the view controls sit on the right. These controls should be plain text links, not large buttons.
+The page layout is sparse and top-heavy. The main identity appears as small text in the upper-left corner. The view controls sit in the upper-right corner. The main navigation floats near the top center of the page inside a rounded pill-shaped container.
 
-The category navigation should float over the page as a rounded translucent pill. In the reference, the pill contains `All`, `Projects`, `Updates`, `Teaching`, and `About`. For this portfolio, the pill should follow the same layout but use:
+The project images sit below the navigation in a loose collage. They are not arranged as a standard equal grid. Instead, the images overlap visually through proximity, depth, and glow. Some cards are larger, some are smaller, and the arrangement feels curated rather than mechanical.
+
+Key layout traits:
+
+- Small name label in the upper-left.
+- Small `List View`, `Gallery View`, and `Apps` text controls in the upper-right.
+- Floating rounded navigation pill near the top center.
+- Gallery cluster positioned below the navigation.
+- Large white margins around the content.
+- Vertical scrolling, with more projects continuing below.
+
+## Navigation Style
+
+The navigation is one of the most important visual elements. It appears as a soft, rounded, floating pill with a translucent white background and a blurred shadow. The links inside are small, evenly spaced, and text-based.
+
+Visible navigation items include:
 
 - `All`
-- `Academic`
-- `Professional`
+- `Projects`
+- `Updates`
+- `Teaching`
 - `About`
 
-The `About` item should stay at the far-right side of the pill. There should be no large separate header section, no centered title block, and no explanatory intro section above the gallery.
-
-## Gallery Composition
-
-The default view should be a gallery view, because the screenshot shows the reference in gallery mode. Project tiles should appear as image cards clustered near the top center of the page. The cards should not form a clean, evenly spaced portfolio grid. Instead, they should feel slightly layered and staggered:
-
-- A wide card on the upper-left.
-- A taller main card slightly overlapping or sitting close to the first.
-- A smaller card on the upper-right.
-- More cards continuing below in a loose two-column stack.
-
-The gallery should feel like a floating collage of project previews. The cards should have rounded corners and strong soft glow around them. Since the reference has a blue-purple glow, this portfolio should translate that glow into soft pink.
+The active item is underlined. The navigation does not look like a set of heavy buttons. It feels more like a floating browser control or filter bar.
 
 ## Typography
 
-The typography should be small, plain, and slightly technical. A monospace font such as `Courier New` is appropriate because it resembles the screenshot's interface text. Text should remain small and quiet:
+The typography is small, plain, and technical. It resembles a monospace or typewriter-like interface font. There is no large hero heading, no bold marketing headline, and no oversized project title.
 
-- Site name: small, upper-left, not a large logo.
-- View controls: small, upper-right, underlined when active.
-- Navigation pill: small text with generous horizontal spacing.
-- Project labels: small captions only when needed.
+Typography qualities:
 
-Avoid large sans-serif display headings, bold marketing copy, and oversized project titles.
+- Small font size.
+- Black text on a pale background.
+- Minimal hierarchy.
+- Underlines used to indicate active links.
+- Plain labels rather than expressive branding.
 
-## Color And Glow
+The type should feel functional, like an interface for browsing work.
 
-The base palette should be extremely pale:
+## Color Palette
 
-- Background: white or warm off-white.
+The base color palette is restrained:
+
+- Background: white or very pale warm gray.
 - Text: black.
-- Muted text: gray.
-- Navigation pill: translucent off-white.
-- Glow: soft pink and pale violet-pink.
+- Navigation background: translucent white.
+- Shadows: soft gray.
+- Glow: blue-purple in the reference.
 
-The glow should be stronger around gallery tiles and softer around the navigation pill. It should look atmospheric and digital, not like a solid colored border.
+The color is mainly created by the project images and the glow around them. The interface itself stays almost colorless.
 
-## What To Avoid
+## Glow And Atmosphere
 
-Do not use:
+The blue-purple glow is a major part of the reference style. It surrounds the gallery images and gives the page a soft digital atmosphere. The glow makes the image cards feel like they are hovering above the page.
 
-- Large hero text.
-- Big rectangular buttons.
-- A standard card grid.
-- Pink/yellow gradient backgrounds.
-- Course-template comments.
-- Large explanatory text blocks above the work.
-- Generic portfolio sections such as "Selected Work" or "My Projects" as the main visual focus.
+Glow characteristics:
 
-The final page should feel like the screenshot: small interface text, a floating pill menu, and glowing project images on a quiet page.
+- Soft and blurred.
+- Strongest around project image cards.
+- Also visible around the floating navigation pill.
+- Cool-toned, leaning blue and violet.
+- Used as atmosphere, not as a hard border.
+
+## Gallery Image Treatment
+
+The gallery uses image cards with rounded corners. The cards have different dimensions and appear in a staggered arrangement. The images include technical diagrams, colorful circular graphics, installation photos, interface screenshots, and dark projection imagery.
+
+Image treatment qualities:
+
+- Rounded corners.
+- Soft shadow and glow.
+- Mixed image sizes.
+- Slight overlap or close stacking.
+- Centered cluster rather than full-width grid.
+- Images are the main visual content.
+
+The gallery should feel like a floating collection of project fragments.
+
+## Interaction Style
+
+Interactions should be subtle. Active links are underlined, and hover states can use light glow or underline changes. The interface should not use large animated transitions or obvious button styling.
+
+The site suggests two main modes:
+
+- `List View`: likely a text-based project index.
+- `Gallery View`: image-based project browsing.
+
+The screenshot shows `Gallery View` as the active mode.
+
+## Style Keywords
+
+- Minimal
+- Floating
+- Sparse
+- Gallery-based
+- Technical
+- Quiet
+- Atmospheric
+- Experimental
+- Interface-like
+- Soft-glowing
+
+## Design Takeaway
+
+To match this reference, the website should avoid a conventional portfolio format. The design should not begin with a large introduction or a full-width hero. Instead, it should use small interface text, a floating pill navigation bar, and a glowing staggered gallery as the main visual identity.
