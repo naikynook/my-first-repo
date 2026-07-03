@@ -158,7 +158,7 @@ main {
 }
 
 .card-a {
-  top: 303px;
+  top: 260px;
   left: -36px;
   z-index: 1;
   width: 250px;
@@ -166,7 +166,7 @@ main {
 }
 
 .card-b {
-  top: 303px;
+  top: 260px;
   left: 232px;
   z-index: 3;
   width: 240px;
@@ -174,7 +174,7 @@ main {
 }
 
 .card-c {
-  top: 307px;
+  top: 264px;
   left: 492px;
   z-index: 2;
   width: 112px;
@@ -182,7 +182,7 @@ main {
 }
 
 .card-d {
-  top: 533px;
+  top: 490px;
   left: -38px;
   z-index: 1;
   width: 240px;
@@ -190,7 +190,7 @@ main {
 }
 
 .card-e {
-  top: 533px;
+  top: 490px;
   left: 214px;
   z-index: 1;
   width: 176px;
@@ -198,7 +198,7 @@ main {
 }
 
 .card-f {
-  top: 765px;
+  top: 722px;
   left: 92px;
   z-index: 1;
   width: 236px;
@@ -206,7 +206,7 @@ main {
 }
 
 .card-g {
-  top: 791px;
+  top: 748px;
   left: 342px;
   z-index: 1;
   width: 150px;
