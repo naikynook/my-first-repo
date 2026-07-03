@@ -439,42 +439,25 @@ main {
   }
 
   .project-stage {
-    width: 100vw;
-    margin: 0;
+    width: min(100%, 360px);
+    height: auto;
+    margin: 156px auto 80px;
+    display: grid;
+    gap: 22px;
   }
 
   .gallery-view .project-card {
-    transform: scale(0.82);
-    transform-origin: top left;
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    aspect-ratio: 1;
+    height: auto;
+    transform: none;
   }
 
   .gallery-view .project-card:hover {
-    transform: scale(0.82) translateY(-3px);
-  }
-
-  .card-a,
-  .card-d {
-    left: 18px;
-  }
-
-  .card-b {
-    left: 124px;
-  }
-
-  .card-c {
-    left: 308px;
-  }
-
-  .card-e {
-    left: 220px;
-  }
-
-  .card-f {
-    left: 86px;
-  }
-
-  .card-g {
-    left: 278px;
+    transform: translateY(-3px);
   }
 }
 
