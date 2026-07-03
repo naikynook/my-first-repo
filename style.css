@@ -364,11 +364,12 @@ main {
   position: fixed;
   inset: auto;
   top: 170px;
-  right: 88px;
+  left: 50%;
   z-index: 15;
   display: block;
   width: min(34vw, 360px);
   height: min(34vw, 360px);
+  transform: translateX(-50%);
   border-radius: 7px;
   box-shadow:
     0 0 22px var(--glow-strong),
