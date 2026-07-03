@@ -3,8 +3,8 @@
   --ink: #111111;
   --muted: #6f6f6f;
   --panel: rgba(255, 255, 255, 0.88);
-  --glow: rgba(137, 122, 255, 0.48);
-  --glow-strong: rgba(133, 118, 255, 0.72);
+  --glow: rgba(255, 143, 204, 0.48);
+  --glow-strong: rgba(255, 105, 180, 0.72);
   --shadow: rgba(0, 0, 0, 0.18);
 }
 
@@ -104,7 +104,7 @@ a:focus-visible {
   box-shadow:
     0 18px 54px rgba(0, 0, 0, 0.22),
     0 0 50px rgba(255, 255, 255, 0.9),
-    0 0 46px rgba(140, 125, 255, 0.22);
+    0 0 46px rgba(255, 143, 204, 0.22);
   backdrop-filter: blur(14px);
   white-space: nowrap;
 }
@@ -370,7 +370,7 @@ main {
   background: var(--panel);
   box-shadow:
     0 18px 48px var(--shadow),
-    0 0 48px rgba(140, 125, 255, 0.22);
+    0 0 48px rgba(255, 143, 204, 0.22);
   opacity: 0;
   pointer-events: none;
   transition: opacity 160ms ease, transform 160ms ease;
