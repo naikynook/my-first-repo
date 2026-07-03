@@ -478,17 +478,15 @@ main {
   }
 
   .list-view .project-card {
-    width: 100%;
+    width: max-content;
     max-width: 100%;
   }
 
   .list-view .project-card.is-selected a {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 112px;
-    gap: 14px;
-    align-items: start;
-    width: 100%;
-    text-decoration: none;
+    display: inline;
+    width: auto;
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
   .gallery-view .project-card {
@@ -506,20 +504,18 @@ main {
   }
 
   .list-view .project-card.is-selected .project-image {
-    position: relative;
-    top: auto;
+    position: fixed;
+    top: 148px;
     left: auto;
-    right: auto;
-    order: 2;
-    width: 112px;
-    height: 112px;
+    right: 18px;
+    width: min(44vw, 190px);
+    height: min(44vw, 190px);
     aspect-ratio: 1;
     margin: 0;
     transform: none;
   }
 
   .list-view .project-card.is-selected .project-label {
-    order: 1;
     text-decoration: underline;
     text-underline-offset: 3px;
   }
