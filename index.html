@@ -7,78 +7,76 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <button class="mark mark-top" type="button" aria-label="Reset archive view">×</button>
+  <header class="topbar">
+    <a class="name" href="#">Kody Naiker</a>
 
-  <header class="masthead">
-    <h1>Kody Naiker</h1>
-
-    <div class="view-controls" aria-label="View controls">
-      <button class="text-button is-active" type="button" data-view="list">List View</button>
-      <button class="text-button" type="button" data-view="gallery">Gallery View</button>
+    <div class="view-switch" aria-label="View switcher">
+      <button type="button" data-view="list">List View</button>
+      <button class="active" type="button" data-view="gallery">Gallery View</button>
     </div>
   </header>
 
-  <nav class="site-tabs" aria-label="Project categories">
-    <div class="filter-group">
-      <button class="text-button is-active" type="button" data-filter="all">All</button>
-      <button class="text-button" type="button" data-filter="academic">Academic</button>
-      <button class="text-button" type="button" data-filter="professional">Professional</button>
-    </div>
-    <a href="#about">About</a>
-  </nav>
-
-  <nav class="site-tabs duplicate-tabs" aria-label="Repeated project categories">
-    <div class="filter-group">
-      <button class="text-button is-active" type="button" data-filter="all">All</button>
-      <button class="text-button" type="button" data-filter="academic">Academic</button>
-      <button class="text-button" type="button" data-filter="professional">Professional</button>
-    </div>
-    <a href="#about">About</a>
+  <nav class="pill-nav" aria-label="Project filters">
+    <button class="active" type="button" data-filter="all">All</button>
+    <button type="button" data-filter="academic">Academic</button>
+    <button type="button" data-filter="professional">Professional</button>
+    <button type="button" data-about>About</button>
   </nav>
 
   <main>
-    <section class="project-index list-view" aria-label="Project index">
-      <a class="project-link" href="#" data-category="academic">
-        <span>academic-index.kodynaiker.com</span>
-        <small>academic archive</small>
-      </a>
+    <section class="projects gallery" aria-label="Project gallery">
+      <article class="project-card card-one academic" data-category="academic">
+        <a href="#">
+          <span class="visual visual-orbit"></span>
+          <span class="caption">computational-design.kodynaiker.com</span>
+        </a>
+      </article>
 
-      <a class="project-link" href="#" data-category="academic">
-        <span>computational-design.kodynaiker.com</span>
-        <small>academic</small>
-      </a>
+      <article class="project-card card-two academic" data-category="academic">
+        <a href="#">
+          <span class="visual visual-installation"></span>
+          <span class="caption">academic-index.kodynaiker.com</span>
+        </a>
+      </article>
 
-      <a class="project-link" href="#" data-category="academic">
-        <span>urban-research.kodynaiker.com</span>
-        <small>academic research</small>
-      </a>
+      <article class="project-card card-three professional" data-category="professional">
+        <a href="#">
+          <span class="visual visual-drawing"></span>
+          <span class="caption">client-study.kodynaiker.com</span>
+        </a>
+      </article>
 
-      <a class="project-link" href="#" data-category="professional">
-        <span>professional-work.kodynaiker.com</span>
-        <small>professional</small>
-      </a>
+      <article class="project-card card-four academic" data-category="academic">
+        <a href="#">
+          <span class="visual visual-night"></span>
+          <span class="caption">urban-research.kodynaiker.com</span>
+        </a>
+      </article>
 
-      <a class="project-link" href="#" data-category="professional">
-        <span>client-study.kodynaiker.com</span>
-        <small>professional concept</small>
-      </a>
+      <article class="project-card card-five professional" data-category="professional">
+        <a href="#">
+          <span class="visual visual-grid"></span>
+          <span class="caption">professional-work.kodynaiker.com</span>
+        </a>
+      </article>
 
-      <a class="project-link" href="#" data-category="academic professional">
-        <span>archive.kodynaiker.com</span>
-        <small>selected work</small>
-      </a>
+      <article class="project-card card-six academic professional" data-category="academic professional">
+        <a href="#">
+          <span class="visual visual-map"></span>
+          <span class="caption">archive.kodynaiker.com</span>
+        </a>
+      </article>
     </section>
 
-    <section class="about" id="about" aria-labelledby="about-title">
-      <h2 id="about-title">About</h2>
+    <section class="about-note" id="about" aria-label="About this portfolio">
       <p>
-        A sparse portfolio index for academic and professional projects. The page is built
-        as a simple public directory: view controls, category filters, and direct project links.
+        Portfolio archive for academic and professional work. Built as a small directory
+        interface with gallery and list views.
       </p>
     </section>
   </main>
 
-  <div class="mark mark-bottom" aria-hidden="true">×</div>
+  <button class="close-mark" type="button" aria-label="Reset view">×</button>
 
   <script src="script.js"></script>
 </body>

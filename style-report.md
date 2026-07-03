@@ -1,74 +1,81 @@
-# Portfolio Website Style Report
+# Style Report: Portfolio Reference Direction
 
-Reference site: [Adam Vosburgh](https://adamvosburgh.com/)
+Reference: [Adam Vosburgh](https://adamvosburgh.com/)
 
-## Style Summary
+## What The Site Should Actually Look Like
 
-This website should closely follow the sparse, index-like feeling of Adam Vosburgh's portfolio. The reference does not look like a normal portfolio homepage with a hero image, large project cards, decorative graphics, or a polished marketing layout. It looks more like a small personal directory on the web: a name, a few plain text controls, compact navigation, and a list of linked projects.
+The website should closely resemble the gallery view shown in the Adam Vosburgh reference screenshot. The page is mostly empty white space with a small amount of precise interface text placed near the top. The design should not look like a generic portfolio, a course template, or a modern landing page. It should look like a quiet personal web interface with floating controls and a glowing image cluster.
 
-The site should feel almost bare, but not careless. Its design language comes from directness, repetition, small text, large empty areas, and simple clickable words. The interface should feel like a functional personal archive.
+The strongest visual qualities are:
 
-## Key Visual Qualities
-
-- Plain white or near-white page
-- Black text with minimal color
-- Very small amount of hierarchy
-- Name placed simply at the top
-- Links treated as the main design element
-- No large hero section
-- No gradient background
-- No cards, shadows, image-heavy sections, or decorative panels
-- Sparse navigation repeated in a compact way
-- A small interface mark such as `×`
-- Soft glow around interactive text and grouped links
-
-## Glow Direction
-
-Adam Vosburgh's site has a faint blue glow around elements. For this portfolio, the glow should become soft pink instead. The pink should not make the site feel bubbly or overly decorative. It should be subtle and atmospheric, like a low digital halo around the text.
-
-The glow should appear around:
-
-- The main name
-- Active view controls
-- Active category filters
-- Hovered project links
-- The small `×` interface mark
-- Gallery view project blocks
-
-The glow should not replace the minimal design. It should sit behind the simple black text and make the page feel slightly strange, digital, and alive.
+- A plain white or very pale background.
+- Small black monospaced or typewriter-like text.
+- A small name in the upper-left corner.
+- `List View` and `Gallery View` controls in the upper-right area.
+- No large hero headline.
+- No large paragraph introduction at the top.
+- A floating rounded navigation pill centered near the top.
+- A stacked gallery of image-like project tiles underneath the pill.
+- A soft glow around the gallery tiles and navigation.
+- A small `×` mark near the lower-right edge.
 
 ## Layout
 
-The page should be arranged like a compact web index. The top area should include the portfolio owner's name, followed by simple text controls such as `List View` and `Gallery View`. The category navigation should sit nearby and stay plain.
+The top of the page should feel like a sparse browser-based interface. The name sits on the left, while the view controls sit on the right. These controls should be plain text links, not large buttons.
 
-The reference includes categories such as `All Projects`, `Updates`, `Teaching`, and `About`. This portfolio should modify that structure. It should keep the spirit of the navigation but use these sections instead:
+The category navigation should float over the page as a rounded translucent pill. In the reference, the pill contains `All`, `Projects`, `Updates`, `Teaching`, and `About`. For this portfolio, the pill should follow the same layout but use:
 
 - `All`
 - `Academic`
 - `Professional`
 - `About`
 
-The `About` link should remain far to the right, separated from the main filtering links.
+The `About` item should stay at the far-right side of the pill. There should be no large separate header section, no centered title block, and no explanatory intro section above the gallery.
+
+## Gallery Composition
+
+The default view should be a gallery view, because the screenshot shows the reference in gallery mode. Project tiles should appear as image cards clustered near the top center of the page. The cards should not form a clean, evenly spaced portfolio grid. Instead, they should feel slightly layered and staggered:
+
+- A wide card on the upper-left.
+- A taller main card slightly overlapping or sitting close to the first.
+- A smaller card on the upper-right.
+- More cards continuing below in a loose two-column stack.
+
+The gallery should feel like a floating collage of project previews. The cards should have rounded corners and strong soft glow around them. Since the reference has a blue-purple glow, this portfolio should translate that glow into soft pink.
 
 ## Typography
 
-Typography should be default-feeling and plain. A system sans-serif font is appropriate. The site should avoid expressive display type, large typographic drama, and heavy styling.
+The typography should be small, plain, and slightly technical. A monospace font such as `Courier New` is appropriate because it resembles the screenshot's interface text. Text should remain small and quiet:
 
-The name can be the largest text, but it should still be modest. Most other text should sit close to body size. Project links should feel like a list of web addresses or file names.
+- Site name: small, upper-left, not a large logo.
+- View controls: small, upper-right, underlined when active.
+- Navigation pill: small text with generous horizontal spacing.
+- Project labels: small captions only when needed.
 
-## Project Link Style
+Avoid large sans-serif display headings, bold marketing copy, and oversized project titles.
 
-Project entries should be simple clickable text. They can resemble subdomains or direct project titles, similar to how the reference lists app links like `ascii.adamvosburgh.com` and `kallax.adamvosburgh.com`.
+## Color And Glow
 
-For this portfolio, project links can use concise names such as:
+The base palette should be extremely pale:
 
-- `academic-index.kodynaiker.com`
-- `computational-design.kodynaiker.com`
-- `professional-work.kodynaiker.com`
-- `client-study.kodynaiker.com`
+- Background: white or warm off-white.
+- Text: black.
+- Muted text: gray.
+- Navigation pill: translucent off-white.
+- Glow: soft pink and pale violet-pink.
 
-Small notes like `academic`, `professional`, `in progress`, or `private archive` can sit beside or below links, but the notes should stay quiet and secondary.
+The glow should be stronger around gallery tiles and softer around the navigation pill. It should look atmospheric and digital, not like a solid colored border.
 
-## Overall Goal
+## What To Avoid
 
-The goal is to make the site feel much closer to the reference: sparse, direct, text-based, and almost like a personal web directory. The portfolio should not feel like a conventional design template. It should feel like a minimal public index of work with a soft pink glow replacing the reference site's blue glow.
+Do not use:
+
+- Large hero text.
+- Big rectangular buttons.
+- A standard card grid.
+- Pink/yellow gradient backgrounds.
+- Course-template comments.
+- Large explanatory text blocks above the work.
+- Generic portfolio sections such as "Selected Work" or "My Projects" as the main visual focus.
+
+The final page should feel like the screenshot: small interface text, a floating pill menu, and glowing project images on a quiet page.

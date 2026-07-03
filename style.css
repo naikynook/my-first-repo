@@ -1,10 +1,12 @@
 :root {
-  --bg: #fbfaf6;
-  --text: #050505;
-  --muted: #5f5f5f;
-  --pink: #ff8fc7;
-  --pink-soft: rgba(255, 143, 199, 0.34);
-  --pink-faint: rgba(255, 143, 199, 0.14);
+  --page: #fbfbfa;
+  --ink: #111;
+  --muted: #777;
+  --pill: rgba(255, 255, 255, 0.86);
+  --pink: #ff9ccc;
+  --glow: rgba(255, 138, 205, 0.58);
+  --glow-soft: rgba(255, 138, 205, 0.28);
+  --violet-soft: rgba(190, 160, 255, 0.3);
 }
 
 * {
@@ -16,28 +18,23 @@ html {
 }
 
 body {
-  min-height: 100vh;
+  min-height: 1180px;
   margin: 0;
-  padding: 18px 22px 28px;
-  background:
-    radial-gradient(circle at 18px 24px, var(--pink-faint), transparent 180px),
-    var(--bg);
-  color: var(--text);
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 16px;
-  line-height: 1.25;
+  background: var(--page);
+  color: var(--ink);
+  font-family: "Courier New", Courier, monospace;
+  font-size: 13px;
+  line-height: 1.2;
 }
 
-button,
-a {
+a,
+button {
   color: inherit;
   font: inherit;
 }
 
 a {
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 2px;
+  text-decoration: none;
 }
 
 button {
@@ -49,178 +46,420 @@ button {
 
 button:hover,
 a:hover {
-  color: var(--pink);
-  text-shadow: 0 0 12px var(--pink-soft), 0 0 28px var(--pink-soft);
+  color: var(--ink);
+  text-decoration: underline;
+  text-shadow: 0 0 14px var(--glow);
 }
 
 button:focus-visible,
 a:focus-visible {
   outline: 1px solid var(--pink);
-  outline-offset: 3px;
-  text-shadow: 0 0 14px var(--pink);
+  outline-offset: 4px;
 }
 
-.masthead {
-  width: min(100%, 1180px);
-}
-
-h1 {
-  width: fit-content;
-  margin: 0 0 18px;
-  font-size: 32px;
-  font-weight: 700;
-  line-height: 1.05;
-  text-shadow: 0 0 14px var(--pink-soft), 0 0 34px var(--pink-faint);
-}
-
-.view-controls,
-.filter-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 11px;
-}
-
-.view-controls {
-  margin-bottom: 16px;
-}
-
-.text-button {
-  text-decoration: none;
-}
-
-.text-button.is-active {
-  color: var(--text);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  text-shadow: 0 0 12px var(--pink-soft), 0 0 26px var(--pink-faint);
-}
-
-.site-tabs {
+.topbar {
+  position: fixed;
+  top: 22px;
+  left: 26px;
+  right: 48px;
+  z-index: 10;
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
-  gap: 24px;
-  width: min(100%, 1180px);
-  margin-bottom: 7px;
+  align-items: flex-start;
+  pointer-events: none;
 }
 
-.site-tabs a {
-  margin-left: auto;
+.name,
+.view-switch,
+.pill-nav,
+.close-mark {
+  pointer-events: auto;
 }
 
-.duplicate-tabs {
-  margin-bottom: 28px;
+.name {
+  letter-spacing: 0.01em;
+  text-shadow: 0 0 16px rgba(255, 255, 255, 0.92);
+}
+
+.view-switch {
+  display: flex;
+  gap: 30px;
+  padding-right: 3px;
+}
+
+.view-switch button.active {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-shadow: 0 0 18px var(--glow-soft);
+}
+
+.pill-nav {
+  position: fixed;
+  top: 50px;
+  left: 50%;
+  z-index: 12;
+  display: flex;
+  gap: 34px;
+  align-items: center;
+  transform: translateX(-50%);
+  padding: 16px 24px 15px;
+  border-radius: 999px;
+  background: var(--pill);
+  box-shadow:
+    0 16px 44px rgba(0, 0, 0, 0.2),
+    0 0 34px var(--glow-soft),
+    0 0 70px rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  white-space: nowrap;
+}
+
+.pill-nav button.active {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-shadow: 0 0 16px var(--glow);
 }
 
 main {
-  width: min(100%, 1180px);
+  min-height: 100vh;
 }
 
-.project-index {
-  display: grid;
-  width: fit-content;
-  max-width: 100%;
-  gap: 8px;
-}
-
-.project-link {
+.projects.gallery {
   position: relative;
-  display: grid;
-  width: fit-content;
-  max-width: 100%;
-  color: var(--text);
-  text-shadow: 0 0 10px var(--pink-faint);
+  width: 608px;
+  height: 840px;
+  margin: 0 auto;
+  padding-top: 0;
 }
 
-.project-link small {
-  margin-top: 2px;
-  color: var(--muted);
-  font-size: 13px;
-  text-decoration: none;
+.project-card {
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease,
+    filter 180ms ease;
 }
 
-.project-link.is-hidden {
+.project-card.is-hidden {
   display: none;
 }
 
-.project-index.gallery-view {
-  width: min(100%, 780px);
-  grid-template-columns: repeat(3, minmax(130px, 1fr));
-  gap: 12px;
+.gallery .project-card {
+  position: absolute;
+  border-radius: 7px;
+  background: #fff;
+  box-shadow:
+    0 0 18px var(--glow),
+    0 0 38px var(--violet-soft),
+    0 8px 24px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
-.gallery-view .project-link {
-  width: 100%;
-  min-height: 128px;
-  padding: 10px;
-  border: 1px solid rgba(255, 143, 199, 0.28);
-  text-decoration: none;
-  box-shadow: 0 0 18px var(--pink-faint);
+.gallery .project-card:hover {
+  z-index: 8;
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 28px var(--glow),
+    0 0 70px var(--violet-soft),
+    0 12px 28px rgba(0, 0, 0, 0.16);
 }
 
-.gallery-view .project-link:hover {
-  background: rgba(255, 143, 199, 0.06);
-  box-shadow: 0 0 18px var(--pink-soft), 0 0 40px var(--pink-faint);
-}
-
-.gallery-view .project-link::after {
-  content: "";
+.gallery .project-card a {
   display: block;
-  align-self: end;
   width: 100%;
-  height: 1px;
-  background: currentColor;
-  opacity: 0.25;
+  height: 100%;
 }
 
-.about {
-  max-width: 520px;
-  margin-top: 46px;
-  color: var(--muted);
-  font-size: 14px;
-  text-shadow: 0 0 16px var(--pink-faint);
+.card-one {
+  top: 96px;
+  left: 0;
+  z-index: 1;
+  width: 242px;
+  height: 158px;
 }
 
-.about h2 {
-  margin: 0 0 8px;
-  color: var(--text);
-  font-size: 16px;
+.card-two {
+  top: 96px;
+  left: 188px;
+  z-index: 3;
+  width: 240px;
+  height: 216px;
 }
 
-.about p {
+.card-three {
+  top: 98px;
+  left: 440px;
+  z-index: 2;
+  width: 112px;
+  height: 98px;
+}
+
+.card-four {
+  top: 328px;
+  left: 0;
+  z-index: 1;
+  width: 240px;
+  height: 178px;
+}
+
+.card-five {
+  top: 328px;
+  left: 252px;
+  z-index: 1;
+  width: 176px;
+  height: 210px;
+}
+
+.card-six {
+  top: 552px;
+  left: 154px;
+  z-index: 1;
+  width: 238px;
+  height: 160px;
+}
+
+.visual {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+}
+
+.caption {
+  position: absolute;
+  left: 10px;
+  bottom: 8px;
+  z-index: 2;
+  max-width: calc(100% - 20px);
+  padding: 3px 5px;
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--ink);
+  font-size: 11px;
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+
+.project-card:hover .caption {
+  opacity: 1;
+}
+
+.visual-orbit {
+  background:
+    radial-gradient(circle at 17% 30%, #73f47e 0 8%, transparent 8.5%),
+    radial-gradient(circle at 32% 32%, #db4a93 0 8%, transparent 8.5%),
+    radial-gradient(circle at 18% 62%, #f5d241 0 7%, transparent 7.5%),
+    radial-gradient(circle at 35% 65%, #65dbff 0 8%, transparent 8.5%),
+    repeating-radial-gradient(circle at 73% 49%, transparent 0 9px, #73f47e 10px 12px, transparent 13px 19px),
+    conic-gradient(from 20deg at 73% 49%, #f2d534, #56e67b, #1d182b, #de326f, #f2d534),
+    #111;
+}
+
+.visual-orbit::after {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+.visual-installation {
+  background:
+    radial-gradient(circle at 44% 42%, rgba(20, 14, 31, 0.9) 0 19%, transparent 20%),
+    repeating-radial-gradient(circle at 44% 42%, #111 0 4px, #ebd238 5px 8px, #4bd477 9px 11px, transparent 12px 18px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.9) 0 7%, transparent 7% 100%),
+    linear-gradient(108deg, #ded2b7 0 48%, #f7f2e8 49% 100%);
+}
+
+.visual-installation::before {
+  content: "";
+  position: absolute;
+  right: 18px;
+  top: 42px;
+  width: 78px;
+  height: 104px;
+  background:
+    radial-gradient(circle, #161616 0 4px, transparent 5px) 0 0 / 24px 24px,
+    linear-gradient(135deg, transparent 45%, #f05c99 46% 50%, transparent 51%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.16), transparent);
+}
+
+.visual-drawing {
+  background:
+    radial-gradient(circle at 28% 26%, transparent 0 21px, rgba(40, 40, 40, 0.22) 22px 23px, transparent 24px),
+    linear-gradient(rgba(55, 75, 160, 0.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(55, 75, 160, 0.16) 1px, transparent 1px),
+    #fbfbfb;
+  background-size: auto, 17px 17px, 17px 17px, auto;
+}
+
+.visual-drawing::after {
+  content: "";
+  position: absolute;
+  inset: 12px 16px;
+  border-top: 1px solid rgba(0, 0, 0, 0.18);
+  border-left: 1px solid rgba(0, 0, 0, 0.18);
+}
+
+.visual-night {
+  background:
+    radial-gradient(circle at 58% 50%, transparent 0 36px, #315cff 37px 38px, transparent 39px),
+    radial-gradient(circle at 58% 50%, transparent 0 54px, rgba(78, 117, 255, 0.75) 55px 56px, transparent 57px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08), transparent 38%),
+    #161616;
+}
+
+.visual-night::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(70deg, transparent 35%, rgba(255, 255, 255, 0.12) 36% 37%, transparent 38%),
+    radial-gradient(circle at 55% 50%, rgba(80, 110, 255, 0.45), transparent 60px);
+}
+
+.visual-grid {
+  background:
+    linear-gradient(90deg, transparent 18%, #2a6fbd 19% 23%, transparent 24% 42%, #2a6fbd 43% 47%, transparent 48% 66%, #2a6fbd 67% 71%, transparent 72%),
+    linear-gradient(transparent 26%, #2a6fbd 27% 31%, transparent 32% 56%, #2a6fbd 57% 61%, transparent 62%),
+    linear-gradient(rgba(0, 0, 0, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.08) 1px, transparent 1px),
+    #f7f7f6;
+  background-size: auto, auto, 18px 18px, 18px 18px, auto;
+}
+
+.visual-map {
+  background:
+    radial-gradient(circle at 38% 52%, #ff91ca 0 6%, transparent 6.5%),
+    radial-gradient(circle at 62% 34%, #71e596 0 5%, transparent 5.5%),
+    radial-gradient(circle at 68% 68%, #476dff 0 4%, transparent 4.5%),
+    linear-gradient(30deg, transparent 47%, rgba(0, 0, 0, 0.24) 48% 49%, transparent 50%),
+    linear-gradient(115deg, transparent 49%, rgba(0, 0, 0, 0.18) 50% 51%, transparent 52%),
+    #f1f0ec;
+}
+
+.projects.list {
+  width: max-content;
+  max-width: calc(100vw - 44px);
+  margin: 116px auto 0;
+}
+
+.list .project-card {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  margin-bottom: 8px;
+}
+
+.list .project-card a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.list .visual {
+  display: none;
+}
+
+.list .caption {
+  position: static;
+  display: inline;
+  padding: 0;
+  background: transparent;
+  opacity: 1;
+  font-size: 13px;
+}
+
+.about-note {
+  position: fixed;
+  left: 50%;
+  bottom: 34px;
+  z-index: 20;
+  width: min(390px, calc(100vw - 44px));
+  padding: 14px 18px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow:
+    0 12px 34px rgba(0, 0, 0, 0.16),
+    0 0 36px var(--glow-soft);
+  transform: translateX(-50%) translateY(16px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.about-note.open {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.about-note p {
   margin: 0;
 }
 
-.mark {
+.close-mark {
   position: fixed;
-  right: 18px;
-  color: var(--text);
+  right: 20px;
+  bottom: 15px;
+  z-index: 18;
   font-size: 22px;
   line-height: 1;
-  text-decoration: none;
-  text-shadow: 0 0 12px var(--pink-soft), 0 0 30px var(--pink-soft);
+  text-shadow:
+    0 0 12px var(--glow),
+    0 0 34px var(--glow-soft);
 }
 
-.mark-top {
-  top: 15px;
-  z-index: 2;
-}
-
-.mark-bottom {
-  bottom: 15px;
-}
-
-@media (max-width: 680px) {
-  body {
-    padding: 16px;
-    font-size: 15px;
+@media (max-width: 720px) {
+  .topbar {
+    left: 18px;
+    right: 18px;
   }
 
-  .site-tabs {
+  .view-switch {
     gap: 16px;
   }
 
-  .project-index.gallery-view {
-    grid-template-columns: 1fr;
+  .pill-nav {
+    top: 58px;
+    gap: 18px;
+    max-width: calc(100vw - 28px);
+    padding: 14px 18px;
+    overflow-x: auto;
+  }
+
+  .projects.gallery {
+    width: 100vw;
+    height: 980px;
+    margin: 0;
+  }
+
+  .gallery .project-card {
+    transform: scale(0.82);
+    transform-origin: top left;
+  }
+
+  .card-one {
+    left: 18px;
+  }
+
+  .card-two {
+    left: 122px;
+  }
+
+  .card-three {
+    left: 302px;
+  }
+
+  .card-four {
+    left: 18px;
+  }
+
+  .card-five {
+    left: 220px;
+  }
+
+  .card-six {
+    left: 90px;
   }
 }

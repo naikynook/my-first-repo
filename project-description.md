@@ -1,86 +1,76 @@
-# Portfolio Website Project Description
+# Project Description: Portfolio Website
 
-Reference site: [Adam Vosburgh](https://adamvosburgh.com/)
+Reference: [Adam Vosburgh](https://adamvosburgh.com/)
 
-## Project Intent
+## Project Goal
 
-This website will be a personal portfolio that closely follows the structure and mood of Adam Vosburgh's website. The portfolio should act less like a traditional homepage and more like a simple project directory. It should present the owner's name, view controls, category filters, and a short list of project links with very little extra explanation.
+This website should become a close reinterpretation of the Adam Vosburgh portfolio shown in the reference screenshot. The goal is not just to make a minimal portfolio. The goal is to reproduce the specific visual structure of the reference: small top interface text, a floating rounded category menu, and a glowing gallery of project tiles.
 
-The website should feel direct, quiet, and useful. Visitors should immediately see that the page is an archive of work. The main experience should be scanning project links and switching between simple views or categories.
+The website will present academic and professional work as a compact visual archive. It should feel like a personal project directory with a gallery interface, not like a conventional portfolio landing page.
 
-## Required Structure
+## Required Page Structure
 
-The website should include these main parts:
+The rebuilt website should contain:
 
-- A small `×` interface mark
-- The portfolio owner's name at the top
-- `List View` and `Gallery View` text controls
-- A compact category row
-- A repeated category row to echo the reference site's duplicated navigation
-- A sparse list of project links
-- A far-right `About` link
-- A small about section that can be revealed or reached from the `About` link
+- A small name label in the upper-left corner.
+- Small `List View` and `Gallery View` controls in the upper-right area.
+- A floating rounded navigation pill near the top center.
+- Navigation items for `All`, `Academic`, `Professional`, and `About`.
+- A default gallery view with stacked, glowing project preview tiles.
+- A list view that switches the same projects into a plain text list.
+- A small `×` mark near the lower-right edge, matching the reference interface detail.
 
-The layout should avoid a large hero introduction. It should not begin with a big sentence like "Selected academic and professional work." Instead, the name and navigation should be the main opening elements.
+The site should not open with a big headline or introduction. The project gallery should be the main thing visitors see.
 
 ## Navigation Requirements
 
-The reference website includes navigation items such as `All Projects`, `Updates`, `Teaching`, `About`, and an `Apps` control. This portfolio should adapt that layout while removing sections that do not fit the project.
+The original reference includes `All`, `Projects`, `Updates`, `Teaching`, `About`, and an `Apps` item in the top-right. This portfolio should preserve the visual arrangement but use the categories needed for this project.
 
-Use these navigation items:
+Use:
 
 - `All`
 - `Academic`
 - `Professional`
 - `About`
 
-Do not include:
+Do not use:
 
 - `Teaching`
 - `Updates`
-- A corner `Apps` tab
+- `Apps`
 
-The `All`, `Academic`, and `Professional` controls should filter the project list. The `About` link should sit far to the right, visually separated from the category filters.
+`All`, `Academic`, and `Professional` should filter the project tiles. `About` should reveal or scroll to a small about note without becoming a large page section.
 
-## View Behavior
+## Gallery Requirements
 
-The portfolio should support two view modes:
+The gallery view should be the default state. It should resemble the attached screenshot:
 
-- `List View`: shows project links as a simple vertical directory.
-- `Gallery View`: arranges the same projects in a small grid while still keeping the design plain and text-based.
+- Project tiles should begin below the floating navigation pill.
+- The cluster should sit slightly above the center of the page, not at the very top and not far down the page.
+- Cards should be different sizes.
+- Some cards should feel staggered or layered.
+- The tiles should use abstract image-like visuals, not plain text boxes.
+- The glow should be pink instead of the blue-purple glow in the reference.
 
-The view controls should look like regular text, not like styled buttons. The active view can use underline, glow, or a slight color change.
+The gallery should not look like a standard equal-card grid. It should look like a designed collage of project previews.
 
-## Project Content
+## List View Requirements
 
-The project list should use domain-like names to better match the reference site. The links do not need to lead to finished pages yet, but they should visually suggest separate project destinations.
+List view should switch the gallery into a simple directory of project names. This view can be sparse and text-based, similar to the text-link version of the reference site.
 
-Suggested project entries:
+List items should be small, underlined, and direct. They can use domain-like project names to preserve the web-directory feeling.
 
-- `academic-index.kodynaiker.com`
-- `computational-design.kodynaiker.com`
-- `urban-research.kodynaiker.com`
-- `professional-work.kodynaiker.com`
-- `client-study.kodynaiker.com`
-- `archive.kodynaiker.com`
+## Interaction Requirements
 
-Each project should include a data category so it can appear under `All`, `Academic`, or `Professional`.
+The JavaScript should handle:
 
-## Visual Requirements
+- Switching between `Gallery View` and `List View`.
+- Filtering projects by `All`, `Academic`, and `Professional`.
+- Updating active states in the top controls and pill navigation.
+- Revealing or focusing the about note when `About` is selected.
 
-The design should be rebuilt from scratch around the reference site. It should use:
-
-- A pale plain background
-- Mostly black text
-- Simple text links
-- Very small descriptions
-- Wide empty space
-- A soft pink glow around interactive elements
-- Minimal hover effects
-- No cards unless gallery view is active
-- No large colorful background
-- No explanatory course-template comments
+All interactive elements should remain visually small. They should not become large styled buttons.
 
 ## Final Direction
 
-The final website should feel like a close reinterpretation of Adam Vosburgh's portfolio, not a generic minimal portfolio. The most important qualities are the bare directory layout, compact text navigation, repeated category links, project links that look like web addresses, and a soft pink glow that replaces the blue glow of the reference.
+The final website should look much closer to the screenshot than the previous versions. The most important parts are the floating pill navigation, tiny interface text, default gallery mode, glowing layered project cards, white background, and soft pink glow. The site should feel like a faithful adaptation of Adam Vosburgh's visual layout for an academic/professional portfolio.
