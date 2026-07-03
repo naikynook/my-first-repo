@@ -1,44 +1,47 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const archive = document.querySelector(".project-archive");
-  const projectItems = document.querySelectorAll(".project-item");
-  const filterButtons = document.querySelectorAll("[data-filter]");
+  const projectIndex = document.querySelector(".project-index");
+  const projectLinks = document.querySelectorAll(".project-link");
   const viewButtons = document.querySelectorAll("[data-view]");
+  const filterButtons = document.querySelectorAll("[data-filter]");
+  const resetButton = document.querySelector(".mark-top");
 
-  function setActiveButton(buttons, activeButton) {
+  function setActiveButton(buttons, value, attribute) {
     buttons.forEach((button) => {
-      const isActive = button === activeButton;
+      const isActive = button.dataset[attribute] === value;
       button.classList.toggle("is-active", isActive);
       button.setAttribute("aria-pressed", String(isActive));
     });
   }
 
-  function filterProjects(category) {
-    projectItems.forEach((project) => {
-      const matchesCategory = category === "all" || project.dataset.category === category;
-      project.classList.toggle("is-hidden", !matchesCategory);
-    });
+  function setView(view) {
+    projectIndex.classList.toggle("list-view", view === "list");
+    projectIndex.classList.toggle("gallery-view", view === "gallery");
+    setActiveButton(viewButtons, view, "view");
   }
 
-  function setArchiveView(view) {
-    archive.classList.toggle("list-view", view === "list");
-    archive.classList.toggle("gallery-view", view === "gallery");
-  }
-
-  filterButtons.forEach((button) => {
-    button.setAttribute("aria-pressed", String(button.classList.contains("is-active")));
-
-    button.addEventListener("click", () => {
-      setActiveButton(filterButtons, button);
-      filterProjects(button.dataset.filter);
+  function setFilter(filter) {
+    projectLinks.forEach((project) => {
+      const categories = project.dataset.category.split(" ");
+      const shouldShow = filter === "all" || categories.includes(filter);
+      project.classList.toggle("is-hidden", !shouldShow);
     });
-  });
+
+    setActiveButton(filterButtons, filter, "filter");
+  }
 
   viewButtons.forEach((button) => {
     button.setAttribute("aria-pressed", String(button.classList.contains("is-active")));
+    button.addEventListener("click", () => setView(button.dataset.view));
+  });
 
-    button.addEventListener("click", () => {
-      setActiveButton(viewButtons, button);
-      setArchiveView(button.dataset.view);
-    });
+  filterButtons.forEach((button) => {
+    button.setAttribute("aria-pressed", String(button.classList.contains("is-active")));
+    button.addEventListener("click", () => setFilter(button.dataset.filter));
+  });
+
+  resetButton.addEventListener("click", () => {
+    setView("list");
+    setFilter("all");
+    window.scrollTo({ top: 0, behavior: "smooth" });
   });
 });

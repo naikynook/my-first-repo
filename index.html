@@ -3,84 +3,82 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kody Naiker Portfolio</title>
+  <title>Kody Naiker</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-  <header class="site-header">
-    <a class="site-title" href="#" aria-label="Kody Naiker home">Kody Naiker</a>
+  <button class="mark mark-top" type="button" aria-label="Reset archive view">×</button>
 
-    <nav class="site-nav" aria-label="Portfolio navigation">
-      <a href="#about">About</a>
-    </nav>
+  <header class="masthead">
+    <h1>Kody Naiker</h1>
+
+    <div class="view-controls" aria-label="View controls">
+      <button class="text-button is-active" type="button" data-view="list">List View</button>
+      <button class="text-button" type="button" data-view="gallery">Gallery View</button>
+    </div>
   </header>
 
-  <main class="archive">
-    <section class="intro" aria-labelledby="page-title">
-      <p class="eyebrow">Portfolio Archive</p>
-      <h1 id="page-title">Selected academic and professional work</h1>
-      <p class="intro-text">
-        A minimal index of projects, studies, and experiments across computational design,
-        architecture, research, and practice.
-      </p>
+  <nav class="site-tabs" aria-label="Project categories">
+    <div class="filter-group">
+      <button class="text-button is-active" type="button" data-filter="all">All</button>
+      <button class="text-button" type="button" data-filter="academic">Academic</button>
+      <button class="text-button" type="button" data-filter="professional">Professional</button>
+    </div>
+    <a href="#about">About</a>
+  </nav>
+
+  <nav class="site-tabs duplicate-tabs" aria-label="Repeated project categories">
+    <div class="filter-group">
+      <button class="text-button is-active" type="button" data-filter="all">All</button>
+      <button class="text-button" type="button" data-filter="academic">Academic</button>
+      <button class="text-button" type="button" data-filter="professional">Professional</button>
+    </div>
+    <a href="#about">About</a>
+  </nav>
+
+  <main>
+    <section class="project-index list-view" aria-label="Project index">
+      <a class="project-link" href="#" data-category="academic">
+        <span>academic-index.kodynaiker.com</span>
+        <small>academic archive</small>
+      </a>
+
+      <a class="project-link" href="#" data-category="academic">
+        <span>computational-design.kodynaiker.com</span>
+        <small>academic</small>
+      </a>
+
+      <a class="project-link" href="#" data-category="academic">
+        <span>urban-research.kodynaiker.com</span>
+        <small>academic research</small>
+      </a>
+
+      <a class="project-link" href="#" data-category="professional">
+        <span>professional-work.kodynaiker.com</span>
+        <small>professional</small>
+      </a>
+
+      <a class="project-link" href="#" data-category="professional">
+        <span>client-study.kodynaiker.com</span>
+        <small>professional concept</small>
+      </a>
+
+      <a class="project-link" href="#" data-category="academic professional">
+        <span>archive.kodynaiker.com</span>
+        <small>selected work</small>
+      </a>
     </section>
 
-    <section class="archive-controls" aria-label="Archive controls">
-      <div class="view-controls" aria-label="View options">
-        <button class="text-control is-active" type="button" data-view="list">List View</button>
-        <button class="text-control" type="button" data-view="gallery">Gallery View</button>
-      </div>
-
-      <div class="category-tabs" aria-label="Project categories">
-        <button class="text-control is-active" type="button" data-filter="all">All</button>
-        <button class="text-control" type="button" data-filter="academic">Academic</button>
-        <button class="text-control" type="button" data-filter="professional">Professional</button>
-      </div>
-    </section>
-
-    <section class="project-archive list-view" aria-label="Projects">
-      <article class="project-item" data-category="academic">
-        <a href="#" class="project-link">
-          <span class="project-title">Computational Design Practices</span>
-          <span class="project-meta">Academic / 2026</span>
-          <span class="project-description">Course archive exploring code, systems, and visual structure.</span>
-        </a>
-      </article>
-
-      <article class="project-item" data-category="academic">
-        <a href="#" class="project-link">
-          <span class="project-title">Urban Data Study</span>
-          <span class="project-meta">Academic / Research</span>
-          <span class="project-description">A spatial investigation using mapping, analysis, and design methods.</span>
-        </a>
-      </article>
-
-      <article class="project-item" data-category="professional">
-        <a href="#" class="project-link">
-          <span class="project-title">Professional Project Index</span>
-          <span class="project-meta">Professional / Practice</span>
-          <span class="project-description">Selected work from collaborations, internships, and applied design contexts.</span>
-        </a>
-      </article>
-
-      <article class="project-item" data-category="professional">
-        <a href="#" class="project-link">
-          <span class="project-title">Client Design Study</span>
-          <span class="project-meta">Professional / Concept</span>
-          <span class="project-description">A compact record of design decisions, deliverables, and project process.</span>
-        </a>
-      </article>
-    </section>
-
-    <section class="about-section" id="about" aria-labelledby="about-title">
+    <section class="about" id="about" aria-labelledby="about-title">
       <h2 id="about-title">About</h2>
       <p>
-        This portfolio is a living archive of academic and professional work. It is designed
-        to stay direct, lightweight, and easy to browse, keeping attention on the projects.
+        A sparse portfolio index for academic and professional projects. The page is built
+        as a simple public directory: view controls, category filters, and direct project links.
       </p>
     </section>
   </main>
+
+  <div class="mark mark-bottom" aria-hidden="true">×</div>
 
   <script src="script.js"></script>
 </body>
