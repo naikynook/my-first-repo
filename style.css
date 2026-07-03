@@ -117,7 +117,7 @@ main {
   position: relative;
   width: 560px;
   height: 980px;
-  margin: 0 auto;
+  margin: 110px auto 0;
 }
 
 .project-card {
