@@ -242,7 +242,7 @@ main {
 }
 
 .card-f {
-  top: 760px;
+  top: 632px;
   left: 92px;
   z-index: 1;
   width: 236px;
@@ -250,11 +250,11 @@ main {
 }
 
 .card-g {
-  top: 840px;
+  top: 702px;
   left: 342px;
   z-index: 1;
-  width: 176px;
-  height: 230px;
+  width: 210px;
+  height: 274px;
 }
 
 /* Reposition selected cards when the Academic filter is active. */
@@ -285,7 +285,7 @@ main {
 }
 
 .gallery-view[data-filter="professional"] .card-f {
-  top: 426px;
+  top: 400px;
   left: 158px;
 }
 
@@ -295,7 +295,7 @@ main {
 }
 
 .gallery-view[data-filter="professional"] .card-g {
-  top: 646px;
+  top: 594px;
   left: 92px;
 }
 
