@@ -179,10 +179,10 @@ main {
 
 .card-a {
   top: 196px;
-  left: -36px;
+  left: 42px;
   z-index: 1;
-  width: 132px;
-  height: 190px;
+  width: 150px;
+  height: 216px;
 }
 
 .card-b {
@@ -202,7 +202,7 @@ main {
 }
 
 .card-d {
-  top: 426px;
+  top: 466px;
   left: -38px;
   z-index: 1;
   width: 240px;
@@ -234,7 +234,7 @@ main {
 }
 
 .gallery-view[data-filter="academic"] .card-d {
-  top: 426px;
+  top: 466px;
   left: -38px;
 }
 
