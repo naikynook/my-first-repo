@@ -79,10 +79,12 @@ document.addEventListener("DOMContentLoaded", () => {
     listPreview.className = ["list-preview", ...imageClasses, isProfessional ? "is-professional" : ""]
       .filter(Boolean)
       .join(" ");
+    listPreview.style.background = selectedImage.style.background || "";
   }
 
   function resetListPreview() {
     listPreview.className = "list-preview";
+    listPreview.style.background = "";
   }
 
   viewButtons.forEach((button) => {
