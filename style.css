@@ -298,6 +298,10 @@ main {
     #111;
 }
 
+.image-axon {
+  background: #f7f7f4 url("assets/axon-final1.png") center / contain no-repeat;
+}
+
 .image-atlas::after,
 .image-installation::after,
 .image-projection::after {
@@ -351,6 +355,10 @@ main {
     radial-gradient(circle at 58% 50%, transparent 0 54px, rgba(80, 110, 255, 0.75) 55px 56px, transparent 57px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.08), transparent 38%),
     #161616;
+}
+
+.image-backend {
+  background: #ffffff url("assets/backend-graphic.png") center / contain no-repeat;
 }
 
 .image-grid {
@@ -426,6 +434,14 @@ main {
 }
 
 .list-view .project-card.is-selected .project-image {
+  display: none;
+}
+
+.list-preview {
+  display: none;
+}
+
+body.is-list-view .list-preview {
   position: fixed;
   inset: auto;
   top: 170px;
@@ -443,7 +459,7 @@ main {
   pointer-events: none;
 }
 
-.list-view .project-card.is-selected[data-category~="professional"] .project-image {
+body.is-list-view .list-preview.is-professional {
   box-shadow:
     0 0 22px var(--professional-glow-strong),
     0 0 56px var(--professional-glow),
@@ -575,7 +591,7 @@ main {
     transform: translateY(-3px);
   }
 
-  .list-view .project-card.is-selected .project-image {
+  body.is-list-view .list-preview {
     position: fixed;
     top: 148px;
     left: auto;

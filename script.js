@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const appsButton = document.querySelector("[data-apps]");
   const aboutPanel = document.querySelector(".about-panel");
   const appsPanel = document.querySelector(".apps-panel");
+  const listPreview = document.querySelector(".list-preview");
   const resetMark = document.querySelector(".reset-mark");
 
   function setActive(buttons, activeButton) {
@@ -20,12 +21,14 @@ document.addEventListener("DOMContentLoaded", () => {
   function setView(view, activeButton) {
     stage.classList.toggle("gallery-view", view === "gallery");
     stage.classList.toggle("list-view", view === "list");
+    document.body.classList.toggle("is-list-view", view === "list");
     setActive(viewButtons, activeButton);
 
     if (view === "list") {
       selectFirstVisibleCard();
     } else {
       cards.forEach((card) => card.classList.remove("is-selected"));
+      resetListPreview();
     }
   }
 
@@ -50,6 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
     cards.forEach((card) => {
       card.classList.toggle("is-selected", card === selectedCard);
     });
+
+    updateListPreview(selectedCard);
   }
 
   function selectFirstVisibleCard() {
@@ -59,7 +64,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (firstVisibleCard) {
       selectCard(firstVisibleCard);
+    } else {
+      resetListPreview();
     }
+  }
+
+  function updateListPreview(selectedCard) {
+    const selectedImage = selectedCard.querySelector(".project-image");
+    const imageClasses = Array.from(selectedImage.classList).filter((className) => {
+      return className !== "project-image";
+    });
+    const isProfessional = selectedCard.dataset.category.split(" ").includes("professional");
+
+    listPreview.className = ["list-preview", ...imageClasses, isProfessional ? "is-professional" : ""]
+      .filter(Boolean)
+      .join(" ");
+  }
+
+  function resetListPreview() {
+    listPreview.className = "list-preview";
   }
 
   viewButtons.forEach((button) => {
