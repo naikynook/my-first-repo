@@ -315,6 +315,10 @@ main {
     linear-gradient(100deg, #cdbfa8 0 40%, #f4efe7 41% 100%);
 }
 
+.image-chair {
+  background: #f4f4f1 url("assets/chair-1.png") center / cover no-repeat;
+}
+
 .image-installation::before {
   content: "";
   position: absolute;
@@ -357,6 +361,10 @@ main {
     linear-gradient(90deg, rgba(0, 0, 0, 0.08) 1px, transparent 1px),
     #f7f7f6;
   background-size: auto, auto, 18px 18px, 18px 18px, auto;
+}
+
+.image-lamp-two {
+  background: #f1f1ec url("assets/lamp-2.png") center / cover no-repeat;
 }
 
 .image-map {
