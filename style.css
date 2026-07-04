@@ -185,6 +185,14 @@ main {
 }
 
 /* Individual card positions for the All gallery layout. */
+.card-i {
+  top: 196px;
+  left: -122px;
+  z-index: 1;
+  width: 150px;
+  height: 180px;
+}
+
 .card-a {
   top: 196px;
   left: 42px;
@@ -265,6 +273,11 @@ main {
   left: 448px;
 }
 
+.gallery-view[data-filter="academic"] .card-i {
+  top: 196px;
+  left: -122px;
+}
+
 /* Reposition selected cards when the Professional filter is active. */
 .gallery-view[data-filter="professional"] .card-e {
   top: 196px;
@@ -325,6 +338,16 @@ main {
 
 .image-axon {
   background: #f7f7f4 url("assets/axon-final1.png") center / contain no-repeat;
+}
+
+.image-blank {
+  background:
+    linear-gradient(135deg, transparent 49%, rgba(0, 0, 0, 0.16) 50%, transparent 51%),
+    linear-gradient(45deg, transparent 49%, rgba(0, 0, 0, 0.16) 50%, transparent 51%),
+    linear-gradient(rgba(0, 0, 0, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.08) 1px, transparent 1px),
+    #f6f6f2;
+  background-size: auto, auto, 18px 18px, 18px 18px, auto;
 }
 
 .image-atlas::after,
