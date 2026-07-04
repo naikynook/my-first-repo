@@ -251,6 +251,11 @@ main {
   left: 214px;
 }
 
+.gallery-view[data-filter="academic"] .card-h {
+  top: 426px;
+  left: 448px;
+}
+
 .gallery-view[data-filter="professional"] .card-e {
   top: 196px;
   left: -36px;
@@ -269,11 +274,6 @@ main {
 .gallery-view[data-filter="professional"] .card-g {
   top: 426px;
   left: 92px;
-}
-
-.gallery-view[data-filter="professional"] .card-h {
-  top: 426px;
-  left: 262px;
 }
 
 .project-image {
