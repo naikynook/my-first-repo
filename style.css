@@ -186,11 +186,11 @@ main {
 
 /* Individual card positions for the All gallery layout. */
 .card-i {
-  top: 196px;
-  left: -122px;
+  top: 166px;
+  left: -180px;
   z-index: 1;
-  width: 150px;
-  height: 180px;
+  width: 210px;
+  height: 315px;
 }
 
 .card-a {
@@ -274,8 +274,8 @@ main {
 }
 
 .gallery-view[data-filter="academic"] .card-i {
-  top: 196px;
-  left: -122px;
+  top: 166px;
+  left: -180px;
 }
 
 /* Reposition selected cards when the Professional filter is active. */
@@ -341,13 +341,7 @@ main {
 }
 
 .image-blank {
-  background:
-    linear-gradient(135deg, transparent 49%, rgba(0, 0, 0, 0.16) 50%, transparent 51%),
-    linear-gradient(45deg, transparent 49%, rgba(0, 0, 0, 0.16) 50%, transparent 51%),
-    linear-gradient(rgba(0, 0, 0, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.08) 1px, transparent 1px),
-    #f6f6f2;
-  background-size: auto, auto, 18px 18px, 18px 18px, auto;
+  background: #050807 url("assets/final-collage-1.png") center / cover no-repeat;
 }
 
 .image-atlas::after,
