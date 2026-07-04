@@ -242,7 +242,7 @@ main {
 }
 
 .card-f {
-  top: 658px;
+  top: 760px;
   left: 92px;
   z-index: 1;
   width: 236px;
@@ -250,11 +250,11 @@ main {
 }
 
 .card-g {
-  top: 684px;
+  top: 840px;
   left: 342px;
   z-index: 1;
-  width: 150px;
-  height: 190px;
+  width: 176px;
+  height: 230px;
 }
 
 /* Reposition selected cards when the Academic filter is active. */
@@ -285,7 +285,7 @@ main {
 }
 
 .gallery-view[data-filter="professional"] .card-f {
-  top: 196px;
+  top: 426px;
   left: 158px;
 }
 
@@ -295,7 +295,7 @@ main {
 }
 
 .gallery-view[data-filter="professional"] .card-g {
-  top: 426px;
+  top: 646px;
   left: 92px;
 }
 
@@ -437,6 +437,10 @@ main {
     linear-gradient(40deg, transparent 0 55%, rgba(255, 255, 255, 0.55) 56% 58%, transparent 59%),
     radial-gradient(circle at 55% 35%, rgba(89, 112, 255, 0.5), transparent 38px),
     #d7d2c8;
+}
+
+.image-bubblegum {
+  background: #050505 url("assets/bubblegum.png") center / cover no-repeat;
 }
 
 /* List View turns the project cards into a simple text index. */
