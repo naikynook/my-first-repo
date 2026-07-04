@@ -217,6 +217,14 @@ main {
   height: 210px;
 }
 
+.card-h {
+  top: 426px;
+  left: 448px;
+  z-index: 1;
+  width: 210px;
+  height: 170px;
+}
+
 .card-f {
   top: 658px;
   left: 92px;
@@ -261,6 +269,11 @@ main {
 .gallery-view[data-filter="professional"] .card-g {
   top: 426px;
   left: 92px;
+}
+
+.gallery-view[data-filter="professional"] .card-h {
+  top: 426px;
+  left: 262px;
 }
 
 .project-image {
@@ -373,6 +386,10 @@ main {
 
 .image-lamp-two {
   background: #f1f1ec url("assets/lamp-2.png") center bottom / cover no-repeat;
+}
+
+.image-garment {
+  background: #ffffff url("assets/garment-making.png") center / contain no-repeat;
 }
 
 .image-map {
