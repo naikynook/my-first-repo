@@ -75,11 +75,19 @@ document.addEventListener("DOMContentLoaded", () => {
       return className !== "project-image";
     });
     const isProfessional = selectedCard.dataset.category.split(" ").includes("professional");
+    const previewUrl = selectedCard.dataset.preview;
+    const previewFit = selectedCard.dataset.previewFit || "cover";
+    const previewPosition = selectedCard.dataset.previewPosition || "center";
 
     listPreview.className = ["list-preview", ...imageClasses, isProfessional ? "is-professional" : ""]
       .filter(Boolean)
       .join(" ");
-    listPreview.style.background = selectedImage.style.background || "";
+
+    if (previewUrl) {
+      listPreview.style.background = `#f7f7f4 url("${previewUrl}") ${previewPosition} / ${previewFit} no-repeat`;
+    } else {
+      listPreview.style.background = selectedImage.style.background || "";
+    }
   }
 
   function resetListPreview() {

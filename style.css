@@ -452,6 +452,7 @@ body.is-list-view .list-preview {
   height: min(34vw, 360px);
   transform: translateX(-50%);
   border-radius: 7px;
+  background-color: #f7f7f4;
   box-shadow:
     0 0 22px var(--glow-strong),
     0 0 56px var(--glow),
