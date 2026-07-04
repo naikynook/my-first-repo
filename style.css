@@ -364,7 +364,7 @@ main {
 }
 
 .image-lamp-two {
-  background: #f1f1ec url("assets/lamp-2.png") center / cover no-repeat;
+  background: #f1f1ec url("assets/lamp-2.png") center bottom / cover no-repeat;
 }
 
 .image-map {
