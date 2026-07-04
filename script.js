@@ -82,6 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
     listPreview.className = ["list-preview", ...imageClasses, isProfessional ? "is-professional" : ""]
       .filter(Boolean)
       .join(" ");
+    listPreview.style.background = "";
 
     if (previewUrl) {
       listPreview.style.background = `#f7f7f4 url("${previewUrl}") ${previewPosition} / ${previewFit} no-repeat`;
@@ -105,17 +106,15 @@ document.addEventListener("DOMContentLoaded", () => {
     button.addEventListener("click", () => setFilter(button.dataset.filter, button));
   });
 
-  cards.forEach((card) => {
-    const link = card.querySelector("a");
+  stage.addEventListener("click", (event) => {
+    const selectedCard = event.target.closest(".project-card");
 
-    link.addEventListener("click", (event) => {
-      if (!stage.classList.contains("list-view")) {
-        return;
-      }
+    if (!selectedCard || !stage.classList.contains("list-view")) {
+      return;
+    }
 
-      event.preventDefault();
-      selectCard(card);
-    });
+    event.preventDefault();
+    selectCard(selectedCard);
   });
 
   aboutButton.addEventListener("click", () => {
