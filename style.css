@@ -1,3 +1,4 @@
+/* Global design tokens for the pale interface, text color, and glow colors. */
 :root {
   --page: #fbfbfa;
   --ink: #111111;
@@ -10,6 +11,7 @@
   --shadow: rgba(0, 0, 0, 0.18);
 }
 
+/* Base reset and shared typography. */
 * {
   box-sizing: border-box;
 }
@@ -63,6 +65,7 @@ a:focus-visible {
   outline-offset: 4px;
 }
 
+/* Fixed top interface: portfolio name and view controls. */
 .top-interface {
   position: fixed;
   top: 28px;
@@ -95,6 +98,7 @@ a:focus-visible {
   line-height: 1;
 }
 
+/* Floating pill filter menu. */
 .filter-pill {
   position: fixed;
   top: 70px;
@@ -119,6 +123,7 @@ main {
   min-height: 100vh;
 }
 
+/* The gallery stage is a positioned canvas for the staggered project cards. */
 .project-stage {
   position: relative;
   width: 560px;
@@ -137,6 +142,7 @@ main {
   display: none;
 }
 
+/* Default gallery card treatment, including the soft glow. */
 .gallery-view .project-card {
   position: absolute;
   overflow: hidden;
@@ -157,6 +163,7 @@ main {
     0 12px 28px rgba(0, 0, 0, 0.18);
 }
 
+/* Professional cards use green glow; academic/default cards use pink glow. */
 .gallery-view .project-card[data-category~="professional"] {
   box-shadow:
     0 0 22px var(--professional-glow-strong),
@@ -177,6 +184,7 @@ main {
   height: 100%;
 }
 
+/* Individual card positions for the All gallery layout. */
 .card-a {
   top: 196px;
   left: 42px;
@@ -241,6 +249,7 @@ main {
   height: 190px;
 }
 
+/* Reposition selected cards when the Academic filter is active. */
 .gallery-view[data-filter="academic"] .card-d {
   top: 466px;
   left: -38px;
@@ -256,6 +265,7 @@ main {
   left: 448px;
 }
 
+/* Reposition selected cards when the Professional filter is active. */
 .gallery-view[data-filter="professional"] .card-e {
   top: 196px;
   left: -36px;
@@ -282,6 +292,7 @@ main {
   display: block;
 }
 
+/* Project labels are hidden until hover in Gallery View. */
 .project-label {
   position: absolute;
   left: 9px;
@@ -300,6 +311,7 @@ main {
   opacity: 1;
 }
 
+/* Image styles for each project card. Some are image assets, others are CSS graphics. */
 .image-atlas {
   background:
     radial-gradient(circle at 15% 30%, #7cff75 0 8%, transparent 8.5%),
@@ -410,6 +422,7 @@ main {
     #d7d2c8;
 }
 
+/* List View turns the project cards into a simple text index. */
 .list-view {
   width: calc(100vw - 96px);
   max-width: none;
@@ -493,6 +506,7 @@ body.is-list-view .list-preview.is-professional {
   opacity: 1;
 }
 
+/* Pop-up panels for About and Apps. */
 .about-panel,
 .apps-panel {
   position: fixed;
@@ -539,6 +553,7 @@ body.is-list-view .list-preview.is-professional {
   margin: 0;
 }
 
+/* Lower-right reset mark. */
 .reset-mark {
   position: fixed;
   right: 20px;
@@ -551,6 +566,7 @@ body.is-list-view .list-preview.is-professional {
     0 0 40px var(--glow);
 }
 
+/* Mobile layout: gallery becomes a single-column square-card list. */
 @media (max-width: 760px) {
   .top-interface {
     top: 16px;

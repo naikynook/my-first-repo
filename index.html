@@ -4,9 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kody Naiker</title>
-  <link rel="stylesheet" href="style.css?v=20260703-2259">
+  <link rel="stylesheet" href="style.css?v=20260703-2311">
 </head>
 <body>
+  <!-- Fixed top interface: name on the left, view controls on the right. -->
   <header class="top-interface">
     <a class="site-name" href="#" aria-label="Home">Kody Naiker</a>
 
@@ -17,6 +18,7 @@
     </nav>
   </header>
 
+  <!-- Floating filter menu. JavaScript uses data-filter to show/hide project cards. -->
   <nav class="filter-pill" aria-label="Portfolio filters">
     <button class="is-active" type="button" data-filter="all">All</button>
     <button type="button" data-filter="projects">Projects</button>
@@ -26,6 +28,12 @@
   </nav>
 
   <main>
+    <!--
+      Project cards:
+      - data-category controls which filter tab each project belongs to.
+      - data-preview controls the image shown in List View when a title is clicked.
+      - data-preview-fit and data-preview-position control preview cropping/framing.
+    -->
     <section class="project-stage gallery-view" data-filter="all" aria-label="Project gallery">
       <article class="project-card card-a" data-category="projects academic" data-preview="assets/axon-final1.png?v=20260703-2212" data-preview-fit="contain" data-preview-position="center">
         <a href="#">
@@ -85,8 +93,10 @@
     </section>
   </main>
 
+  <!-- Dedicated preview layer used only in List View. JavaScript swaps its image. -->
   <div class="list-preview" aria-hidden="true"></div>
 
+  <!-- Pop-up panels controlled by the About and Apps buttons. -->
   <aside class="about-panel" aria-label="About">
     <p>I am currently pursuing an M. Arch and and M.S. in Computational Design Practices at Columbia University. My interests lie at the intersection of art, technology, and the built environment.</p>
   </aside>
@@ -97,8 +107,9 @@
     <a href="#">viewer.local</a>
   </aside>
 
+  <!-- Reset button returns the page to Gallery View / All projects. -->
   <button class="reset-mark" type="button" aria-label="Reset view">×</button>
 
-  <script src="script.js?v=20260703-2259"></script>
+  <script src="script.js?v=20260703-2311"></script>
 </body>
 </html>

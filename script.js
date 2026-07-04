@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Cache the main elements that the controls will update.
   const stage = document.querySelector(".project-stage");
   const cards = document.querySelectorAll(".project-card");
   const viewButtons = document.querySelectorAll("[data-view]");
@@ -10,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const listPreview = document.querySelector(".list-preview");
   const resetMark = document.querySelector(".reset-mark");
 
+  // Visually marks one button in a group as active and updates aria-pressed.
   function setActive(buttons, activeButton) {
     buttons.forEach((button) => {
       const isActive = button === activeButton;
@@ -18,6 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Switches between image-based Gallery View and text-based List View.
   function setView(view, activeButton) {
     stage.classList.toggle("gallery-view", view === "gallery");
     stage.classList.toggle("list-view", view === "list");
@@ -32,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Filters the project cards using each card's data-category values.
   function setFilter(filter, activeButton) {
     stage.dataset.filter = filter;
 
@@ -49,6 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Selects one project in List View and updates the preview image.
   function selectCard(selectedCard) {
     cards.forEach((card) => {
       card.classList.toggle("is-selected", card === selectedCard);
@@ -57,6 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateListPreview(selectedCard);
   }
 
+  // When entering List View or changing filters, show the first available project.
   function selectFirstVisibleCard() {
     const firstVisibleCard = Array.from(cards).find((card) => {
       return !card.classList.contains("is-hidden");
@@ -69,6 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Copies the selected project's preview settings into the fixed preview layer.
   function updateListPreview(selectedCard) {
     const selectedImage = selectedCard.querySelector(".project-image");
     const imageClasses = Array.from(selectedImage.classList).filter((className) => {
@@ -91,21 +98,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Clears the list preview when leaving List View.
   function resetListPreview() {
     listPreview.className = "list-preview";
     listPreview.style.background = "";
   }
 
+  // View control buttons: List View / Gallery View.
   viewButtons.forEach((button) => {
     button.setAttribute("aria-pressed", String(button.classList.contains("is-active")));
     button.addEventListener("click", () => setView(button.dataset.view, button));
   });
 
+  // Filter buttons: All / Projects / Academic / Professional.
   filterButtons.forEach((button) => {
     button.setAttribute("aria-pressed", String(button.classList.contains("is-active")));
     button.addEventListener("click", () => setFilter(button.dataset.filter, button));
   });
 
+  // In List View, clicking a project title changes the preview image.
   stage.addEventListener("click", (event) => {
     const selectedCard = event.target.closest(".project-card");
 
@@ -117,6 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
     selectCard(selectedCard);
   });
 
+  // Small pop-up panels for About and Apps.
   aboutButton.addEventListener("click", () => {
     aboutPanel.classList.toggle("is-open");
     appsPanel.classList.remove("is-open");
@@ -127,6 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
     aboutPanel.classList.remove("is-open");
   });
 
+  // Reset to the default state.
   resetMark.addEventListener("click", () => {
     setView("gallery", document.querySelector('[data-view="gallery"]'));
     setFilter("all", document.querySelector('[data-filter="all"]'));
