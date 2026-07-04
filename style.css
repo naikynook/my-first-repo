@@ -242,7 +242,7 @@ main {
 }
 
 .card-f {
-  top: 632px;
+  top: 700px;
   left: 92px;
   z-index: 1;
   width: 236px;
@@ -285,7 +285,7 @@ main {
 }
 
 .gallery-view[data-filter="professional"] .card-f {
-  top: 400px;
+  top: 464px;
   left: 158px;
 }
 
