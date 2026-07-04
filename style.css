@@ -186,7 +186,7 @@ main {
 
 /* Individual card positions for the All gallery layout. */
 .card-i {
-  top: 166px;
+  top: 196px;
   left: -180px;
   z-index: 1;
   width: 210px;
@@ -218,7 +218,7 @@ main {
 }
 
 .card-d {
-  top: 466px;
+  top: 536px;
   left: -38px;
   z-index: 1;
   width: 240px;
@@ -259,7 +259,7 @@ main {
 
 /* Reposition selected cards when the Academic filter is active. */
 .gallery-view[data-filter="academic"] .card-d {
-  top: 466px;
+  top: 536px;
   left: -38px;
 }
 
@@ -274,7 +274,7 @@ main {
 }
 
 .gallery-view[data-filter="academic"] .card-i {
-  top: 166px;
+  top: 196px;
   left: -180px;
 }
 
