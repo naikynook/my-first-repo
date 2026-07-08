@@ -29,17 +29,16 @@
   scene.add(fillLight);
 
   function createGridTexture() {
-    const canvas = document.createElement('canvas');
     const cols = 24;
     const rows = 12;
+    const cellSize = 32;
     const spacing = 4;
-    const margin = spacing;
 
-    canvas.width = (cols * 32) + ((cols - 1) * spacing) + (margin * 2);
-    canvas.height = (rows * 32) + ((rows - 1) * spacing) + (margin * 2);
+    const canvas = document.createElement('canvas');
+    canvas.width = cols * (cellSize + spacing);
+    canvas.height = rows * (cellSize + spacing);
 
     const ctx = canvas.getContext('2d');
-    const cellSize = 32;
 
     ctx.fillStyle = '#000000';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -47,13 +46,15 @@
     ctx.fillStyle = '#ffffff';
     for (let i = 0; i < cols; i++) {
       for (let j = 0; j < rows; j++) {
-        const x = margin + i * (cellSize + spacing);
-        const y = margin + j * (cellSize + spacing);
+        const x = i * (cellSize + spacing);
+        const y = j * (cellSize + spacing);
         ctx.fillRect(x, y, cellSize, cellSize);
       }
     }
 
     const texture = new THREE.CanvasTexture(canvas);
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
     texture.anisotropy = 4;
     return texture;
   }
