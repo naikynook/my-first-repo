@@ -20,7 +20,7 @@
     '<input id="grid-density-slider" type="range" min="8" max="48" step="2" value="24">' +
     '<div class="spectrum-control">' +
       '<label for="bg-color-spectrum">Background color: <span id="bg-color-value">rgb(255, 255, 255)</span></label>' +
-      '<input id="bg-color-spectrum" class="spectrum-slider" type="range" min="0" max="100" value="0">' +
+      '<input id="bg-color-spectrum" type="range" min="0" max="100" value="0">' +
     '</div>';
   container.parentNode.insertBefore(controls, container);
 
