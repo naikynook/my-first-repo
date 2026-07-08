@@ -7,8 +7,8 @@
   const SPHERE_RADIUS = 1.6;
   const SPACING = 4;
   const CELL_SIZE = 32;
-  const WAVE_SPEED = 0.03;
-  const WAVE_WIDTH = 0.75;
+  const WAVE_SPEED = 8;
+  const WAVE_WIDTH = 100;
 
   const container = document.getElementById('canvas-container-3');
   container.innerHTML = '';
@@ -64,16 +64,14 @@
 
   const raycaster = new THREE.Raycaster();
   const mouse = new THREE.Vector2();
-  const cellLocal = new THREE.Vector3();
 
   let cols = 24;
   let rows = 12;
   let frameCount = 0;
   let waveRadius = 0;
   let isAnimating = false;
-  let hasClick = false;
-  let clickU = 0;
-  let clickV = 0;
+  let clickX = 0;
+  let clickY = 0;
 
   function setGridDensity(value) {
     cols = value;
@@ -83,32 +81,29 @@
     gridCanvas.height = rows * (CELL_SIZE + SPACING);
     isAnimating = false;
     waveRadius = 0;
-    hasClick = false;
     drawGridTexture();
   }
 
-  function cellCenterUv(i, j) {
-    const x = i * (CELL_SIZE + SPACING);
-    const y = j * (CELL_SIZE + SPACING);
+  function uvToGridPoint(u, v) {
     return {
-      u: (x + CELL_SIZE / 2) / gridCanvas.width,
-      v: 1 - (y + CELL_SIZE / 2) / gridCanvas.height
+      x: u * gridCanvas.width,
+      y: (1 - v) * gridCanvas.height
     };
   }
 
-  function uvToLocal(u, v) {
-    const phi = (1 - v) * Math.PI;
-    const theta = u * 2 * Math.PI;
-    cellLocal.set(
-      -Math.sin(phi) * Math.cos(theta),
-      Math.cos(phi),
-      Math.sin(phi) * Math.sin(theta)
-    );
-    return cellLocal;
+  function gridDistance(x1, y1, x2, y2) {
+    let dx = Math.abs(x1 - x2);
+    dx = Math.min(dx, gridCanvas.width - dx);
+    const dy = y1 - y2;
+    return Math.sqrt(dx * dx + dy * dy);
   }
 
-  function arcDistance(a, b) {
-    return SPHERE_RADIUS * Math.acos(Math.max(-1, Math.min(1, a.dot(b))));
+  function setClickFromUv(u, v) {
+    const point = uvToGridPoint(u, v);
+    const cellI = Math.min(cols - 1, Math.max(0, Math.floor(point.x / (CELL_SIZE + SPACING))));
+    const cellJ = Math.min(rows - 1, Math.max(0, Math.floor(point.y / (CELL_SIZE + SPACING))));
+    clickX = cellI * (CELL_SIZE + SPACING) + CELL_SIZE / 2;
+    clickY = cellJ * (CELL_SIZE + SPACING) + CELL_SIZE / 2;
   }
 
   function drawGridTexture() {
@@ -116,21 +111,23 @@
     gridCtx.fillRect(0, 0, gridCanvas.width, gridCanvas.height);
 
     let anySquareActive = false;
-    const maxDistance = Math.PI * SPHERE_RADIUS;
-    const clickPoint = hasClick ? uvToLocal(clickU, clickV) : null;
+    const maxDistance = Math.sqrt(
+      Math.pow(gridCanvas.width / 2, 2) + Math.pow(gridCanvas.height / 2, 2)
+    );
 
     for (let i = 0; i < cols; i++) {
       for (let j = 0; j < rows; j++) {
         const x = i * (CELL_SIZE + SPACING);
         const y = j * (CELL_SIZE + SPACING);
-        const uv = cellCenterUv(i, j);
+        const centerX = x + CELL_SIZE / 2;
+        const centerY = y + CELL_SIZE / 2;
 
-        if (isAnimating && hasClick) {
-          const distance = arcDistance(clickPoint, uvToLocal(uv.u, uv.v));
+        if (isAnimating) {
+          const distance = gridDistance(clickX, clickY, centerX, centerY);
 
           if (distance < waveRadius && distance > waveRadius - WAVE_WIDTH) {
             anySquareActive = true;
-            const hue = (Math.sin(frameCount * 0.12) * 180 + 180 + distance * 80) % 360;
+            const hue = (Math.sin(frameCount * 0.12) * 180 + 180 + distance * 1.4) % 360;
             gridCtx.fillStyle = 'hsl(' + hue + ', 90%, 55%)';
           } else {
             gridCtx.fillStyle = '#ffffff';
@@ -148,7 +145,6 @@
     if (isAnimating && !anySquareActive && waveRadius > maxDistance) {
       isAnimating = false;
       waveRadius = 0;
-      hasClick = false;
     }
   }
 
@@ -161,11 +157,9 @@
     const hits = raycaster.intersectObject(globe);
 
     if (hits.length > 0) {
-      clickU = hits[0].uv.x;
-      clickV = hits[0].uv.y;
+      setClickFromUv(hits[0].uv.x, hits[0].uv.y);
       waveRadius = 0;
       isAnimating = true;
-      hasClick = true;
     }
   }
 
