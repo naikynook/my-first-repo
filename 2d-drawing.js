@@ -11,8 +11,11 @@ var sketch1 = function(p) {
     const canvasWidth = (cols * size) + ((cols - 1) * spacing) + (margin * 2);
     const canvasHeight = (rows * size) + ((rows - 1) * spacing) + (margin * 2);
 
+    const container = document.getElementById('canvas-container-1');
+    container.innerHTML = '';
+
     const canvas = p.createCanvas(canvasWidth, canvasHeight);
-    canvas.parent('canvas-container-1');
+    canvas.parent(container);
     p.noLoop(); // Run draw() only once
     p.redraw();
   };

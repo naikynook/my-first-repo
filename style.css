@@ -128,7 +128,16 @@ button:hover {
 }
 
 /* Style for canvas containers to add spacing between them */
-#canvas-container-1,
+#canvas-container-1 {
+  margin-bottom: 40px;
+  width: fit-content;
+  line-height: 0;
+}
+
+#canvas-container-1 canvas {
+  display: block;
+}
+
 #canvas-container-2,
 #canvas-container-3 {
   margin-bottom: 40px;                /* Add 40 pixels of space below each canvas */
