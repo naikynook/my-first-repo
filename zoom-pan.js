@@ -7,8 +7,8 @@
   const SPHERE_RADIUS = 1.6;
   const SPACING = 4;
   const CELL_SIZE = 32;
-  const WAVE_SPEED = 0.12;
-  const WAVE_WIDTH = 0.55;
+  const WAVE_SPEED = 0.03;
+  const WAVE_WIDTH = 0.75;
 
   const container = document.getElementById('canvas-container-3');
   container.innerHTML = '';
@@ -64,8 +64,7 @@
 
   const raycaster = new THREE.Raycaster();
   const mouse = new THREE.Vector2();
-  const clickWorld = new THREE.Vector3();
-  const cellWorld = new THREE.Vector3();
+  const cellLocal = new THREE.Vector3();
 
   let cols = 24;
   let rows = 12;
@@ -73,6 +72,8 @@
   let waveRadius = 0;
   let isAnimating = false;
   let hasClick = false;
+  let clickU = 0;
+  let clickV = 0;
 
   function setGridDensity(value) {
     cols = value;
@@ -86,15 +87,24 @@
     drawGridTexture();
   }
 
-  function uvToWorld(u, v) {
-    const phi = v * Math.PI;
+  function cellCenterUv(i, j) {
+    const x = i * (CELL_SIZE + SPACING);
+    const y = j * (CELL_SIZE + SPACING);
+    return {
+      u: (x + CELL_SIZE / 2) / gridCanvas.width,
+      v: 1 - (y + CELL_SIZE / 2) / gridCanvas.height
+    };
+  }
+
+  function uvToLocal(u, v) {
+    const phi = (1 - v) * Math.PI;
     const theta = u * 2 * Math.PI;
-    cellWorld.set(
+    cellLocal.set(
       -Math.sin(phi) * Math.cos(theta),
       Math.cos(phi),
       Math.sin(phi) * Math.sin(theta)
     );
-    return cellWorld;
+    return cellLocal;
   }
 
   function arcDistance(a, b) {
@@ -107,20 +117,20 @@
 
     let anySquareActive = false;
     const maxDistance = Math.PI * SPHERE_RADIUS;
+    const clickPoint = hasClick ? uvToLocal(clickU, clickV) : null;
 
     for (let i = 0; i < cols; i++) {
       for (let j = 0; j < rows; j++) {
         const x = i * (CELL_SIZE + SPACING);
         const y = j * (CELL_SIZE + SPACING);
-        const centerU = (x + CELL_SIZE / 2) / gridCanvas.width;
-        const centerV = (y + CELL_SIZE / 2) / gridCanvas.height;
+        const uv = cellCenterUv(i, j);
 
         if (isAnimating && hasClick) {
-          const distance = arcDistance(clickWorld, uvToWorld(centerU, centerV));
+          const distance = arcDistance(clickPoint, uvToLocal(uv.u, uv.v));
 
           if (distance < waveRadius && distance > waveRadius - WAVE_WIDTH) {
             anySquareActive = true;
-            const hue = (Math.sin(frameCount * 0.2) * 180 + 180 + distance * 120) % 360;
+            const hue = (Math.sin(frameCount * 0.12) * 180 + 180 + distance * 80) % 360;
             gridCtx.fillStyle = 'hsl(' + hue + ', 90%, 55%)';
           } else {
             gridCtx.fillStyle = '#ffffff';
@@ -151,7 +161,8 @@
     const hits = raycaster.intersectObject(globe);
 
     if (hits.length > 0) {
-      clickWorld.copy(hits[0].point).normalize();
+      clickU = hits[0].uv.x;
+      clickV = hits[0].uv.y;
       waveRadius = 0;
       isAnimating = true;
       hasClick = true;
