@@ -19,8 +19,8 @@
     '<label for="grid-density-slider">Grid density: <span id="grid-density-value">24</span> columns</label>' +
     '<input id="grid-density-slider" type="range" min="8" max="48" step="2" value="24">' +
     '<div class="spectrum-control">' +
-      '<label for="bg-color-spectrum">Background color: <span id="bg-color-value">rgb(217, 20, 20)</span></label>' +
-      '<input id="bg-color-spectrum" class="spectrum-slider" type="range" min="0" max="360" value="0">' +
+      '<label for="bg-color-spectrum">Background color: <span id="bg-color-value">rgb(255, 255, 255)</span></label>' +
+      '<input id="bg-color-spectrum" class="spectrum-slider" type="range" min="0" max="100" value="0">' +
     '</div>';
   container.parentNode.insertBefore(controls, container);
 
@@ -79,9 +79,23 @@
   let clickX = 0;
   let clickY = 0;
 
+  const whiteColor = new THREE.Color(0xffffff);
+  const blackColor = new THREE.Color(0x000000);
+  const spectrumColor = new THREE.Color();
+
   function setBackgroundColor() {
-    const hue = parseInt(bgColorSpectrum.value, 10) / 360;
-    scene.background.setHSL(hue, 0.85, 0.55);
+    const t = parseInt(bgColorSpectrum.value, 10) / 100;
+
+    if (t <= 0.1) {
+      spectrumColor.setHSL(0, 0.85, 0.55);
+      scene.background.copy(whiteColor).lerp(spectrumColor, t / 0.1);
+    } else if (t >= 0.9) {
+      spectrumColor.setHSL(1, 0.85, 0.55);
+      scene.background.copy(spectrumColor).lerp(blackColor, (t - 0.9) / 0.1);
+    } else {
+      const hue = (t - 0.1) / 0.8;
+      scene.background.setHSL(hue, 0.85, 0.55);
+    }
 
     const r = Math.round(scene.background.r * 255);
     const g = Math.round(scene.background.g * 255);
