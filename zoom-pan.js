@@ -1,98 +1,190 @@
-// Zoom Pan Sketch - using p5.js instance mode
-var sketch3 = function(p) {
-  var canvasWidth = 800;
-  var canvasHeight = 400;
-  var gridSpacing = 40;
-  var zoom = 1;
-  var offsetX = 0;
-  var offsetY = 0;
-  var isDragging = false;
-  var lastMouseX, lastMouseY;
-  var canvas;
+// zoom-pan.js
+// Interactive Three.js sphere: grid texture, scroll zoom, density slider, click wave
 
-  p.setup = function() {
-    canvas = p.createCanvas(canvasWidth, canvasHeight);
-    canvas.parent('canvas-container-3');
-  };
+(function() {
+  const WIDTH = 800;
+  const HEIGHT = 400;
+  const SPHERE_RADIUS = 1.6;
+  const SPACING = 4;
+  const CELL_SIZE = 32;
+  const WAVE_SPEED = 0.12;
+  const WAVE_WIDTH = 0.55;
 
-  p.draw = function() {
-    p.background(250);
-    p.translate(p.width / 2 + offsetX, p.height / 2 + offsetY);
-    p.scale(zoom);
-    p.translate(-p.width / 2, -p.height / 2);
+  const container = document.getElementById('canvas-container-3');
+  container.innerHTML = '';
 
-    drawGrid();
-    drawPrimitives();
-  };
+  const controls = document.createElement('div');
+  controls.className = 'three-controls';
+  controls.innerHTML =
+    '<label for="grid-density-slider">Grid density: <span id="grid-density-value">24</span> columns</label>' +
+    '<input id="grid-density-slider" type="range" min="8" max="48" step="2" value="24">';
+  container.parentNode.insertBefore(controls, container);
 
-  function drawGrid() {
-    p.stroke(200);
-    p.strokeWeight(1);
-    for (var x = 0; x <= p.width; x += gridSpacing) {
-      p.line(x, 0, x, p.height);
-    }
-    for (var y = 0; y <= p.height; y += gridSpacing) {
-      p.line(0, y, p.width, y);
-    }
+  const slider = controls.querySelector('#grid-density-slider');
+  const sliderValue = controls.querySelector('#grid-density-value');
+
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xffffff);
+
+  const camera = new THREE.PerspectiveCamera(45, WIDTH / HEIGHT, 0.1, 100);
+  const initialCameraZ = 5.2;
+  camera.position.set(0, 0.2, initialCameraZ);
+  camera.lookAt(0, 0, 0);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setSize(WIDTH, HEIGHT);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  scene.add(new THREE.AmbientLight(0xffffff, 0.75));
+
+  const keyLight = new THREE.DirectionalLight(0xffffff, 0.65);
+  keyLight.position.set(4, 5, 6);
+  scene.add(keyLight);
+
+  const fillLight = new THREE.DirectionalLight(0xffffff, 0.25);
+  fillLight.position.set(-4, -2, -3);
+  scene.add(fillLight);
+
+  const gridCanvas = document.createElement('canvas');
+  const gridCtx = gridCanvas.getContext('2d');
+  const texture = new THREE.CanvasTexture(gridCanvas);
+  texture.wrapS = THREE.RepeatWrapping;
+  texture.wrapT = THREE.RepeatWrapping;
+  texture.anisotropy = 4;
+
+  const globeMaterial = new THREE.MeshPhongMaterial({
+    map: texture,
+    shininess: 12,
+    specular: 0x222222
+  });
+
+  const globe = new THREE.Mesh(new THREE.SphereGeometry(SPHERE_RADIUS, 64, 64), globeMaterial);
+  scene.add(globe);
+
+  const raycaster = new THREE.Raycaster();
+  const mouse = new THREE.Vector2();
+  const clickWorld = new THREE.Vector3();
+  const cellWorld = new THREE.Vector3();
+
+  let cols = 24;
+  let rows = 12;
+  let frameCount = 0;
+  let waveRadius = 0;
+  let isAnimating = false;
+  let hasClick = false;
+
+  function setGridDensity(value) {
+    cols = value;
+    rows = Math.max(6, Math.round(cols / 2));
+    sliderValue.textContent = String(cols);
+    gridCanvas.width = cols * (CELL_SIZE + SPACING);
+    gridCanvas.height = rows * (CELL_SIZE + SPACING);
+    isAnimating = false;
+    waveRadius = 0;
+    hasClick = false;
+    drawGridTexture();
   }
 
-  function drawPrimitives() {
-    p.fill(255, 100, 100);
-    p.rect(120, 80, 100, 60);
-
-    p.fill(100, 180, 255);
-    p.ellipse(350, 200, 90, 90);
-
-    p.stroke(80, 200, 120);
-    p.strokeWeight(4);
-    p.line(500, 100, 700, 300);
-
-    p.noStroke();
-    p.fill(255, 220, 80);
-    p.triangle(600, 80, 750, 60, 700, 200);
+  function uvToWorld(u, v) {
+    const phi = v * Math.PI;
+    const theta = u * 2 * Math.PI;
+    cellWorld.set(
+      -Math.sin(phi) * Math.cos(theta),
+      Math.cos(phi),
+      Math.sin(phi) * Math.sin(theta)
+    );
+    return cellWorld;
   }
 
-  p.mouseWheel = function(event) {
-    if (canvas && canvas.elt.matches(':hover')) {
-      var zoomFactor = 1.05;
-      if (event.delta > 0) {
-        zoom /= zoomFactor;
-      } else {
-        zoom *= zoomFactor;
+  function arcDistance(a, b) {
+    return SPHERE_RADIUS * Math.acos(Math.max(-1, Math.min(1, a.dot(b))));
+  }
+
+  function drawGridTexture() {
+    gridCtx.fillStyle = '#000000';
+    gridCtx.fillRect(0, 0, gridCanvas.width, gridCanvas.height);
+
+    let anySquareActive = false;
+    const maxDistance = Math.PI * SPHERE_RADIUS;
+
+    for (let i = 0; i < cols; i++) {
+      for (let j = 0; j < rows; j++) {
+        const x = i * (CELL_SIZE + SPACING);
+        const y = j * (CELL_SIZE + SPACING);
+        const centerU = (x + CELL_SIZE / 2) / gridCanvas.width;
+        const centerV = (y + CELL_SIZE / 2) / gridCanvas.height;
+
+        if (isAnimating && hasClick) {
+          const distance = arcDistance(clickWorld, uvToWorld(centerU, centerV));
+
+          if (distance < waveRadius && distance > waveRadius - WAVE_WIDTH) {
+            anySquareActive = true;
+            const hue = (Math.sin(frameCount * 0.2) * 180 + 180 + distance * 120) % 360;
+            gridCtx.fillStyle = 'hsl(' + hue + ', 90%, 55%)';
+          } else {
+            gridCtx.fillStyle = '#ffffff';
+          }
+        } else {
+          gridCtx.fillStyle = '#ffffff';
+        }
+
+        gridCtx.fillRect(x, y, CELL_SIZE, CELL_SIZE);
       }
-      zoom = p.constrain(zoom, 0.2, 5);
-      return false;
     }
-  };
 
-  p.mousePressed = function() {
-    if (
-      canvas &&
-      canvas.elt.matches(':hover') &&
-      p.mouseButton === p.LEFT &&
-      p.mouseX >= 0 &&
-      p.mouseX <= p.width &&
-      p.mouseY >= 0 &&
-      p.mouseY <= p.height
-    ) {
-      isDragging = true;
-      lastMouseX = p.mouseX;
-      lastMouseY = p.mouseY;
+    texture.needsUpdate = true;
+
+    if (isAnimating && !anySquareActive && waveRadius > maxDistance) {
+      isAnimating = false;
+      waveRadius = 0;
+      hasClick = false;
     }
-  };
+  }
 
-  p.mouseDragged = function() {
-    if (isDragging && canvas && canvas.elt.matches(':hover')) {
-      offsetX += p.mouseX - lastMouseX;
-      offsetY += p.mouseY - lastMouseY;
-      lastMouseX = p.mouseX;
-      lastMouseY = p.mouseY;
+  function onPointerClick(event) {
+    const rect = renderer.domElement.getBoundingClientRect();
+    mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+    raycaster.setFromCamera(mouse, camera);
+    const hits = raycaster.intersectObject(globe);
+
+    if (hits.length > 0) {
+      clickWorld.copy(hits[0].point).normalize();
+      waveRadius = 0;
+      isAnimating = true;
+      hasClick = true;
     }
-  };
+  }
 
-  p.mouseReleased = function() {
-    isDragging = false;
-  };
-};
+  function onWheel(event) {
+    event.preventDefault();
+    camera.position.z += event.deltaY * 0.004;
+    camera.position.z = Math.max(2.8, Math.min(10, camera.position.z));
+  }
 
-new p5(sketch3);
+  renderer.domElement.addEventListener('click', onPointerClick);
+  renderer.domElement.addEventListener('wheel', onWheel, { passive: false });
+
+  slider.addEventListener('input', function() {
+    setGridDensity(parseInt(slider.value, 10));
+  });
+
+  setGridDensity(parseInt(slider.value, 10));
+
+  function animate() {
+    requestAnimationFrame(animate);
+    frameCount++;
+
+    if (isAnimating) {
+      waveRadius += WAVE_SPEED;
+    }
+
+    drawGridTexture();
+    globe.rotation.y += 0.004;
+    renderer.render(scene, camera);
+  }
+
+  animate();
+})();

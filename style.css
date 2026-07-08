@@ -155,6 +155,29 @@ button:hover {
   border: 1px solid #eee;
   border-radius: 4px;
   overflow: hidden;
+  width: fit-content;
+  line-height: 0;
+}
+
+#canvas-container-3 canvas {
+  display: block;
+}
+
+.three-controls {
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: #333;
+}
+
+.three-controls label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.three-controls input[type="range"] {
+  width: 100%;
+  max-width: 400px;
+  cursor: pointer;
 }
 
 #threejs-container-1 {
