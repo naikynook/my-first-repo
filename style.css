@@ -180,29 +180,64 @@ button:hover {
   cursor: pointer;
 }
 
-.rgb-controls {
+.spectrum-control {
   margin-top: 20px;
 }
 
-.rgb-sliders label {
-  display: grid;
-  grid-template-columns: 24px 36px 1fr;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 10px;
-}
-
-.rgb-sliders input[type="range"] {
-  max-width: none;
-}
-
-.bg-color-preview {
-  display: inline-block;
-  width: 48px;
+.spectrum-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  max-width: 400px;
   height: 24px;
-  margin-top: 8px;
+  border-radius: 12px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  cursor: pointer;
+  background: linear-gradient(
+    to right,
+    hsl(0, 85%, 55%),
+    hsl(60, 85%, 55%),
+    hsl(120, 85%, 55%),
+    hsl(180, 85%, 55%),
+    hsl(240, 85%, 55%),
+    hsl(300, 85%, 55%),
+    hsl(360, 85%, 55%)
+  );
+}
+
+.spectrum-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  background: #111111;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+.spectrum-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  background: #111111;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+.spectrum-slider::-moz-range-track {
+  height: 24px;
+  border-radius: 12px;
+  background: linear-gradient(
+    to right,
+    hsl(0, 85%, 55%),
+    hsl(60, 85%, 55%),
+    hsl(120, 85%, 55%),
+    hsl(180, 85%, 55%),
+    hsl(240, 85%, 55%),
+    hsl(300, 85%, 55%),
+    hsl(360, 85%, 55%)
+  );
 }
 
 #threejs-container-1 {
