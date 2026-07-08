@@ -191,6 +191,11 @@ button:hover {
 
 #threejs-container-1 canvas {
   display: block;
+  cursor: grab;
+}
+
+#threejs-container-1 canvas:active {
+  cursor: grabbing;
 }
 
 /* Add extra spacing after the last canvas container */
