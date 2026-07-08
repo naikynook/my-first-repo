@@ -1,46 +1,33 @@
-// 2D Drawing Sketch - using p5.js instance mode
+// Grid Sketch - using p5.js instance mode
 var sketch1 = function(p) {
-  var canvasWidth = 800;
-  var canvasHeight = 400;
-  var gridSpacing = 40;
+  var cols = 10;
+  var rows = 10;
+  var size = 40;
+  var spacing = 4;
+  var margin = spacing;
 
   p.setup = function() {
+    var canvasWidth = (cols * size) + ((cols - 1) * spacing) + (margin * 2);
+    var canvasHeight = (rows * size) + ((rows - 1) * spacing) + (margin * 2);
     var canvas = p.createCanvas(canvasWidth, canvasHeight);
     canvas.parent('canvas-container-1');
+    p.noLoop();
   };
 
   p.draw = function() {
-    p.background(250);
-    drawGrid();
-    drawPrimitives();
-  };
+    p.background(0);
 
-  function drawGrid() {
-    p.stroke(200);
-    p.strokeWeight(1);
-    for (var x = 0; x <= p.width; x += gridSpacing) {
-      p.line(x, 0, x, p.height);
-    }
-    for (var y = 0; y <= p.height; y += gridSpacing) {
-      p.line(0, y, p.width, y);
-    }
-  }
-
-  function drawPrimitives() {
-    p.fill(255, 100, 100);
-    p.rect(120, 80, 100, 60);
-
-    p.fill(100, 180, 255);
-    p.ellipse(350, 200, 90, 90);
-
-    p.stroke(80, 200, 120);
-    p.strokeWeight(4);
-    p.line(500, 100, 700, 300);
-
+    p.fill(255);
     p.noStroke();
-    p.fill(255, 220, 80);
-    p.triangle(600, 80, 750, 60, 700, 200);
-  }
+
+    for (var i = 0; i < cols; i++) {
+      for (var j = 0; j < rows; j++) {
+        var x = margin + i * (size + spacing);
+        var y = margin + j * (size + spacing);
+        p.rect(x, y, size, size);
+      }
+    }
+  };
 };
 
 new p5(sketch1);
