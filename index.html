@@ -22,7 +22,7 @@
   <meta charset="UTF-8">
   <!-- This sets the character encoding to UTF-8, which supports special characters and emojis -->
   
-  <title>Module 1</title>
+  <title>Code Visualizer</title>
   <!-- This is the title that appears in the browser tab and bookmarks -->
   
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
@@ -60,11 +60,11 @@
   <main>
     <!-- The main tag contains the primary content of the page -->
     
-    <div class="project-meta">2025</div>
+    <div class="project-meta">2026</div>
     <!-- This div displays the year/project metadata -->
     <!-- class="project-meta" allows us to style this with CSS -->
     
-    <div class="project-title">Website Title</div>
+    <div class="project-title">Code Visualizer</div>
     <!-- This div displays the main project title -->
     <!-- class="project-title" allows us to style this with CSS -->
     
@@ -72,7 +72,7 @@
     <!-- This div displays the student's name as a subtitle -->
     <!-- class="project-subtitle" allows us to style this with CSS -->
     
-    <div class="advisor">Advisor Name</div>
+    <div class="advisor">Advisor: Catherine Griffiths</div>
     <!-- This div displays advisor information -->
     <!-- <br> creates a line break -->
     <!-- <strong> makes the text bold for emphasis -->
@@ -89,29 +89,29 @@
     <!-- ADD A NEW 'CANVAS CONTAINER' FOR EACH NEW P5.JS SKETCH (THE ORDER IS DEFINED BY THE CONTAINER NUMBER BELOW + THE MOST RECENT SKETCH SHOULD BE AT THE TOP) -->
 
     <!-- Section for Three.js sketch (three-sketch.js) -->
-    <div class="section-title">Interactive Grid with Zoom & Pan</div>
-    <p>Drag to orbit around the sphere. Scroll to zoom in and out.</p>
+    <div class="section-title">Orbiting Grid Sphere</div>
+    <p>A stationary Three.js sphere wrapped in a white cell grid. Drag to orbit the camera around it, or scroll to zoom in and out. The grid texture is drawn on a canvas and mapped onto the sphere surface, while OrbitControls move the camera instead of rotating the object itself.</p>
 
     <!-- Canvas container for Three.js sketch (three-sketch.js) -->
     <div id="threejs-container-1"></div>
 
     <!-- Section for interactive Three.js sketch (zoom-pan.js) -->
-    <div class="section-title">Interactive Grid with Zoom & Pan</div>
-    <p>Scroll to zoom, use the slider to change grid density, pick a background color from the spectrum bar, and click the sphere to trigger a radiating rainbow wave.</p>
+    <div class="section-title">Interactive Sphere Matrix</div>
+    <p>An interactive Three.js sphere that behaves like a matrix panel wrapped in 3D. Use the sliders to change grid density and background color, scroll to zoom, and click the sphere to send a rainbow wave across individual cells. The code redraws a canvas texture each frame, measuring distance from the clicked cell to color only the squares inside a moving wave band.</p>
 
     <!-- Canvas container for interactive Three.js sketch (zoom-pan.js) -->
     <div id="canvas-container-3"></div>
 
     <!-- Section for first p5.js sketch (2d-drawing.js) -->
-    <div class="section-title">Grid Configuration</div>
-    <p>10×10 white squares on a black field with even spacing.</p>
+    <div class="section-title">Static Grid Configuration</div>
+    <p>A fixed 10×10 matrix of white squares on a black field with even spacing between cells. The canvas size is calculated from the number of columns, rows, square size, and spacing, then nested loops place each cell at its computed x and y position. The sketch runs once with noLoop(), treating the grid as a precise spatial layout rather than an animation.</p>
     
     <!-- Canvas container for first p5.js sketch (2d-drawing.js) -->
     <div id="canvas-container-1"></div>
   
     <!-- Section for second p5.js sketch (bouncing-ball.js) --> 
-    <div class="section-title">Interactive Grid Wave</div>
-    <p>Click anywhere on the grid to trigger a radiating rainbow wave.</p>
+    <div class="section-title">2D Matrix Wave</div>
+    <p>A flat p5.js grid where each square acts as an individual cell in a matrix panel. Click anywhere to trigger a radiating rainbow wave from that point. On each frame, the code expands a circular wave radius and tests every cell’s distance from the click; only cells inside the wave front receive shifting HSB colors before returning to white.</p>
     
     <!-- Canvas container for second p5.js sketch (bouncing-ball.js) --> 
     <div id="canvas-container-2"></div>
