@@ -157,11 +157,17 @@ button:hover {
   overflow: hidden;
 }
 
-#canvas-container-4 {
+#threejs-container-1 {
   margin-bottom: 40px;
   border: 1px solid #eee;
   border-radius: 4px;
   overflow: hidden;
+  width: fit-content;
+  line-height: 0;
+}
+
+#threejs-container-1 canvas {
+  display: block;
 }
 
 /* Add extra spacing after the last canvas container */

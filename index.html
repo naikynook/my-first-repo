@@ -12,6 +12,9 @@
   <!-- Load p5.js library from CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
   <!-- This loads the p5.js library which provides functions for creating graphics and animations -->
+
+  <!-- Load Three.js library from CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <!-- ------------------------------------------------------------ -->
 
   
@@ -24,7 +27,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
   <!-- This loads the Roboto font from Google Fonts for use on our page -->
   
-  <link rel="stylesheet" href="style.css?v=20260708c">
+  <link rel="stylesheet" href="style.css?v=20260708d">
   <!-- This links our CSS file to style the page - the href points to our style.css file -->
 </head>
 
@@ -84,12 +87,12 @@
 
     <!-- ADD A NEW 'CANVAS CONTAINER' FOR EACH NEW P5.JS SKETCH (THE ORDER IS DEFINED BY THE CONTAINER NUMBER BELOW + THE MOST RECENT SKETCH SHOULD BE AT THE TOP) -->
 
-    <!-- Section for outline canvas (outline-canvas.js) -->
+    <!-- Section for Three.js sketch (three-sketch.js) -->
     <div class="section-title">Interactive Grid with Zoom & Pan</div>
     <p>Description of the canvas content/exploration</p>
 
-    <!-- Canvas container for outline canvas (outline-canvas.js) -->
-    <div id="canvas-container-4"></div>
+    <!-- Canvas container for Three.js sketch (three-sketch.js) -->
+    <div id="threejs-container-1"></div>
 
     <!-- Section for third p5.js sketch (zoom-pan.js) -->
     <div class="section-title">Interactive Grid with Zoom & Pan</div>
@@ -122,7 +125,7 @@
 
   <!-- LOAD EACH NEW P5.JS SCRIPT HERE -->
 
-  <script src="outline-canvas.js?v=20260708"></script>
+  <script src="three-sketch.js?v=20260708"></script>
   <script src="2d-drawing.js?v=20260708"></script>
   <script src="bouncing-ball.js?v=20260708b"></script>
   <script src="zoom-pan.js?v=20260708"></script>
