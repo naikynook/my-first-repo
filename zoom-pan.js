@@ -17,11 +17,28 @@
   controls.className = 'three-controls';
   controls.innerHTML =
     '<label for="grid-density-slider">Grid density: <span id="grid-density-value">24</span> columns</label>' +
-    '<input id="grid-density-slider" type="range" min="8" max="48" step="2" value="24">';
+    '<input id="grid-density-slider" type="range" min="8" max="48" step="2" value="24">' +
+    '<div class="rgb-controls">' +
+      '<label>Background color: <span id="bg-color-value">rgb(255, 255, 255)</span></label>' +
+      '<div class="rgb-sliders">' +
+        '<label for="bg-color-r">R <span id="bg-color-r-value">255</span><input id="bg-color-r" type="range" min="0" max="255" value="255"></label>' +
+        '<label for="bg-color-g">G <span id="bg-color-g-value">255</span><input id="bg-color-g" type="range" min="0" max="255" value="255"></label>' +
+        '<label for="bg-color-b">B <span id="bg-color-b-value">255</span><input id="bg-color-b" type="range" min="0" max="255" value="255"></label>' +
+      '</div>' +
+      '<span id="bg-color-preview" class="bg-color-preview"></span>' +
+    '</div>';
   container.parentNode.insertBefore(controls, container);
 
   const slider = controls.querySelector('#grid-density-slider');
   const sliderValue = controls.querySelector('#grid-density-value');
+  const bgColorR = controls.querySelector('#bg-color-r');
+  const bgColorG = controls.querySelector('#bg-color-g');
+  const bgColorB = controls.querySelector('#bg-color-b');
+  const bgColorValue = controls.querySelector('#bg-color-value');
+  const bgColorRValue = controls.querySelector('#bg-color-r-value');
+  const bgColorGValue = controls.querySelector('#bg-color-g-value');
+  const bgColorBValue = controls.querySelector('#bg-color-b-value');
+  const bgColorPreview = controls.querySelector('#bg-color-preview');
 
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0xffffff);
@@ -72,6 +89,19 @@
   let isAnimating = false;
   let clickX = 0;
   let clickY = 0;
+
+  function setBackgroundColor() {
+    const r = parseInt(bgColorR.value, 10);
+    const g = parseInt(bgColorG.value, 10);
+    const b = parseInt(bgColorB.value, 10);
+
+    scene.background.setRGB(r / 255, g / 255, b / 255);
+    bgColorValue.textContent = 'rgb(' + r + ', ' + g + ', ' + b + ')';
+    bgColorRValue.textContent = String(r);
+    bgColorGValue.textContent = String(g);
+    bgColorBValue.textContent = String(b);
+    bgColorPreview.style.backgroundColor = 'rgb(' + r + ', ' + g + ', ' + b + ')';
+  }
 
   function setGridDensity(value) {
     cols = value;
@@ -176,7 +206,12 @@
     setGridDensity(parseInt(slider.value, 10));
   });
 
+  bgColorR.addEventListener('input', setBackgroundColor);
+  bgColorG.addEventListener('input', setBackgroundColor);
+  bgColorB.addEventListener('input', setBackgroundColor);
+
   setGridDensity(parseInt(slider.value, 10));
+  setBackgroundColor();
 
   function animate() {
     requestAnimationFrame(animate);

@@ -180,6 +180,31 @@ button:hover {
   cursor: pointer;
 }
 
+.rgb-controls {
+  margin-top: 20px;
+}
+
+.rgb-sliders label {
+  display: grid;
+  grid-template-columns: 24px 36px 1fr;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.rgb-sliders input[type="range"] {
+  max-width: none;
+}
+
+.bg-color-preview {
+  display: inline-block;
+  width: 48px;
+  height: 24px;
+  margin-top: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
 #threejs-container-1 {
   margin-bottom: 40px;
   border: 1px solid #eee;
