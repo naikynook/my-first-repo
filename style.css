@@ -46,7 +46,7 @@ header .right a {
 
 /* Style the main content area */
 main {
-  max-width: 800px;                   /* Limit the maximum width to 800 pixels */
+  max-width: 1100px;                  /* Wide enough for the 1024px interactive grid */
   margin: 60px auto;                  /* Add 60px top/bottom margin, center horizontally */
   padding: 0 20px;                    /* Add 20px left/right padding, no top/bottom */
 }
@@ -141,7 +141,9 @@ button:hover {
 #canvas-container-2 {
   margin-bottom: 40px;
   width: fit-content;
+  max-width: 100%;
   line-height: 0;
+  overflow-x: auto;
 }
 
 #canvas-container-2 canvas {
