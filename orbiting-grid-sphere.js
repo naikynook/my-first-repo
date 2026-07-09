@@ -1,4 +1,4 @@
-// three-sketch.js
+// orbiting-grid-sphere.js
 // Stationary grid sphere with mouse orbit controls on a white background
 
 (function() {

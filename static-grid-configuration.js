@@ -1,4 +1,4 @@
-// Grid Configuration
+// static-grid-configuration.js
 var sketch1 = function(p) {
   const cols = 10;          // Number of columns
   const rows = 10;          // Number of rows

@@ -1,4 +1,4 @@
-// Interactive Grid Wave - using p5.js instance mode
+// 2d-matrix-wave.js
 var sketch2 = function(p) {
   const cols = 30;          // 30 columns for a wide grid
   const rows = 15;          // 15 rows

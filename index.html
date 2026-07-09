@@ -88,32 +88,32 @@
 
     <!-- ADD A NEW 'CANVAS CONTAINER' FOR EACH NEW P5.JS SKETCH (THE ORDER IS DEFINED BY THE CONTAINER NUMBER BELOW + THE MOST RECENT SKETCH SHOULD BE AT THE TOP) -->
 
-    <!-- Section for Three.js sketch (three-sketch.js) -->
+    <!-- Section for Three.js sketch (orbiting-grid-sphere.js) -->
     <div class="section-title">Orbiting Grid Sphere</div>
     <p>A stationary Three.js sphere wrapped in a white cell grid. Drag to orbit the camera around it, or scroll to zoom in and out. The grid texture is drawn on a canvas and mapped onto the sphere surface, while OrbitControls move the camera instead of rotating the object itself.</p>
 
-    <!-- Canvas container for Three.js sketch (three-sketch.js) -->
+    <!-- Canvas container for Three.js sketch (orbiting-grid-sphere.js) -->
     <div id="threejs-container-1"></div>
 
-    <!-- Section for interactive Three.js sketch (zoom-pan.js) -->
+    <!-- Section for interactive Three.js sketch (interactive-sphere-matrix.js) -->
     <div class="section-title">Interactive Sphere Matrix</div>
     <p>An interactive Three.js sphere that behaves like a matrix panel wrapped in 3D. Use the sliders to change grid density and background color, scroll to zoom, and click the sphere to send a rainbow wave across individual cells. The code redraws a canvas texture each frame, measuring distance from the clicked cell to color only the squares inside a moving wave band.</p>
 
-    <!-- Canvas container for interactive Three.js sketch (zoom-pan.js) -->
+    <!-- Canvas container for interactive Three.js sketch (interactive-sphere-matrix.js) -->
     <div id="canvas-container-3"></div>
 
-    <!-- Section for first p5.js sketch (2d-drawing.js) -->
+    <!-- Section for first p5.js sketch (static-grid-configuration.js) -->
     <div class="section-title">Static Grid Configuration</div>
     <p>A fixed 10×10 matrix of white squares on a black field with even spacing between cells. The canvas size is calculated from the number of columns, rows, square size, and spacing, then nested loops place each cell at its computed x and y position. The sketch runs once with noLoop(), treating the grid as a precise spatial layout rather than an animation.</p>
     
-    <!-- Canvas container for first p5.js sketch (2d-drawing.js) -->
+    <!-- Canvas container for first p5.js sketch (static-grid-configuration.js) -->
     <div id="canvas-container-1"></div>
   
-    <!-- Section for second p5.js sketch (bouncing-ball.js) --> 
+    <!-- Section for second p5.js sketch (2d-matrix-wave.js) --> 
     <div class="section-title">2D Matrix Wave</div>
     <p>A flat p5.js grid where each square acts as an individual cell in a matrix panel. Click anywhere to trigger a radiating rainbow wave from that point. On each frame, the code expands a circular wave radius and tests every cell’s distance from the click; only cells inside the wave front receive shifting HSB colors before returning to white.</p>
     
-    <!-- Canvas container for second p5.js sketch (bouncing-ball.js) --> 
+    <!-- Canvas container for second p5.js sketch (2d-matrix-wave.js) --> 
     <div id="canvas-container-2"></div>
  
     <!-- ------------------------------------------------------------ -->
@@ -126,10 +126,10 @@
 
   <!-- LOAD EACH NEW P5.JS SCRIPT HERE -->
 
-  <script src="three-sketch.js?v=20260708k"></script>
-  <script src="2d-drawing.js?v=20260708"></script>
-  <script src="bouncing-ball.js?v=20260708b"></script>
-  <script src="zoom-pan.js?v=20260708o"></script>
+  <script src="orbiting-grid-sphere.js"></script>
+  <script src="static-grid-configuration.js"></script>
+  <script src="2d-matrix-wave.js"></script>
+  <script src="interactive-sphere-matrix.js"></script>
 
   <!-- ------------------------------------------------------------ -->
 

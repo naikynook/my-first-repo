@@ -1,4 +1,4 @@
-// zoom-pan.js
+// interactive-sphere-matrix.js
 // Interactive Three.js sphere: grid texture, scroll zoom, density slider, click wave
 
 (function() {
