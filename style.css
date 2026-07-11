@@ -188,15 +188,20 @@ button:hover {
   margin-bottom: 40px;
   border: 1px solid #eee;
   border-radius: 4px;
-  overflow-x: auto;
-  width: fit-content;
-  max-width: 100%;
-  padding: 20px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 1100px;
+  padding: 16px;
   background: #ffffff;
+  box-sizing: border-box;
 }
 
 #chart svg {
   display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
 }
 
 #threejs-container-1 {
