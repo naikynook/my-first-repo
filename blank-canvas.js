@@ -1,7 +1,13 @@
 // blank-canvas.js
 // D3 bar chart
 
-(function() {
+function initFruitBarChart() {
+  if (typeof d3 === "undefined") {
+    document.getElementById("chart").innerHTML =
+      "<p>Could not load D3.js. Check your internet connection and refresh the page.</p>";
+    return;
+  }
+
   const fruits = ["Apple", "Banana", "Orange", "Grape"];
   const counts = [5, 3, 7, 2];
 
@@ -30,5 +36,12 @@
     .attr("x", (d, i) => i * 80 + 80)
     .attr("y", 280)
     .attr("text-anchor", "middle")
+    .attr("fill", "#111111")
     .text(d => d);
-})();
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initFruitBarChart);
+} else {
+  initFruitBarChart();
+}
