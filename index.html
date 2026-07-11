@@ -88,6 +88,13 @@
 
     <!-- ADD A NEW 'CANVAS CONTAINER' FOR EACH NEW P5.JS SKETCH (THE ORDER IS DEFINED BY THE CONTAINER NUMBER BELOW + THE MOST RECENT SKETCH SHOULD BE AT THE TOP) -->
 
+    <!-- Section for blank Three.js sketch (blank-canvas.js) -->
+    <div class="section-title">Blank Canvas</div>
+    <p>An empty canvas placeholder ready for a future sketch.</p>
+
+    <!-- Canvas container for blank Three.js sketch (blank-canvas.js) -->
+    <div id="threejs-container-0"></div>
+
     <!-- Section for Three.js sketch (orbiting-grid-sphere.js) -->
     <div class="section-title">Orbiting Grid Sphere</div>
     <p>A stationary Three.js sphere wrapped in a white cell grid. Drag to orbit the camera around it, or scroll to zoom in and out. The grid texture is drawn on a canvas and mapped onto the sphere surface, while OrbitControls move the camera instead of rotating the object itself.</p>
@@ -126,6 +133,7 @@
 
   <!-- LOAD EACH NEW P5.JS SCRIPT HERE -->
 
+  <script src="blank-canvas.js"></script>
   <script src="orbiting-grid-sphere.js"></script>
   <script src="static-grid-configuration.js"></script>
   <script src="2d-matrix-wave.js"></script>

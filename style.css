@@ -184,6 +184,19 @@ button:hover {
   margin-top: 20px;
 }
 
+#threejs-container-0 {
+  margin-bottom: 40px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  overflow: hidden;
+  width: fit-content;
+  line-height: 0;
+}
+
+#threejs-container-0 canvas {
+  display: block;
+}
+
 #threejs-container-1 {
   margin-bottom: 40px;
   border: 1px solid #eee;
