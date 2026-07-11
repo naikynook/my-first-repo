@@ -1,26 +1,34 @@
 // blank-canvas.js
-// Empty Three.js canvas placeholder
+// D3 bar chart
 
 (function() {
-  const WIDTH = 800;
-  const HEIGHT = 400;
+  const fruits = ["Apple", "Banana", "Orange", "Grape"];
+  const counts = [5, 3, 7, 2];
 
-  const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xffffff);
+  const chart = document.getElementById("chart");
+  chart.innerHTML = "";
 
-  const camera = new THREE.PerspectiveCamera(45, WIDTH / HEIGHT, 0.1, 100);
-  camera.position.set(0, 0, 5);
-  camera.lookAt(0, 0, 0);
+  const svg = d3.select("#chart")
+    .append("svg")
+    .attr("width", 400)
+    .attr("height", 300);
 
-  const renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setSize(WIDTH, HEIGHT);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  document.getElementById('threejs-container-0').appendChild(renderer.domElement);
+  svg.selectAll("rect")
+    .data(counts)
+    .enter()
+    .append("rect")
+    .attr("x", (d, i) => i * 80 + 50)
+    .attr("y", d => 250 - d * 20)
+    .attr("width", 60)
+    .attr("height", d => d * 20)
+    .attr("fill", "steelblue");
 
-  function animate() {
-    requestAnimationFrame(animate);
-    renderer.render(scene, camera);
-  }
-
-  animate();
+  svg.selectAll("text")
+    .data(fruits)
+    .enter()
+    .append("text")
+    .attr("x", (d, i) => i * 80 + 80)
+    .attr("y", 280)
+    .attr("text-anchor", "middle")
+    .text(d => d);
 })();
