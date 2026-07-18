@@ -25,7 +25,7 @@
   <title>Code Visualizer</title>
   <!-- This is the title that appears in the browser tab and bookmarks -->
   
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600&family=Outfit:wght@400;500;600&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
   <!-- This loads the Roboto font from Google Fonts for use on our page -->
   
   <link rel="stylesheet" href="style.css?v=20260708h">
@@ -87,6 +87,12 @@
     <!-- Canvas container for D3 relational network (relational-structures.js) -->
     <div id="canvas-container-4"></div>
 
+    <div class="section-title">Circular Relations</div>
+    <p>The same three related shooting tables, redrawn as a chord diagram: offender race on one side of each ribbon, victim race on the other. The palette is intentionally soft — blush, lilac, mint, peach — so the cuteness of the form sits against the gravity of the data. Ribbon width is volume; hover a group or chord to isolate a relationship and see murder counts inside it.</p>
+
+    <!-- Canvas container for D3 chord diagram (relational-chord.js) -->
+    <div id="canvas-container-5"></div>
+
     <div class="section-title">Digital Object 2: Temporal Structures</div>
     <p>Temporal structures organize change over time, turning sequences of days and years into something you can see at once. Rather than treating data as a static table, this section asks how a calendar can become a matrix panel — a surface where time itself is the layout.</p>
 
@@ -140,6 +146,7 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
   <script src="relational-structures.js?v=20260718o"></script>
+  <script src="relational-chord.js?v=20260718d"></script>
   <script src="blank-canvas.js?v=20260711q"></script>
   <script src="orbiting-grid-sphere.js"></script>
   <script src="static-grid-configuration.js"></script>
