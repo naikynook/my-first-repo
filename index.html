@@ -77,16 +77,18 @@
     <!-- <br> creates a line break -->
     <!-- <strong> makes the text bold for emphasis -->
     
-    <div class="section-title">Digital Object 1: Spatial Canvases</div>
-    <!-- Section heading for the p5.js canvas demonstration -->
-    
-    <p>I chose to use the P5.js and three.js libraries to explore how code and web design can be used, perhaps with a projector, to create visual environments. Music visuals at concerts are a big inspiration and aspiration for what I hope code and web design can do for me.</p>
-    <!-- Introduction to the first section -->
-
-
     <!-- ------------------------------------------------------------ -->
 
     <!-- ADD A NEW 'CANVAS CONTAINER' FOR EACH NEW P5.JS SKETCH (THE ORDER IS DEFINED BY THE CONTAINER NUMBER BELOW + THE MOST RECENT SKETCH SHOULD BE AT THE TOP) -->
+
+    <div class="section-title">Digital Object 3: Relational Structures</div>
+    <p>NYPD publishes shootings as three related tables — incidents, victims, and offenders — joined by a shared incident key. This D3 network makes those relationships visible: offenders flow into boroughs, boroughs into victims. Node size shows volume; link thickness shows how often a path appears; redder links carry a higher share of statistical murders. Hover any node or edge for counts, and drag nodes to inspect the structure.</p>
+
+    <!-- Canvas container for D3 relational network (relational-structures.js) -->
+    <div id="canvas-container-4"></div>
+
+    <div class="section-title">Digital Object 2: Temporal Structures</div>
+    <p>Temporal structures organize change over time, turning sequences of days and years into something you can see at once. Rather than treating data as a static table, this section asks how a calendar can become a matrix panel — a surface where time itself is the layout.</p>
 
     <!-- Section for D3 sketch (blank-canvas.js) -->
     <div class="section-title">Shootings Calendar</div>
@@ -94,6 +96,9 @@
 
     <!-- Chart container for D3 sketch (blank-canvas.js) -->
     <div id="chart"></div>
+
+    <div class="section-title">Digital Object 1: Spatial Canvases</div>
+    <p>I chose to use the P5.js and three.js libraries to explore how code and web design can be used, perhaps with a projector, to create visual environments. Music visuals at concerts are a big inspiration and aspiration for what I hope code and web design can do for me.</p>
 
     <!-- Section for Three.js sketch (orbiting-grid-sphere.js) -->
     <div class="section-title">Orbiting Grid Sphere</div>
@@ -134,6 +139,7 @@
   <!-- LOAD EACH NEW P5.JS SCRIPT HERE -->
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+  <script src="relational-structures.js?v=20260718o"></script>
   <script src="blank-canvas.js?v=20260711q"></script>
   <script src="orbiting-grid-sphere.js"></script>
   <script src="static-grid-configuration.js"></script>
