@@ -28,7 +28,8 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600&family=Outfit:wght@400;500;600&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
   <!-- This loads the Roboto font from Google Fonts for use on our page -->
   
-  <link rel="stylesheet" href="style.css?v=20260708h">
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=20260721b">
   <!-- This links our CSS file to style the page - the href points to our style.css file -->
 </head>
 
@@ -80,6 +81,12 @@
     <!-- ------------------------------------------------------------ -->
 
     <!-- ADD A NEW 'CANVAS CONTAINER' FOR EACH NEW P5.JS SKETCH (THE ORDER IS DEFINED BY THE CONTAINER NUMBER BELOW + THE MOST RECENT SKETCH SHOULD BE AT THE TOP) -->
+
+    <div class="section-title">Digital Object 4: Geospatial Structures</div>
+    <p>Geospatial structures locate data in place — coordinates, neighborhoods, and the uneven surfaces of a city. This section will explore how maps and spatial layouts can turn location into a visual field, asking what becomes visible when incidents are read through geography rather than only through time or relationship.</p>
+
+    <!-- Canvas container for geospatial sketch (geospatial-structures.js) -->
+    <div id="canvas-container-6"></div>
 
     <div class="section-title">Digital Object 3: Relational Structures</div>
     <p>NYPD publishes shootings as three related tables — incidents, victims, and offenders — joined by a shared incident key. This D3 network makes those relationships visible: offenders flow into boroughs, boroughs into victims. Node size shows volume; link thickness shows how often a path appears; redder links carry a higher share of statistical murders. Hover any node or edge for counts, and drag nodes to inspect the structure. The goal is to bring in other datasets related to inequality to contextualize the distribution within a broader context related to class divisions and disparities.</p>
@@ -145,6 +152,10 @@
   <!-- LOAD EACH NEW P5.JS SCRIPT HERE -->
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6.5.0/turf.min.js"></script>
+  <script src="mapbox-config.js"></script>
+  <script src="geospatial-structures.js?v=20260721o"></script>
   <script src="relational-structures.js?v=20260718o"></script>
   <script src="relational-chord.js?v=20260718d"></script>
   <script src="blank-canvas.js?v=20260711q"></script>

@@ -1,0 +1,4 @@
+# Local secrets / machine-specific config
+mapbox-config.js
+.env
+.env.local
