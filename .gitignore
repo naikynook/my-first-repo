@@ -1,4 +1,4 @@
-# Local secrets / machine-specific config
+# Local secrets / machine-specific config — never commit these
 mapbox-config.js
 .env
 .env.local
