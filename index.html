@@ -29,7 +29,7 @@
   <!-- This loads the Roboto font from Google Fonts for use on our page -->
   
   <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260721b">
+  <link rel="stylesheet" href="style.css?v=20260721p">
   <!-- This links our CSS file to style the page - the href points to our style.css file -->
 </head>
 
@@ -53,10 +53,22 @@
       <!-- class="center" allows us to style this span differently -->
     </div>
     
-    <div class="right">About</div>
-    <!-- This div creates a container for the right side of the header -->
-    <!-- <a href="#">About</a> creates a clickable link (currently goes nowhere with #) -->
+    <button type="button" class="right about-trigger" id="about-trigger" aria-haspopup="dialog" aria-controls="about-modal">About</button>
+    <!-- This button opens the About widget -->
   </header>
+
+  <div class="about-modal" id="about-modal" hidden>
+    <div class="about-modal-backdrop" data-about-close></div>
+    <div class="about-modal-panel" role="dialog" aria-modal="true" aria-labelledby="about-modal-title">
+      <div class="about-modal-header">
+        <h2 id="about-modal-title">About</h2>
+        <button type="button" class="about-modal-close" data-about-close aria-label="Close">&times;</button>
+      </div>
+      <div class="about-modal-body">
+        <!-- Blank for now — add About content here later -->
+      </div>
+    </div>
+  </div>
 
   <main>
     <!-- The main tag contains the primary content of the page -->
@@ -163,6 +175,36 @@
   <script src="static-grid-configuration.js"></script>
   <script src="2d-matrix-wave.js"></script>
   <script src="interactive-sphere-matrix.js"></script>
+
+  <script>
+    (function() {
+      const trigger = document.getElementById("about-trigger");
+      const modal = document.getElementById("about-modal");
+      if (!trigger || !modal) {
+        return;
+      }
+
+      function openAbout() {
+        modal.hidden = false;
+        document.body.classList.add("about-open");
+      }
+
+      function closeAbout() {
+        modal.hidden = true;
+        document.body.classList.remove("about-open");
+      }
+
+      trigger.addEventListener("click", openAbout);
+      modal.querySelectorAll("[data-about-close]").forEach(function(el) {
+        el.addEventListener("click", closeAbout);
+      });
+      document.addEventListener("keydown", function(event) {
+        if (event.key === "Escape" && !modal.hidden) {
+          closeAbout();
+        }
+      });
+    })();
+  </script>
 
   <!-- ------------------------------------------------------------ -->
 
