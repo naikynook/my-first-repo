@@ -29,7 +29,7 @@
   <!-- This loads the Roboto font from Google Fonts for use on our page -->
   
   <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260725a">
+  <link rel="stylesheet" href="style.css?v=20260725b">
   <!-- This links our CSS file to style the page - the href points to our style.css file -->
 </head>
 
@@ -94,31 +94,121 @@
 
     <!-- ADD A NEW 'CANVAS CONTAINER' FOR EACH NEW P5.JS SKETCH (THE ORDER IS DEFINED BY THE CONTAINER NUMBER BELOW + THE MOST RECENT SKETCH SHOULD BE AT THE TOP) -->
 
-    <div class="section-title">Engagement Components: Live Poll</div>
-    <p>A shared poll wired to a Firebase Realtime Database. Every vote is written to one database that all visitors read from, so the counts below update live for everyone on the page at the same time — no refresh, no server of my own.</p>
+    <div class="section-title">Engagement Components: Facial Recognition Survey</div>
+    <p>A five-question yes/no survey about facial recognition technology (FRT) in cities. Answers are stored in a Firebase Realtime Database, so the live counts update for everyone on the page at the same time — no refresh required.</p>
 
-    <!-- Canvas container for the Firebase poll (poll-app.js) -->
+    <!-- Canvas container for the Firebase FRT survey (poll-app.js) -->
     <div id="canvas-container-7">
-      <div class="poll-app">
-        <p class="poll-question">Should data visualization prioritize clarity over aesthetics?</p>
+      <div class="poll-app" id="frt-survey">
+        <p class="poll-intro">Facial recognition in the city — five quick questions</p>
 
-        <div class="poll-buttons">
-          <button type="button" id="vote-yes">Yes</button>
-          <button type="button" id="vote-no">No</button>
+        <div class="poll-question-block" data-question="q1">
+          <p class="poll-question">1. Do you think facial recognition technology makes cities safer overall?</p>
+          <div class="poll-buttons">
+            <button type="button" data-vote="yes">Yes</button>
+            <button type="button" data-vote="no">No</button>
+          </div>
+          <div class="poll-results">
+            <div class="poll-result">
+              <span class="poll-result-label">Yes</span>
+              <span class="poll-result-count" data-count="yes">0</span>
+            </div>
+            <div class="poll-result">
+              <span class="poll-result-label">No</span>
+              <span class="poll-result-count" data-count="no">0</span>
+            </div>
+            <div class="poll-result">
+              <span class="poll-result-label">Total</span>
+              <span class="poll-result-count" data-count="total">0</span>
+            </div>
+          </div>
         </div>
 
-        <div class="poll-results">
-          <div class="poll-result">
-            <span class="poll-result-label">Yes</span>
-            <span class="poll-result-count" id="yes-count">0</span>
+        <div class="poll-question-block" data-question="q2">
+          <p class="poll-question">2. Should police be allowed to use FRT in public spaces without a warrant?</p>
+          <div class="poll-buttons">
+            <button type="button" data-vote="yes">Yes</button>
+            <button type="button" data-vote="no">No</button>
           </div>
-          <div class="poll-result">
-            <span class="poll-result-label">No</span>
-            <span class="poll-result-count" id="no-count">0</span>
+          <div class="poll-results">
+            <div class="poll-result">
+              <span class="poll-result-label">Yes</span>
+              <span class="poll-result-count" data-count="yes">0</span>
+            </div>
+            <div class="poll-result">
+              <span class="poll-result-label">No</span>
+              <span class="poll-result-count" data-count="no">0</span>
+            </div>
+            <div class="poll-result">
+              <span class="poll-result-label">Total</span>
+              <span class="poll-result-count" data-count="total">0</span>
+            </div>
           </div>
-          <div class="poll-result">
-            <span class="poll-result-label">Total</span>
-            <span class="poll-result-count" id="total-votes">0</span>
+        </div>
+
+        <div class="poll-question-block" data-question="q3">
+          <p class="poll-question">3. Would you feel comfortable with FRT cameras operating in your own neighborhood?</p>
+          <div class="poll-buttons">
+            <button type="button" data-vote="yes">Yes</button>
+            <button type="button" data-vote="no">No</button>
+          </div>
+          <div class="poll-results">
+            <div class="poll-result">
+              <span class="poll-result-label">Yes</span>
+              <span class="poll-result-count" data-count="yes">0</span>
+            </div>
+            <div class="poll-result">
+              <span class="poll-result-label">No</span>
+              <span class="poll-result-count" data-count="no">0</span>
+            </div>
+            <div class="poll-result">
+              <span class="poll-result-label">Total</span>
+              <span class="poll-result-count" data-count="total">0</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="poll-question-block" data-question="q4">
+          <p class="poll-question">4. Do you trust city governments to use facial recognition responsibly and without misuse?</p>
+          <div class="poll-buttons">
+            <button type="button" data-vote="yes">Yes</button>
+            <button type="button" data-vote="no">No</button>
+          </div>
+          <div class="poll-results">
+            <div class="poll-result">
+              <span class="poll-result-label">Yes</span>
+              <span class="poll-result-count" data-count="yes">0</span>
+            </div>
+            <div class="poll-result">
+              <span class="poll-result-label">No</span>
+              <span class="poll-result-count" data-count="no">0</span>
+            </div>
+            <div class="poll-result">
+              <span class="poll-result-label">Total</span>
+              <span class="poll-result-count" data-count="total">0</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="poll-question-block" data-question="q5">
+          <p class="poll-question">5. Should cities ban or strictly limit FRT until bias and privacy concerns are better addressed?</p>
+          <div class="poll-buttons">
+            <button type="button" data-vote="yes">Yes</button>
+            <button type="button" data-vote="no">No</button>
+          </div>
+          <div class="poll-results">
+            <div class="poll-result">
+              <span class="poll-result-label">Yes</span>
+              <span class="poll-result-count" data-count="yes">0</span>
+            </div>
+            <div class="poll-result">
+              <span class="poll-result-label">No</span>
+              <span class="poll-result-count" data-count="no">0</span>
+            </div>
+            <div class="poll-result">
+              <span class="poll-result-label">Total</span>
+              <span class="poll-result-count" data-count="total">0</span>
+            </div>
           </div>
         </div>
 
@@ -198,7 +288,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
   <script src="firebase-config.js"></script>
-  <script src="poll-app.js?v=20260725a"></script>
+  <script src="poll-app.js?v=20260725b"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
   <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6.5.0/turf.min.js"></script>

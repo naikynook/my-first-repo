@@ -2,18 +2,23 @@
   "rules": {
     ".read": false,
     ".write": false,
-    "poll": {
-      ".read": true,
-      "yes": {
-        ".write": true,
-        ".validate": "newData.isNumber() && (!data.exists() || newData.val() === data.val() + 1)"
-      },
-      "no": {
-        ".write": true,
-        ".validate": "newData.isNumber() && (!data.exists() || newData.val() === data.val() + 1)"
-      },
-      "$other": {
-        ".validate": false
+    "survey": {
+      "frt": {
+        ".read": true,
+        "$question": {
+          ".validate": "$question.matches(/^q[1-5]$/)",
+          "yes": {
+            ".write": true,
+            ".validate": "newData.isNumber() && (!data.exists() || newData.val() === data.val() + 1)"
+          },
+          "no": {
+            ".write": true,
+            ".validate": "newData.isNumber() && (!data.exists() || newData.val() === data.val() + 1)"
+          },
+          "$other": {
+            ".validate": false
+          }
+        }
       }
     }
   }

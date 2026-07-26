@@ -1,26 +1,15 @@
-// Firebase Poll App - Tutorial JavaScript
-// This script demonstrates how to integrate Firebase Realtime Database with a simple web app
-// It shows real-time data synchronization across multiple users
+// Firebase FRT Survey — five yes/no questions with live counts
+// Answers sync through Firebase Realtime Database for everyone on the page.
 
 document.addEventListener('DOMContentLoaded', function() {
-
-  // ========================================
-  // STEP 1: FIREBASE CONFIGURATION
-  // ========================================
-  // The config object lives in firebase-config.js so it can be swapped without touching
-  // this file. Firebase web configs are public by design; access is controlled by the
-  // Realtime Database rules and by API key referrer restrictions.
-
   const firebaseConfig = window.FIREBASE_CONFIG;
-
-  const yesButton = document.getElementById('vote-yes');
-  const noButton = document.getElementById('vote-no');
-  const yesCount = document.getElementById('yes-count');
-  const noCount = document.getElementById('no-count');
-  const totalVotes = document.getElementById('total-votes');
+  const surveyRoot = document.getElementById('frt-survey');
   const connectionStatus = document.getElementById('connection-status');
+  const questionBlocks = surveyRoot
+    ? surveyRoot.querySelectorAll('.poll-question-block')
+    : [];
 
-  if (!yesButton || !noButton || !yesCount || !noCount || !totalVotes) {
+  if (!surveyRoot || !questionBlocks.length) {
     return;
   }
 
@@ -31,66 +20,73 @@ document.addEventListener('DOMContentLoaded', function() {
     return;
   }
 
-  // Initialize Firebase - this connects your app to Firebase services
   firebase.initializeApp(firebaseConfig);
-
-  // Get a reference to the Firebase Realtime Database
   const database = firebase.database();
+  const surveyRef = database.ref('survey/frt');
 
-  // ========================================
-  // STEP 2: SET UP REAL-TIME DATABASE LISTENERS
-  // ========================================
-  // Firebase Realtime Database automatically updates the app when data changes.
-  // .on('value') listens for any change to our poll data.
+  const questions = ['q1', 'q2', 'q3', 'q4', 'q5'];
 
-  database.ref('poll/yes').on('value', function(snapshot) {
-    const count = snapshot.val() || 0;
-    yesCount.textContent = count;
-    updateTotalVotes();
+  function updateBlockTotals(block) {
+    const yesEl = block.querySelector('[data-count="yes"]');
+    const noEl = block.querySelector('[data-count="no"]');
+    const totalEl = block.querySelector('[data-count="total"]');
+    if (!yesEl || !noEl || !totalEl) {
+      return;
+    }
+    const yesVotes = parseInt(yesEl.textContent, 10) || 0;
+    const noVotes = parseInt(noEl.textContent, 10) || 0;
+    totalEl.textContent = yesVotes + noVotes;
+  }
+
+  // Live listeners for each question's yes/no counts
+  questions.forEach(function(questionId) {
+    const block = surveyRoot.querySelector('[data-question="' + questionId + '"]');
+    if (!block) {
+      return;
+    }
+
+    surveyRef.child(questionId + '/yes').on('value', function(snapshot) {
+      const yesEl = block.querySelector('[data-count="yes"]');
+      if (yesEl) {
+        yesEl.textContent = snapshot.val() || 0;
+      }
+      updateBlockTotals(block);
+    });
+
+    surveyRef.child(questionId + '/no').on('value', function(snapshot) {
+      const noEl = block.querySelector('[data-count="no"]');
+      if (noEl) {
+        noEl.textContent = snapshot.val() || 0;
+      }
+      updateBlockTotals(block);
+    });
   });
 
-  database.ref('poll/no').on('value', function(snapshot) {
-    const count = snapshot.val() || 0;
-    noCount.textContent = count;
-    updateTotalVotes();
-  });
-
-  // ========================================
-  // STEP 3: SET UP BUTTON EVENT LISTENERS
-  // ========================================
-  // A transaction increments safely even when several people vote at the same moment.
-
-  function castVote(choice, label) {
-    database.ref('poll/' + choice)
+  function castVote(questionId, choice) {
+    surveyRef.child(questionId + '/' + choice)
       .transaction(function(current) {
         return (current || 0) + 1;
       })
       .then(function() {
-        showVoteConfirmation(label);
+        showToast('Response recorded: ' + choice.toUpperCase(), '#4CAF50');
       })
       .catch(function(error) {
         console.error('Error recording vote:', error);
-        showError('Failed to record vote. Please try again.');
+        showToast('Failed to record vote. Please try again.', '#f44336');
       });
   }
 
-  yesButton.addEventListener('click', function() {
-    castVote('yes', 'Yes');
+  questionBlocks.forEach(function(block) {
+    const questionId = block.getAttribute('data-question');
+    block.querySelectorAll('[data-vote]').forEach(function(button) {
+      button.addEventListener('click', function() {
+        const choice = button.getAttribute('data-vote');
+        if (questionId && (choice === 'yes' || choice === 'no')) {
+          castVote(questionId, choice);
+        }
+      });
+    });
   });
-
-  noButton.addEventListener('click', function() {
-    castVote('no', 'No');
-  });
-
-  // ========================================
-  // STEP 4: HELPER FUNCTIONS
-  // ========================================
-
-  function updateTotalVotes() {
-    const yesVotes = parseInt(yesCount.textContent, 10) || 0;
-    const noVotes = parseInt(noCount.textContent, 10) || 0;
-    totalVotes.textContent = yesVotes + noVotes;
-  }
 
   function showToast(message, background) {
     const toast = document.createElement('div');
@@ -108,18 +104,6 @@ document.addEventListener('DOMContentLoaded', function() {
       }, 300);
     }, 3000);
   }
-
-  function showVoteConfirmation(vote) {
-    showToast('Thank you for voting "' + vote + '"!', '#4CAF50');
-  }
-
-  function showError(message) {
-    showToast(message, '#f44336');
-  }
-
-  // ========================================
-  // STEP 5: CONNECTION STATUS MONITORING
-  // ========================================
 
   if (connectionStatus) {
     database.ref('.info/connected').on('value', function(snapshot) {
