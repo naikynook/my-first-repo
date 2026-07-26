@@ -213,6 +213,100 @@ button:hover {
   min-height: 20px;                   /* Set minimum height so the area is visible even when empty */
 }
 
+/* Firebase live poll (poll-app.js) */
+#canvas-container-7 {
+  margin-bottom: 40px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fafafa;
+  box-sizing: border-box;
+}
+
+.poll-app {
+  padding: 24px;
+}
+
+.poll-question {
+  margin: 0 0 16px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.poll-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.poll-buttons button {
+  margin-bottom: 0;
+  min-width: 96px;
+}
+
+.poll-results {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.poll-result {
+  flex: 1 1 120px;
+  padding: 12px 14px;
+  border: 1px solid #e2e2e2;
+  border-radius: 4px;
+  background: #fff;
+}
+
+.poll-result-label {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #888;
+  margin-bottom: 4px;
+}
+
+.poll-result-count {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.poll-status {
+  margin-top: 16px;
+  font-size: 13px;
+}
+
+.poll-status p {
+  margin: 0;
+  font-size: 13px;
+}
+
+.poll-toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  padding: 12px 20px;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 14px;
+  animation: pollToastIn 0.3s ease-out;
+}
+
+.poll-toast.is-leaving {
+  animation: pollToastOut 0.3s ease-in forwards;
+}
+
+@keyframes pollToastIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes pollToastOut {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(100%); opacity: 0; }
+}
+
 /* Style for canvas containers to add spacing between them */
 #canvas-container-1 {
   margin-bottom: 40px;

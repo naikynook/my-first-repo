@@ -29,7 +29,7 @@
   <!-- This loads the Roboto font from Google Fonts for use on our page -->
   
   <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260721p">
+  <link rel="stylesheet" href="style.css?v=20260725a">
   <!-- This links our CSS file to style the page - the href points to our style.css file -->
 </head>
 
@@ -93,6 +93,38 @@
     <!-- ------------------------------------------------------------ -->
 
     <!-- ADD A NEW 'CANVAS CONTAINER' FOR EACH NEW P5.JS SKETCH (THE ORDER IS DEFINED BY THE CONTAINER NUMBER BELOW + THE MOST RECENT SKETCH SHOULD BE AT THE TOP) -->
+
+    <div class="section-title">Engagement Components: Live Poll</div>
+    <p>A shared poll wired to a Firebase Realtime Database. Every vote is written to one database that all visitors read from, so the counts below update live for everyone on the page at the same time — no refresh, no server of my own.</p>
+
+    <!-- Canvas container for the Firebase poll (poll-app.js) -->
+    <div id="canvas-container-7">
+      <div class="poll-app">
+        <p class="poll-question">Should data visualization prioritize clarity over aesthetics?</p>
+
+        <div class="poll-buttons">
+          <button type="button" id="vote-yes">Yes</button>
+          <button type="button" id="vote-no">No</button>
+        </div>
+
+        <div class="poll-results">
+          <div class="poll-result">
+            <span class="poll-result-label">Yes</span>
+            <span class="poll-result-count" id="yes-count">0</span>
+          </div>
+          <div class="poll-result">
+            <span class="poll-result-label">No</span>
+            <span class="poll-result-count" id="no-count">0</span>
+          </div>
+          <div class="poll-result">
+            <span class="poll-result-label">Total</span>
+            <span class="poll-result-count" id="total-votes">0</span>
+          </div>
+        </div>
+
+        <div class="poll-status" id="connection-status"></div>
+      </div>
+    </div>
 
     <div class="section-title">Digital Object 4: Geospatial Structures</div>
     <p>Geospatial structures locate data in place — coordinates, neighborhoods, and the uneven surfaces of a city. This section will explore how maps and spatial layouts can turn location into a visual field, asking what becomes visible when incidents are read through geography rather than only through time or relationship.</p>
@@ -163,6 +195,10 @@
 
   <!-- LOAD EACH NEW P5.JS SCRIPT HERE -->
 
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="poll-app.js?v=20260725a"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
   <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6.5.0/turf.min.js"></script>
