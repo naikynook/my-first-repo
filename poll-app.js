@@ -20,7 +20,9 @@ document.addEventListener('DOMContentLoaded', function() {
     return;
   }
 
-  firebase.initializeApp(firebaseConfig);
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
   const database = firebase.database();
   const surveyRef = database.ref('survey/frt');
 

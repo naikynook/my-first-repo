@@ -1,0 +1,13 @@
+{
+  "name": "agents-chat-functions",
+  "description": "Server-side OpenAI proxy for the Agents chatbot",
+  "engines": {
+    "node": "20"
+  },
+  "main": "index.js",
+  "private": true,
+  "dependencies": {
+    "firebase-admin": "^12.7.0",
+    "firebase-functions": "^6.3.0"
+  }
+}

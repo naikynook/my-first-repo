@@ -20,6 +20,31 @@
           }
         }
       }
+    },
+    "chat": {
+      "messages": {
+        ".read": true,
+        ".write": true,
+        "$messageId": {
+          ".validate": "newData.hasChildren(['text', 'sender', 'timestamp'])",
+          "text": {
+            ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 8000"
+          },
+          "sender": {
+            ".validate": "newData.val() === 'user' || newData.val() === 'bot'"
+          },
+          "timestamp": {
+            ".validate": "newData.isNumber()"
+          },
+          "$other": {
+            ".validate": false
+          }
+        }
+      },
+      "rateLimits": {
+        ".read": false,
+        ".write": false
+      }
     }
   }
 }

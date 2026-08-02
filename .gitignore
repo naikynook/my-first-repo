@@ -1,3 +1,8 @@
-# Machine-specific config (keep .env out of git)
+# Secrets and local install artifacts — never commit these
+openai-config.js
 .env
 .env.local
+functions/node_modules/
+functions/.env
+functions/.secret.local
+*.log
