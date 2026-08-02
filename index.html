@@ -21,6 +21,7 @@
   
   <meta charset="UTF-8">
   <!-- This sets the character encoding to UTF-8, which supports special characters and emojis -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   
   <title>Web Design Exploration</title>
   <!-- This is the title that appears in the browser tab and bookmarks -->
@@ -29,7 +30,7 @@
   <!-- This loads display + mono fonts for the Agents chat and page type -->
   
   <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260802a">
+  <link rel="stylesheet" href="style.css?v=20260802f">
   <!-- This links our CSS file to style the page - the href points to our style.css file -->
 </head>
 
@@ -65,247 +66,273 @@
         <button type="button" class="about-modal-close" data-about-close aria-label="Close">&times;</button>
       </div>
       <div class="about-modal-body">
-        <!-- Blank for now — add About content here later -->
+        <p>A collection of experiments for Computational Design Workflows at Columbia's GSAPP.</p>
       </div>
     </div>
   </div>
 
   <main>
     <!-- The main tag contains the primary content of the page -->
-    
-    <div class="project-meta">2026</div>
-    <!-- This div displays the year/project metadata -->
-    <!-- class="project-meta" allows us to style this with CSS -->
-    
-    <div class="project-title">Web Design Exploration</div>
-    <!-- This div displays the main project title -->
-    <!-- class="project-title" allows us to style this with CSS -->
-    
-    <div class="project-subtitle">Kody Naiker</div>
-    <!-- This div displays the student's name as a subtitle -->
-    <!-- class="project-subtitle" allows us to style this with CSS -->
-    
-    <div class="advisor">Advisor: Catherine Griffiths</div>
-    <!-- This div displays advisor information -->
-    <!-- <br> creates a line break -->
-    <!-- <strong> makes the text bold for emphasis -->
+
+    <div class="studio-intro">
+      <div class="project-meta">2026</div>
+      <!-- This div displays the year/project metadata -->
+      <!-- class="project-meta" allows us to style this with CSS -->
+      
+      <div class="project-title">Web Design Exploration</div>
+      <!-- This div displays the main project title -->
+      <!-- class="project-title" allows us to style this with CSS -->
+      
+      <div class="project-subtitle">Kody Naiker</div>
+      <!-- This div displays the student's name as a subtitle -->
+      <!-- class="project-subtitle" allows us to style this with CSS -->
+      
+      <div class="advisor">Advisor: Catherine Griffiths</div>
+      <!-- This div displays advisor information -->
+      <!-- <br> creates a line break -->
+      <!-- <strong> makes the text bold for emphasis -->
+    </div>
     
     <!-- ------------------------------------------------------------ -->
 
     <!-- ADD A NEW 'CANVAS CONTAINER' FOR EACH NEW P5.JS SKETCH (THE ORDER IS DEFINED BY THE CONTAINER NUMBER BELOW + THE MOST RECENT SKETCH SHOULD BE AT THE TOP) -->
 
-    <div class="section-title">Digital Object: Agents</div>
-    <p>An AI collaborator for projector art. Ask it for p5.js and Three.js sketches tuned to large-scale projection — grids, waves, spheres, loops, and installation-minded performance tips. Messages sync live through Firebase while replies come from ChatGPT.</p>
+    <!-- Tabbed studio layout: each button switches one digital-object panel below (Agents, Survey, Geospatial, etc.) -->
+    <nav class="object-tabs" role="tablist" aria-label="Digital objects">
+      <button type="button" class="object-tab is-active" role="tab" id="tab-agents" aria-selected="true" aria-controls="panel-agents" data-tab="agents">Agents</button>
+      <button type="button" class="object-tab" role="tab" id="tab-survey" aria-selected="false" aria-controls="panel-survey" data-tab="survey" tabindex="-1">Survey</button>
+      <button type="button" class="object-tab" role="tab" id="tab-geospatial" aria-selected="false" aria-controls="panel-geospatial" data-tab="geospatial" tabindex="-1">Geospatial</button>
+      <button type="button" class="object-tab" role="tab" id="tab-relational" aria-selected="false" aria-controls="panel-relational" data-tab="relational" tabindex="-1">Relational</button>
+      <button type="button" class="object-tab" role="tab" id="tab-temporal" aria-selected="false" aria-controls="panel-temporal" data-tab="temporal" tabindex="-1">Temporal</button>
+      <button type="button" class="object-tab" role="tab" id="tab-spatial" aria-selected="false" aria-controls="panel-spatial" data-tab="spatial" tabindex="-1">Spatial</button>
+    </nav>
 
-    <!-- Canvas container for Agents chatbot (chat-bot.js) -->
-    <div id="canvas-container-8">
-      <div class="agents-shell" id="agents-chat">
-        <div class="agents-header">
-          <div class="agents-header-copy">
-            <span class="agents-kicker">agents // creative coding</span>
-            <h3 class="agents-title">Projector Visual Assistant</h3>
+    <div class="object-stage">
+      <div class="object-panel is-active" role="tabpanel" id="panel-agents" aria-labelledby="tab-agents" data-panel="agents">
+        <div class="section-title">Digital Object: Agents</div>
+        <p>An AI collaborator for projector art. Ask it for p5.js and Three.js sketches tuned to large-scale projection — grids, waves, spheres, loops, and installation-minded performance tips. Messages sync live through Firebase while replies come from ChatGPT.</p>
+
+        <!-- Canvas container for Agents chatbot (chat-bot.js) -->
+        <div id="canvas-container-8">
+          <div class="agents-shell" id="agents-chat">
+            <div class="agents-header">
+              <div class="agents-header-copy">
+                <span class="agents-kicker">agents // creative coding</span>
+                <h3 class="agents-title">Projector Visual Assistant</h3>
+              </div>
+              <div class="agents-status" id="chat-status">booting…</div>
+            </div>
+
+            <div class="agents-stage">
+              <div class="agents-grid" aria-hidden="true"></div>
+              <div class="chat-messages" id="chat-messages"></div>
+            </div>
+
+            <form class="chat-form" id="chat-form">
+              <label class="visually-hidden" for="chat-input">Message the agent</label>
+              <textarea
+                id="chat-input"
+                class="chat-input"
+                rows="2"
+                placeholder="Describe a projection sketch… e.g. reactive three.js sphere for a dark gallery wall"
+              ></textarea>
+              <button type="submit" id="chat-send" class="chat-send">Send</button>
+            </form>
           </div>
-          <div class="agents-status" id="chat-status">booting…</div>
         </div>
+      </div>
 
-        <div class="agents-stage">
-          <div class="agents-grid" aria-hidden="true"></div>
-          <div class="chat-messages" id="chat-messages"></div>
+      <div class="object-panel" role="tabpanel" id="panel-survey" aria-labelledby="tab-survey" data-panel="survey" hidden>
+        <div class="section-title">Engagement Components: Facial Recognition Survey</div>
+        <p>A five-question yes/no survey about facial recognition technology (FRT) in cities. Answers are stored in a Firebase Realtime Database, so the live counts update for everyone on the page at the same time — no refresh required.</p>
+
+        <!-- Canvas container for the Firebase FRT survey (poll-app.js) -->
+        <div id="canvas-container-7">
+          <div class="poll-app" id="frt-survey">
+            <p class="poll-intro">Facial recognition in the city — five quick questions</p>
+
+            <div class="poll-question-block" data-question="q1">
+              <p class="poll-question">1. Do you think facial recognition technology makes cities safer overall?</p>
+              <div class="poll-buttons">
+                <button type="button" data-vote="yes">Yes</button>
+                <button type="button" data-vote="no">No</button>
+              </div>
+              <div class="poll-results">
+                <div class="poll-result">
+                  <span class="poll-result-label">Yes</span>
+                  <span class="poll-result-count" data-count="yes">0</span>
+                </div>
+                <div class="poll-result">
+                  <span class="poll-result-label">No</span>
+                  <span class="poll-result-count" data-count="no">0</span>
+                </div>
+                <div class="poll-result">
+                  <span class="poll-result-label">Total</span>
+                  <span class="poll-result-count" data-count="total">0</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="poll-question-block" data-question="q2">
+              <p class="poll-question">2. Should police be allowed to use FRT in public spaces without a warrant?</p>
+              <div class="poll-buttons">
+                <button type="button" data-vote="yes">Yes</button>
+                <button type="button" data-vote="no">No</button>
+              </div>
+              <div class="poll-results">
+                <div class="poll-result">
+                  <span class="poll-result-label">Yes</span>
+                  <span class="poll-result-count" data-count="yes">0</span>
+                </div>
+                <div class="poll-result">
+                  <span class="poll-result-label">No</span>
+                  <span class="poll-result-count" data-count="no">0</span>
+                </div>
+                <div class="poll-result">
+                  <span class="poll-result-label">Total</span>
+                  <span class="poll-result-count" data-count="total">0</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="poll-question-block" data-question="q3">
+              <p class="poll-question">3. Would you feel comfortable with FRT cameras operating in your own neighborhood?</p>
+              <div class="poll-buttons">
+                <button type="button" data-vote="yes">Yes</button>
+                <button type="button" data-vote="no">No</button>
+              </div>
+              <div class="poll-results">
+                <div class="poll-result">
+                  <span class="poll-result-label">Yes</span>
+                  <span class="poll-result-count" data-count="yes">0</span>
+                </div>
+                <div class="poll-result">
+                  <span class="poll-result-label">No</span>
+                  <span class="poll-result-count" data-count="no">0</span>
+                </div>
+                <div class="poll-result">
+                  <span class="poll-result-label">Total</span>
+                  <span class="poll-result-count" data-count="total">0</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="poll-question-block" data-question="q4">
+              <p class="poll-question">4. Do you trust city governments to use facial recognition responsibly and without misuse?</p>
+              <div class="poll-buttons">
+                <button type="button" data-vote="yes">Yes</button>
+                <button type="button" data-vote="no">No</button>
+              </div>
+              <div class="poll-results">
+                <div class="poll-result">
+                  <span class="poll-result-label">Yes</span>
+                  <span class="poll-result-count" data-count="yes">0</span>
+                </div>
+                <div class="poll-result">
+                  <span class="poll-result-label">No</span>
+                  <span class="poll-result-count" data-count="no">0</span>
+                </div>
+                <div class="poll-result">
+                  <span class="poll-result-label">Total</span>
+                  <span class="poll-result-count" data-count="total">0</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="poll-question-block" data-question="q5">
+              <p class="poll-question">5. Should cities ban or strictly limit FRT until bias and privacy concerns are better addressed?</p>
+              <div class="poll-buttons">
+                <button type="button" data-vote="yes">Yes</button>
+                <button type="button" data-vote="no">No</button>
+              </div>
+              <div class="poll-results">
+                <div class="poll-result">
+                  <span class="poll-result-label">Yes</span>
+                  <span class="poll-result-count" data-count="yes">0</span>
+                </div>
+                <div class="poll-result">
+                  <span class="poll-result-label">No</span>
+                  <span class="poll-result-count" data-count="no">0</span>
+                </div>
+                <div class="poll-result">
+                  <span class="poll-result-label">Total</span>
+                  <span class="poll-result-count" data-count="total">0</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="poll-status" id="connection-status"></div>
+          </div>
         </div>
+      </div>
 
-        <form class="chat-form" id="chat-form">
-          <label class="visually-hidden" for="chat-input">Message the agent</label>
-          <textarea
-            id="chat-input"
-            class="chat-input"
-            rows="2"
-            placeholder="Describe a projection sketch… e.g. reactive three.js sphere for a dark gallery wall"
-          ></textarea>
-          <button type="submit" id="chat-send" class="chat-send">Send</button>
-        </form>
+      <div class="object-panel" role="tabpanel" id="panel-geospatial" aria-labelledby="tab-geospatial" data-panel="geospatial" hidden>
+        <div class="section-title">Digital Object 4: Geospatial Structures</div>
+        <p>Geospatial structures locate data in place — coordinates, neighborhoods, and the uneven surfaces of a city. This section will explore how maps and spatial layouts can turn location into a visual field, asking what becomes visible when incidents are read through geography rather than only through time or relationship.</p>
+
+        <!-- Canvas container for geospatial sketch (geospatial-structures.js) -->
+        <div id="canvas-container-6"></div>
+      </div>
+
+      <div class="object-panel" role="tabpanel" id="panel-relational" aria-labelledby="tab-relational" data-panel="relational" hidden>
+        <div class="section-title">Digital Object 3: Relational Structures</div>
+        <p>NYPD publishes shootings as three related tables — incidents, victims, and offenders — joined by a shared incident key. This D3 network makes those relationships visible: offenders flow into boroughs, boroughs into victims. Node size shows volume; link thickness shows how often a path appears; redder links carry a higher share of statistical murders. Hover any node or edge for counts, and drag nodes to inspect the structure. The goal is to bring in other datasets related to inequality to contextualize the distribution within a broader context related to class divisions and disparities.</p>
+
+        <!-- Canvas container for D3 relational network (relational-structures.js) -->
+        <div id="canvas-container-4"></div>
+
+        <div class="section-title">Circular Relations</div>
+        <p>The same three related shooting tables, redrawn as a chord diagram: offender race on one side of each ribbon, victim race on the other. The palette is intentionally bright so to sit against the gravity of the data. Ribbon width is volume; hover a group or chord to isolate a relationship and see murder counts inside it.</p>
+
+        <!-- Canvas container for D3 chord diagram (relational-chord.js) -->
+        <div id="canvas-container-5"></div>
+      </div>
+
+      <div class="object-panel" role="tabpanel" id="panel-temporal" aria-labelledby="tab-temporal" data-panel="temporal" hidden>
+        <div class="section-title">Digital Object 2: Temporal Structures</div>
+        <p>Temporal structures organize change over time, turning sequences of days and years into something you can see at once. Rather than treating data as a static table, this section asks how a calendar can become a matrix panel — a surface where time itself is the layout.</p>
+
+        <!-- Section for D3 sketch (blank-canvas.js) -->
+        <div class="section-title">Shootings Calendar</div>
+        <p>Keeping in theme with using code as a visual tool, I used D3 to abstract the data, prioritizing visuals over readability. Below is data for NYC's shootings from 2006 - present, playfully shown as a calendar visualization/matrix panel. Working with a real dataset and seeing D3 examples of all the beautiful possibilities made me question art's relationship to data.</p>
+
+        <!-- Chart container for D3 sketch (blank-canvas.js) -->
+        <div id="chart"></div>
+      </div>
+
+      <div class="object-panel" role="tabpanel" id="panel-spatial" aria-labelledby="tab-spatial" data-panel="spatial" hidden>
+        <div class="section-title">Digital Object 1: Spatial Canvases</div>
+        <p>I chose to use the P5.js and three.js libraries to explore how code and web design can be used, perhaps with a projector, to create visual environments. Music visuals at concerts are a big inspiration and aspiration for what I hope code and web design can do for me.</p>
+
+        <!-- Section for Three.js sketch (orbiting-grid-sphere.js) -->
+        <div class="section-title">Orbiting Grid Sphere</div>
+        <p>A stationary Three.js sphere wrapped in a white cell grid. Drag to orbit the camera around it, or scroll to zoom in and out. The grid texture is drawn on a canvas and mapped onto the sphere surface, while OrbitControls move the camera instead of rotating the object itself.</p>
+
+        <!-- Canvas container for Three.js sketch (orbiting-grid-sphere.js) -->
+        <div id="threejs-container-1"></div>
+
+        <!-- Section for interactive Three.js sketch (interactive-sphere-matrix.js) -->
+        <div class="section-title">Interactive Sphere Matrix</div>
+        <p>An interactive Three.js sphere that behaves like a matrix panel wrapped in 3D. Use the sliders to change grid density and background color, scroll to zoom, and click the sphere to send a rainbow wave across individual cells. The code redraws a canvas texture each frame, measuring distance from the clicked cell to color only the squares inside a moving wave band.</p>
+
+        <!-- Canvas container for interactive Three.js sketch (interactive-sphere-matrix.js) -->
+        <div id="canvas-container-3"></div>
+
+        <!-- Section for first p5.js sketch (static-grid-configuration.js) -->
+        <div class="section-title">Static Grid Configuration</div>
+        <p>A fixed 10×10 matrix of white squares on a black field with even spacing between cells. The canvas size is calculated from the number of columns, rows, square size, and spacing, then nested loops place each cell at its computed x and y position. The sketch runs once with noLoop(), treating the grid as a precise spatial layout rather than an animation.</p>
+        
+        <!-- Canvas container for first p5.js sketch (static-grid-configuration.js) -->
+        <div id="canvas-container-1"></div>
+      
+        <!-- Section for second p5.js sketch (2d-matrix-wave.js) --> 
+        <div class="section-title">2D Matrix Wave</div>
+        <p>A flat p5.js grid where each square acts as an individual cell in a matrix panel. Click anywhere to trigger a radiating rainbow wave from that point. On each frame, the code expands a circular wave radius and tests every cell’s distance from the click; only cells inside the wave front receive shifting HSB colors before returning to white.</p>
+        
+        <!-- Canvas container for second p5.js sketch (2d-matrix-wave.js) --> 
+        <div id="canvas-container-2"></div>
       </div>
     </div>
-
-    <div class="section-title">Engagement Components: Facial Recognition Survey</div>
-    <p>A five-question yes/no survey about facial recognition technology (FRT) in cities. Answers are stored in a Firebase Realtime Database, so the live counts update for everyone on the page at the same time — no refresh required.</p>
-
-    <!-- Canvas container for the Firebase FRT survey (poll-app.js) -->
-    <div id="canvas-container-7">
-      <div class="poll-app" id="frt-survey">
-        <p class="poll-intro">Facial recognition in the city — five quick questions</p>
-
-        <div class="poll-question-block" data-question="q1">
-          <p class="poll-question">1. Do you think facial recognition technology makes cities safer overall?</p>
-          <div class="poll-buttons">
-            <button type="button" data-vote="yes">Yes</button>
-            <button type="button" data-vote="no">No</button>
-          </div>
-          <div class="poll-results">
-            <div class="poll-result">
-              <span class="poll-result-label">Yes</span>
-              <span class="poll-result-count" data-count="yes">0</span>
-            </div>
-            <div class="poll-result">
-              <span class="poll-result-label">No</span>
-              <span class="poll-result-count" data-count="no">0</span>
-            </div>
-            <div class="poll-result">
-              <span class="poll-result-label">Total</span>
-              <span class="poll-result-count" data-count="total">0</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="poll-question-block" data-question="q2">
-          <p class="poll-question">2. Should police be allowed to use FRT in public spaces without a warrant?</p>
-          <div class="poll-buttons">
-            <button type="button" data-vote="yes">Yes</button>
-            <button type="button" data-vote="no">No</button>
-          </div>
-          <div class="poll-results">
-            <div class="poll-result">
-              <span class="poll-result-label">Yes</span>
-              <span class="poll-result-count" data-count="yes">0</span>
-            </div>
-            <div class="poll-result">
-              <span class="poll-result-label">No</span>
-              <span class="poll-result-count" data-count="no">0</span>
-            </div>
-            <div class="poll-result">
-              <span class="poll-result-label">Total</span>
-              <span class="poll-result-count" data-count="total">0</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="poll-question-block" data-question="q3">
-          <p class="poll-question">3. Would you feel comfortable with FRT cameras operating in your own neighborhood?</p>
-          <div class="poll-buttons">
-            <button type="button" data-vote="yes">Yes</button>
-            <button type="button" data-vote="no">No</button>
-          </div>
-          <div class="poll-results">
-            <div class="poll-result">
-              <span class="poll-result-label">Yes</span>
-              <span class="poll-result-count" data-count="yes">0</span>
-            </div>
-            <div class="poll-result">
-              <span class="poll-result-label">No</span>
-              <span class="poll-result-count" data-count="no">0</span>
-            </div>
-            <div class="poll-result">
-              <span class="poll-result-label">Total</span>
-              <span class="poll-result-count" data-count="total">0</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="poll-question-block" data-question="q4">
-          <p class="poll-question">4. Do you trust city governments to use facial recognition responsibly and without misuse?</p>
-          <div class="poll-buttons">
-            <button type="button" data-vote="yes">Yes</button>
-            <button type="button" data-vote="no">No</button>
-          </div>
-          <div class="poll-results">
-            <div class="poll-result">
-              <span class="poll-result-label">Yes</span>
-              <span class="poll-result-count" data-count="yes">0</span>
-            </div>
-            <div class="poll-result">
-              <span class="poll-result-label">No</span>
-              <span class="poll-result-count" data-count="no">0</span>
-            </div>
-            <div class="poll-result">
-              <span class="poll-result-label">Total</span>
-              <span class="poll-result-count" data-count="total">0</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="poll-question-block" data-question="q5">
-          <p class="poll-question">5. Should cities ban or strictly limit FRT until bias and privacy concerns are better addressed?</p>
-          <div class="poll-buttons">
-            <button type="button" data-vote="yes">Yes</button>
-            <button type="button" data-vote="no">No</button>
-          </div>
-          <div class="poll-results">
-            <div class="poll-result">
-              <span class="poll-result-label">Yes</span>
-              <span class="poll-result-count" data-count="yes">0</span>
-            </div>
-            <div class="poll-result">
-              <span class="poll-result-label">No</span>
-              <span class="poll-result-count" data-count="no">0</span>
-            </div>
-            <div class="poll-result">
-              <span class="poll-result-label">Total</span>
-              <span class="poll-result-count" data-count="total">0</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="poll-status" id="connection-status"></div>
-      </div>
-    </div>
-
-    <div class="section-title">Digital Object 4: Geospatial Structures</div>
-    <p>Geospatial structures locate data in place — coordinates, neighborhoods, and the uneven surfaces of a city. This section will explore how maps and spatial layouts can turn location into a visual field, asking what becomes visible when incidents are read through geography rather than only through time or relationship.</p>
-
-    <!-- Canvas container for geospatial sketch (geospatial-structures.js) -->
-    <div id="canvas-container-6"></div>
-
-    <div class="section-title">Digital Object 3: Relational Structures</div>
-    <p>NYPD publishes shootings as three related tables — incidents, victims, and offenders — joined by a shared incident key. This D3 network makes those relationships visible: offenders flow into boroughs, boroughs into victims. Node size shows volume; link thickness shows how often a path appears; redder links carry a higher share of statistical murders. Hover any node or edge for counts, and drag nodes to inspect the structure. The goal is to bring in other datasets related to inequality to contextualize the distribution within a broader context related to class divisions and disparities.</p>
-
-    <!-- Canvas container for D3 relational network (relational-structures.js) -->
-    <div id="canvas-container-4"></div>
-
-    <div class="section-title">Circular Relations</div>
-    <p>The same three related shooting tables, redrawn as a chord diagram: offender race on one side of each ribbon, victim race on the other. The palette is intentionally bright so to sit against the gravity of the data. Ribbon width is volume; hover a group or chord to isolate a relationship and see murder counts inside it.</p>
-
-    <!-- Canvas container for D3 chord diagram (relational-chord.js) -->
-    <div id="canvas-container-5"></div>
-
-    <div class="section-title">Digital Object 2: Temporal Structures</div>
-    <p>Temporal structures organize change over time, turning sequences of days and years into something you can see at once. Rather than treating data as a static table, this section asks how a calendar can become a matrix panel — a surface where time itself is the layout.</p>
-
-    <!-- Section for D3 sketch (blank-canvas.js) -->
-    <div class="section-title">Shootings Calendar</div>
-    <p>Keeping in theme with using code as a visual tool, I used D3 to abstract the data, prioritizing visuals over readability. Below is data for NYC's shootings from 2006 - present, playfully shown as a calendar visualization/matrix panel. Working with a real dataset and seeing D3 examples of all the beautiful possibilities made me question art's relationship to data.</p>
-
-    <!-- Chart container for D3 sketch (blank-canvas.js) -->
-    <div id="chart"></div>
-
-    <div class="section-title">Digital Object 1: Spatial Canvases</div>
-    <p>I chose to use the P5.js and three.js libraries to explore how code and web design can be used, perhaps with a projector, to create visual environments. Music visuals at concerts are a big inspiration and aspiration for what I hope code and web design can do for me.</p>
-
-    <!-- Section for Three.js sketch (orbiting-grid-sphere.js) -->
-    <div class="section-title">Orbiting Grid Sphere</div>
-    <p>A stationary Three.js sphere wrapped in a white cell grid. Drag to orbit the camera around it, or scroll to zoom in and out. The grid texture is drawn on a canvas and mapped onto the sphere surface, while OrbitControls move the camera instead of rotating the object itself.</p>
-
-    <!-- Canvas container for Three.js sketch (orbiting-grid-sphere.js) -->
-    <div id="threejs-container-1"></div>
-
-    <!-- Section for interactive Three.js sketch (interactive-sphere-matrix.js) -->
-    <div class="section-title">Interactive Sphere Matrix</div>
-    <p>An interactive Three.js sphere that behaves like a matrix panel wrapped in 3D. Use the sliders to change grid density and background color, scroll to zoom, and click the sphere to send a rainbow wave across individual cells. The code redraws a canvas texture each frame, measuring distance from the clicked cell to color only the squares inside a moving wave band.</p>
-
-    <!-- Canvas container for interactive Three.js sketch (interactive-sphere-matrix.js) -->
-    <div id="canvas-container-3"></div>
-
-    <!-- Section for first p5.js sketch (static-grid-configuration.js) -->
-    <div class="section-title">Static Grid Configuration</div>
-    <p>A fixed 10×10 matrix of white squares on a black field with even spacing between cells. The canvas size is calculated from the number of columns, rows, square size, and spacing, then nested loops place each cell at its computed x and y position. The sketch runs once with noLoop(), treating the grid as a precise spatial layout rather than an animation.</p>
-    
-    <!-- Canvas container for first p5.js sketch (static-grid-configuration.js) -->
-    <div id="canvas-container-1"></div>
-  
-    <!-- Section for second p5.js sketch (2d-matrix-wave.js) --> 
-    <div class="section-title">2D Matrix Wave</div>
-    <p>A flat p5.js grid where each square acts as an individual cell in a matrix panel. Click anywhere to trigger a radiating rainbow wave from that point. On each frame, the code expands a circular wave radius and tests every cell’s distance from the click; only cells inside the wave front receive shifting HSB colors before returning to white.</p>
-    
-    <!-- Canvas container for second p5.js sketch (2d-matrix-wave.js) --> 
-    <div id="canvas-container-2"></div>
  
     <!-- ------------------------------------------------------------ -->
     
@@ -335,6 +362,7 @@
   <script src="2d-matrix-wave.js"></script>
   <script src="interactive-sphere-matrix.js"></script>
 
+  <!-- About modal: open/close + Escape to dismiss -->
   <script>
     (function() {
       const trigger = document.getElementById("about-trigger");
@@ -357,11 +385,93 @@
       modal.querySelectorAll("[data-about-close]").forEach(function(el) {
         el.addEventListener("click", closeAbout);
       });
+      // Close on Escape while the dialog is open
       document.addEventListener("keydown", function(event) {
         if (event.key === "Escape" && !modal.hidden) {
           closeAbout();
         }
       });
+    })();
+  </script>
+
+  <!-- Object tabs: activateTab, keyboard nav, hash routing, resize for hidden canvases -->
+  <script>
+    (function() {
+      const tabs = Array.prototype.slice.call(document.querySelectorAll(".object-tab"));
+      const panels = Array.prototype.slice.call(document.querySelectorAll(".object-panel"));
+      if (!tabs.length || !panels.length) {
+        return;
+      }
+
+      // Show one panel, sync ARIA/tabIndex, update URL hash, then nudge Mapbox/D3/Three to relayout
+      function activateTab(tabId, focusTab) {
+        tabs.forEach(function(tab) {
+          const selected = tab.getAttribute("data-tab") === tabId;
+          tab.classList.toggle("is-active", selected);
+          tab.setAttribute("aria-selected", selected ? "true" : "false");
+          tab.tabIndex = selected ? 0 : -1;
+          if (selected && focusTab) {
+            tab.focus();
+          }
+        });
+
+        panels.forEach(function(panel) {
+          const selected = panel.getAttribute("data-panel") === tabId;
+          panel.classList.toggle("is-active", selected);
+          if (selected) {
+            panel.hidden = false;
+          } else {
+            panel.hidden = true;
+          }
+        });
+
+        // Mapbox (and other libs) need a resize after a panel becomes visible
+        window.requestAnimationFrame(function() {
+          window.dispatchEvent(new Event("resize"));
+          setTimeout(function() {
+            window.dispatchEvent(new Event("resize"));
+          }, 80);
+        });
+
+        // Keep #agents, #survey, etc. in the address bar for shareable deep links
+        try {
+          history.replaceState(null, "", "#" + tabId);
+        } catch (e) {
+          // ignore
+        }
+      }
+
+      tabs.forEach(function(tab) {
+        tab.addEventListener("click", function() {
+          activateTab(tab.getAttribute("data-tab"), false);
+        });
+
+        tab.addEventListener("keydown", function(event) {
+          // Arrow keys, Home, and End move focus between tabs (WAI-ARIA tablist pattern)
+          const index = tabs.indexOf(tab);
+          let next = null;
+          if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+            next = tabs[(index + 1) % tabs.length];
+          } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+            next = tabs[(index - 1 + tabs.length) % tabs.length];
+          } else if (event.key === "Home") {
+            next = tabs[0];
+          } else if (event.key === "End") {
+            next = tabs[tabs.length - 1];
+          }
+          if (next) {
+            event.preventDefault();
+            activateTab(next.getAttribute("data-tab"), true);
+          }
+        });
+      });
+
+      // Open the tab named in the URL hash, or default to Agents
+      const hash = (location.hash || "").replace(/^#/, "");
+      const valid = tabs.some(function(tab) {
+        return tab.getAttribute("data-tab") === hash;
+      });
+      activateTab(valid ? hash : "agents", false);
     })();
   </script>
 

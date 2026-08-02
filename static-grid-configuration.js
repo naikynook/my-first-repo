@@ -1,13 +1,15 @@
 // static-grid-configuration.js
+// Fixed 10×10 white grid on black — drawn once with p5 (noLoop)
+
 var sketch1 = function(p) {
   const cols = 10;          // Number of columns
   const rows = 10;          // Number of rows
   const size = 40;          // Width and height of each square
-  const spacing = 4;        // Width of the black lines between squares
-  const margin = spacing;   // Outer margin now perfectly matches the inner spacing
+  const spacing = 4;        // Gap between squares (shows as black lines)
+  const margin = spacing;   // Outer margin matches the inner gap
 
   p.setup = function() {
-    // Dynamically calculate canvas size based on grid parameters
+    // Size the canvas from grid math so nothing is clipped
     const canvasWidth = (cols * size) + ((cols - 1) * spacing) + (margin * 2);
     const canvasHeight = (rows * size) + ((rows - 1) * spacing) + (margin * 2);
 
@@ -16,30 +18,26 @@ var sketch1 = function(p) {
 
     const canvas = p.createCanvas(canvasWidth, canvasHeight);
     canvas.parent(container);
-    p.noLoop(); // Run draw() only once
+    p.noLoop();   // draw() runs only when we call redraw()
     p.redraw();
   };
 
   p.draw = function() {
-    p.background(0); // Black background fills the gaps and edges evenly
+    p.background(0); // Black fills gaps and outer margin
 
-    // Style settings for the squares
-    p.fill(255);   // Pure white fill for the squares
-    p.noStroke();  // Removes individual outlines
+    p.fill(255);    // White cells
+    p.noStroke();
 
-    // Nested loops to calculate the X and Y coordinates for each cell
+    // Place each cell from its column/row index
     for (let i = 0; i < cols; i++) {
       for (let j = 0; j < rows; j++) {
-
-        // Calculate position of the current square
         let x = margin + i * (size + spacing);
         let y = margin + j * (size + spacing);
-
-        // Draw the white square
         p.rect(x, y, size, size);
       }
     }
   };
 };
 
+// Instance mode so this sketch does not fight other p5 sketches on the page
 new p5(sketch1);

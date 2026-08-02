@@ -1,6 +1,7 @@
 /**
  * Agents chatbot backend — keeps the OpenAI secret off GitHub Pages.
  *
+ * Deploy:
  *   firebase.cmd functions:secrets:set OPENAI_API_KEY
  *   firebase.cmd deploy --only functions
  */
@@ -11,8 +12,10 @@ const { initializeApp } = require("firebase-admin/app");
 
 initializeApp();
 
+// Secret is injected at runtime — never put sk- keys in client JS
 const openAiKey = defineSecret("OPENAI_API_KEY");
 
+// Personality / domain for the projector-art assistant
 const SYSTEM_PROMPT =
   "You are Agents, a creative coding collaborator for projector art. " +
   "Help the user invent, debug, and refine visuals in p5.js and Three.js meant for large-scale projection — " +
@@ -22,14 +25,17 @@ const SYSTEM_PROMPT =
   "When useful, suggest color palettes, motion systems, grid/matrix ideas, shaders-lite approaches, " +
   "and ways to make the sketch feel like generative art rather than a UI demo.";
 
+// Only these sites may call the function (CORS)
 const ALLOWED_ORIGINS = [
   "https://naikynook.github.io",
   "http://localhost",
   "http://127.0.0.1"
 ];
 
+// Return a matching allowlisted origin, or null to reject
 function getAllowedOrigin(req) {
   const origin = req.get("origin") || "";
+  // No Origin header (e.g. some tools) — treat as the live site
   if (!origin) {
     return "https://naikynook.github.io";
   }
@@ -39,6 +45,7 @@ function getAllowedOrigin(req) {
   return ok ? origin : null;
 }
 
+// Keep only the last 8 clean user/assistant turns
 function sanitizeHistory(history) {
   if (!Array.isArray(history)) {
     return [];
@@ -66,14 +73,15 @@ function setCors(res, origin) {
   res.set("Access-Control-Max-Age", "3600");
 }
 
+// Public HTTP endpoint used by chat-bot.js
 exports.chatAgent = onRequest(
   {
     secrets: [openAiKey],
     region: "us-central1",
-    invoker: "public",
+    invoker: "public",   // GitHub Pages has no Firebase Auth user
     timeoutSeconds: 120,
     memory: "256MiB",
-    cors: false,
+    cors: false,         // We set CORS headers ourselves
     maxInstances: 10
   },
   async function(req, res) {
@@ -84,6 +92,7 @@ exports.chatAgent = onRequest(
     }
     setCors(res, origin);
 
+    // Browser preflight for cross-origin POST
     if (req.method === "OPTIONS") {
       res.status(204).send("");
       return;
@@ -114,6 +123,7 @@ exports.chatAgent = onRequest(
         return;
       }
 
+      // system + history + current user message
       const history = sanitizeHistory(body.history);
       const messages = [{ role: "system", content: SYSTEM_PROMPT }]
         .concat(history)
@@ -140,7 +150,7 @@ exports.chatAgent = onRequest(
             detail = errBody.error.message;
           }
         } catch (e) {
-          // ignore
+          // ignore parse errors; keep generic detail
         }
         res.status(502).json({ error: detail });
         return;

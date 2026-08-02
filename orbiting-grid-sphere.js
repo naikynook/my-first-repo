@@ -1,10 +1,11 @@
 // orbiting-grid-sphere.js
-// Stationary grid sphere with mouse orbit controls on a white background
+// Stationary Three.js sphere with a grid texture; OrbitControls move the camera
 
 (function() {
   const WIDTH = 800;
   const HEIGHT = 400;
 
+  // Scene + white backdrop
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0xffffff);
 
@@ -16,6 +17,7 @@
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   document.getElementById('threejs-container-1').appendChild(renderer.domElement);
 
+  // Drag to orbit, scroll to zoom — sphere itself stays still
   const controls = new THREE.OrbitControls(camera, renderer.domElement);
   controls.target.set(0, 0, 0);
   controls.enableDamping = true;
@@ -24,6 +26,7 @@
   controls.minDistance = 2.8;
   controls.maxDistance = 10;
 
+  // Soft key + fill lighting so the grid reads on the sphere
   const ambientLight = new THREE.AmbientLight(0xffffff, 0.75);
   scene.add(ambientLight);
 
@@ -35,6 +38,7 @@
   fillLight.position.set(-4, -2, -3);
   scene.add(fillLight);
 
+  // Draw a 2D grid on a canvas, then use it as the sphere’s texture map
   function createGridTexture() {
     const cols = 24;
     const rows = 12;
@@ -76,6 +80,7 @@
   );
   scene.add(globe);
 
+  // Render loop — only controls.update() for damping; no object rotation
   function animate() {
     requestAnimationFrame(animate);
     controls.update();

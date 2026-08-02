@@ -3,6 +3,7 @@
 // Same three NYC shooting tables joined on INCIDENT_KEY
 
 function initRelationalChord() {
+  // --- Setup / guards ---
   const container = document.getElementById("canvas-container-5");
 
   if (!container) {
@@ -17,6 +18,7 @@ function initRelationalChord() {
 
   container.innerHTML = "<p>Loading related shooting datasets...</p>";
 
+  // --- Data loading ---
   Promise.all([
     d3.csv("Shootings_(2006-Present)_20260711.csv"),
     d3.csv("Shooting_Victims_(2006-Present)_20260716.csv"),
@@ -39,6 +41,7 @@ function initRelationalChord() {
 function buildChord(container, incidents, victims, offenders) {
   container.innerHTML = "";
 
+  // --- Helpers ---
   function clean(value) {
     const text = (value || "").trim();
     if (!text || text === "UNKNOWN" || text === "(null)") {
@@ -55,6 +58,7 @@ function buildChord(container, incidents, victims, offenders) {
       .replace("BLACK HISPANIC", "Black Hispanic");
   }
 
+  // --- Data transform: count offender→victim race pairs per incident ---
   const incidentKeys = new Set(incidents.map(function(d) { return d.INCIDENT_KEY; }));
   const victimsByKey = d3.group(victims, function(d) { return d.INCIDENT_KEY; });
   const offendersByKey = d3.group(offenders, function(d) { return d.INCIDENT_KEY; });
@@ -91,10 +95,12 @@ function buildChord(container, incidents, victims, offenders) {
     });
   });
 
+  // Require minimum volume so the chord matrix stays readable.
   const names = Array.from(raceTotals.keys())
     .filter(function(name) { return (raceTotals.get(name) || 0) >= 30; })
     .sort(function(a, b) { return raceTotals.get(b) - raceTotals.get(a); });
 
+  // Flatten pair counts into the square matrix d3.chord expects (source = offender row).
   const index = new Map(names.map(function(name, i) { return [name, i]; }));
   const n = names.length;
   const matrix = Array.from({ length: n }, function() {
@@ -130,6 +136,7 @@ function buildChord(container, incidents, victims, offenders) {
   const fontUi = '"Outfit", "DM Sans", sans-serif';
   const fontLabel = '"DM Sans", "Outfit", sans-serif';
 
+  // --- Drawing / layers ---
   const width = Math.max(520, Math.min(640, container.parentElement
     ? container.parentElement.clientWidth - 24
     : 640));
@@ -245,6 +252,7 @@ function buildChord(container, incidents, victims, offenders) {
         (count ? " (" + d3.format(".0%")(murders / count) + ")" : "");
     });
 
+  // --- Interaction: dim unrelated ribbons on hover ---
   group.selectAll("path.chord-group")
     .on("mouseenter", function(event, d) {
       ribbons
@@ -286,6 +294,7 @@ function buildChord(container, incidents, victims, offenders) {
     .attr("font-family", fontLabel)
     .text("Ribbon width = relationship volume");
 
+  // --- Zoom / pan (wheel captured so page does not scroll) ---
   const zoom = d3.zoom()
     .scaleExtent([0.65, 4.5])
     .on("start", function() {

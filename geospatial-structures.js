@@ -2,6 +2,7 @@
 // Mapbox NYC shootings map — hex bins + incident points (incident fields only)
 
 function initGeospatialStructures() {
+  // --- Setup / guards ---
   const container = document.getElementById("canvas-container-6");
   if (!container) {
     return;
@@ -30,6 +31,7 @@ function initGeospatialStructures() {
 
   mapboxgl.accessToken = window.MAPBOX_ACCESS_TOKEN;
 
+  // --- Map container & basemap ---
   container.innerHTML = "";
   const mapEl = document.createElement("div");
   mapEl.id = "nyc-shootings-map";
@@ -123,6 +125,7 @@ function initGeospatialStructures() {
     map.resize();
   }
 
+  // --- Data loading (on map ready) ---
   map.on("load", function() {
     forceResize();
     map.fitBounds(
@@ -149,12 +152,14 @@ function initGeospatialStructures() {
   window.addEventListener("resize", forceResize);
 }
 
+// Reference borough polygons + labels; fade out once user zooms into hex detail.
 function addBoroughLayers(map) {
   d3.json("nyc-boroughs.geojson").then(function(geo) {
     if (!geo || !geo.features) {
       return;
     }
 
+    // Label points come from precomputed centroids in the GeoJSON properties.
     const labels = {
       type: "FeatureCollection",
       features: geo.features.map(function(feature) {
@@ -263,6 +268,7 @@ function addBoroughLayers(map) {
   });
 }
 
+// Parse CSV rows, bin into hexes for overview, expose individual points when zoomed in.
 function addShootingLayers(map, rows, hexBbox, status) {
   const popup = new mapboxgl.Popup({
     closeButton: true,
@@ -270,6 +276,7 @@ function addShootingLayers(map, rows, hexBbox, status) {
     maxWidth: "300px"
   });
 
+  // --- Data transform: CSV → GeoJSON points ---
   const pointFeatures = [];
 
   rows.forEach(function(row) {
@@ -307,6 +314,7 @@ function addShootingLayers(map, rows, hexBbox, status) {
 
   status.textContent = "Building hex bins…";
 
+  // --- Hex aggregation (Turf): bin for overview, dedupe coords for point layer ---
   // Yield so the basemap can paint before heavy Turf work
   window.setTimeout(function() {
     const pointsFc = turf.featureCollection(pointFeatures);
@@ -369,6 +377,7 @@ function addShootingLayers(map, rows, hexBbox, status) {
       data: turf.featureCollection(locationFeatures)
     });
 
+    // --- Drawing / layers ---
     map.addLayer({
       id: "hex-fill",
       type: "fill",
@@ -419,6 +428,7 @@ function addShootingLayers(map, rows, hexBbox, status) {
       }
     });
 
+    // --- Interaction handlers ---
     map.on("click", "hex-fill", function(event) {
       const feature = event.features && event.features[0];
       if (!feature) {
@@ -499,6 +509,8 @@ if (document.readyState === "loading") {
   initGeospatialStructures();
 }
 
+// --- Popup helpers ---
+
 function formatIncidentDetails(incident) {
   return [
     "<strong>Shooting incident</strong>",
@@ -513,6 +525,7 @@ function formatIncidentDetails(incident) {
 }
 
 function openIncidentPopup(popup, map, coords, incidents) {
+  // Shared coordinates: list incidents first, then reveal detail on button click.
   if (!incidents.length) {
     return;
   }

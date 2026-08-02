@@ -1,5 +1,5 @@
 // interactive-sphere-matrix.js
-// Interactive Three.js sphere: grid texture, scroll zoom, density slider, click wave
+// Interactive Three.js sphere: editable grid density, background slider, click wave
 
 (function() {
   const WIDTH = 800;
@@ -13,6 +13,7 @@
   const container = document.getElementById('canvas-container-3');
   container.innerHTML = '';
 
+  // UI controls inserted just above the canvas container
   const controls = document.createElement('div');
   controls.className = 'three-controls';
   controls.innerHTML =
@@ -52,6 +53,7 @@
   fillLight.position.set(-4, -2, -3);
   scene.add(fillLight);
 
+  // Offscreen canvas that becomes the sphere’s texture each frame
   const gridCanvas = document.createElement('canvas');
   const gridCtx = gridCanvas.getContext('2d');
   const texture = new THREE.CanvasTexture(gridCanvas);
@@ -68,6 +70,7 @@
   const globe = new THREE.Mesh(new THREE.SphereGeometry(SPHERE_RADIUS, 64, 64), globeMaterial);
   scene.add(globe);
 
+  // Raycaster maps a mouse click onto UV coords on the sphere
   const raycaster = new THREE.Raycaster();
   const mouse = new THREE.Vector2();
 
@@ -83,6 +86,7 @@
   const blackColor = new THREE.Color(0x000000);
   const spectrumColor = new THREE.Color();
 
+  // Slider 0→100: white → rainbow hues → black
   function setBackgroundColor() {
     const t = parseInt(bgColorSpectrum.value, 10) / 100;
 
@@ -103,6 +107,7 @@
     bgColorValue.textContent = 'rgb(' + r + ', ' + g + ', ' + b + ')';
   }
 
+  // Rebuild texture size when density changes; rows stay ~half of columns
   function setGridDensity(value) {
     cols = value;
     rows = Math.max(6, Math.round(cols / 2));
@@ -114,6 +119,7 @@
     drawGridTexture();
   }
 
+  // Convert sphere UV (0–1) into pixel coords on the grid canvas
   function uvToGridPoint(u, v) {
     return {
       x: u * gridCanvas.width,
@@ -121,6 +127,7 @@
     };
   }
 
+  // Horizontal wrap so the wave can cross the texture seam
   function gridDistance(x1, y1, x2, y2) {
     let dx = Math.abs(x1 - x2);
     dx = Math.min(dx, gridCanvas.width - dx);
@@ -128,6 +135,7 @@
     return Math.sqrt(dx * dx + dy * dy);
   }
 
+  // Snap UV hit to the nearest cell center for the wave origin
   function setClickFromUv(u, v) {
     const point = uvToGridPoint(u, v);
     const cellI = Math.min(cols - 1, Math.max(0, Math.floor(point.x / (CELL_SIZE + SPACING))));
@@ -136,6 +144,7 @@
     clickY = cellJ * (CELL_SIZE + SPACING) + CELL_SIZE / 2;
   }
 
+  // Paint every cell; color those inside the expanding wave band
   function drawGridTexture() {
     gridCtx.fillStyle = '#000000';
     gridCtx.fillRect(0, 0, gridCanvas.width, gridCanvas.height);
@@ -178,6 +187,7 @@
     }
   }
 
+  // Click → raycast → start wave from that UV cell
   function onPointerClick(event) {
     const rect = renderer.domElement.getBoundingClientRect();
     mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
@@ -193,6 +203,7 @@
     }
   }
 
+  // Scroll zooms by moving the camera along Z
   function onWheel(event) {
     event.preventDefault();
     camera.position.z += event.deltaY * 0.004;
@@ -211,6 +222,7 @@
   setGridDensity(parseInt(slider.value, 10));
   setBackgroundColor();
 
+  // Slow spin + redraw texture every frame while animating
   function animate() {
     requestAnimationFrame(animate);
     frameCount++;

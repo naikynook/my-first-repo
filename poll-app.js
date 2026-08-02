@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     ? surveyRoot.querySelectorAll('.poll-question-block')
     : [];
 
+  // Nothing to wire up if the survey markup is missing
   if (!surveyRoot || !questionBlocks.length) {
     return;
   }
@@ -20,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
     return;
   }
 
+  // Share one Firebase app instance with chat-bot.js
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
   }
@@ -28,6 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const questions = ['q1', 'q2', 'q3', 'q4', 'q5'];
 
+  // Recalculate Yes + No into the Total field for one question block
   function updateBlockTotals(block) {
     const yesEl = block.querySelector('[data-count="yes"]');
     const noEl = block.querySelector('[data-count="no"]');
@@ -40,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
     totalEl.textContent = yesVotes + noVotes;
   }
 
-  // Live listeners for each question's yes/no counts
+  // Attach live listeners so counts update for every visitor at once
   questions.forEach(function(questionId) {
     const block = surveyRoot.querySelector('[data-question="' + questionId + '"]');
     if (!block) {
@@ -64,6 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
+  // Atomically increment yes or no by 1 (matches database rules)
   function castVote(questionId, choice) {
     surveyRef.child(questionId + '/' + choice)
       .transaction(function(current) {
@@ -78,6 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   }
 
+  // Wire Yes / No buttons on each question
   questionBlocks.forEach(function(block) {
     const questionId = block.getAttribute('data-question');
     block.querySelectorAll('[data-vote]').forEach(function(button) {
@@ -90,6 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
+  // Brief confirmation toast in the corner of the page
   function showToast(message, background) {
     const toast = document.createElement('div');
     toast.className = 'poll-toast';
@@ -107,6 +113,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 3000);
   }
 
+  // Show Firebase connection state under the survey
   if (connectionStatus) {
     database.ref('.info/connected').on('value', function(snapshot) {
       if (snapshot.val()) {

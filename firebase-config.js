@@ -1,7 +1,5 @@
-// firebase-config.js
-// Firebase web config. These values identify the project and are meant to be public —
-// they are not credentials. Access is controlled by Realtime Database rules plus
-// HTTP referrer restrictions on the API key (see README notes).
+// Public Firebase client config — identifies the project in the browser (not secret credentials).
+// Access is enforced by Realtime Database rules and API key referrer restrictions.
 window.FIREBASE_CONFIG = {
   apiKey: "AIzaSyA5-TO8Ztzqk0idxSzXeNRQd2I2-4flTao",
   authDomain: "design-workflows-ed79d.firebaseapp.com",

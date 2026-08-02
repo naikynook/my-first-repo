@@ -3,6 +3,7 @@
 // Three Open Data tables joined on INCIDENT_KEY
 
 function initRelationalStructures() {
+  // --- Setup / guards ---
   const container = document.getElementById("canvas-container-4");
 
   if (typeof d3 === "undefined") {
@@ -13,6 +14,7 @@ function initRelationalStructures() {
 
   container.innerHTML = "<p>Loading related shooting datasets...</p>";
 
+  // --- Data loading: three tables joined later on INCIDENT_KEY ---
   Promise.all([
     d3.csv("Shootings_(2006-Present)_20260711.csv"),
     d3.csv("Shooting_Victims_(2006-Present)_20260716.csv"),
@@ -28,6 +30,7 @@ function initRelationalStructures() {
 function buildVisualization(container, incidents, victims, offenders) {
   container.innerHTML = "";
 
+  // --- Helpers: normalize Open Data sentinels and shorten long race labels ---
   function clean(value) {
     const text = (value || "").trim();
     if (!text || text === "UNKNOWN" || text === "(null)") {
@@ -45,6 +48,7 @@ function buildVisualization(container, incidents, victims, offenders) {
       .replace("STATEN ISLAND", "Staten Island");
   }
 
+  // --- Data transform: build bipartite graph (offender → borough → victim) ---
   const incidentByKey = new Map();
   incidents.forEach(function(row) {
     incidentByKey.set(row.INCIDENT_KEY, { boro: clean(row.BORO) });
@@ -148,6 +152,7 @@ function buildVisualization(container, incidents, victims, offenders) {
     });
   });
 
+  // Drop rare nodes; keep only the two-hop flow edges for the main layout.
   const minNodeCount = 10;
   const nodes = Array.from(nodeMap.values()).filter(function(node) {
     return node.count >= minNodeCount;
@@ -180,6 +185,7 @@ function buildVisualization(container, incidents, victims, offenders) {
       return bRate - aRate || b.count - a.count;
     })[0];
 
+  // --- Drawing: SVG shell, title, and summary stats ---
   const width = Math.min(1000, container.clientWidth || 1000);
   const height = Math.round(width / (16 / 9));
 
@@ -238,6 +244,7 @@ function buildVisualization(container, incidents, victims, offenders) {
         : "")
     );
 
+  // Three fixed columns; forceX keeps nodes near their role even while jumbled.
   const columnX = {
     offender: width * 0.18,
     borough: width * 0.50,
@@ -276,6 +283,7 @@ function buildVisualization(container, incidents, victims, offenders) {
     };
   });
 
+  // --- Interaction: toggle sorted columns vs. force-directed jumble ---
   let sorting = false;
   let sortedMode = false;
 
@@ -302,6 +310,7 @@ function buildVisualization(container, incidents, victims, offenders) {
     .attr("class", "relational-controls-note")
     .text("Toggle between sorted columns and the jumbled force layout");
 
+  // --- Force layout & rendering ---
   const simulation = d3.forceSimulation(graphNodes)
     .force("link", d3.forceLink(graphLinks)
       .id(function(d) { return d.id; })

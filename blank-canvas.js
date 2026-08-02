@@ -2,6 +2,7 @@
 // D3 calendar heatmap of NYC shootings by day, animated by year
 
 function initShootingsCalendar() {
+  // --- Setup / guards ---
   const chart = document.getElementById("chart");
 
   if (typeof d3 === "undefined") {
@@ -12,6 +13,7 @@ function initShootingsCalendar() {
 
   chart.innerHTML = "<p>Loading shootings data...</p>";
 
+  // --- Data loading & transform: aggregate incidents by calendar day ---
   d3.csv("Shootings_(2006-Present)_20260711.csv").then(function(data) {
     chart.innerHTML = "";
 
@@ -65,10 +67,12 @@ function initShootingsCalendar() {
       d3.interpolateViridis
     ];
 
+    // --- Layout helpers: fit up to 366 days into a 16:9 grid ---
     function daysInYear(year) {
       return d3.timeDays(new Date(year, 0, 1), new Date(year + 1, 0, 1));
     }
 
+    // Search row counts for the column/row ratio closest to the panel aspect.
     function gridDimensions(dayCount) {
       let best = { cols: 1, rows: dayCount, score: Infinity };
 
@@ -100,6 +104,7 @@ function initShootingsCalendar() {
       return { days: days, yearMax: yearMax };
     }
 
+    // Each year gets its own palette and domain max so low-volume years stay visible.
     function colorForYear(year, paletteIndex) {
       const stats = getYearStats(year);
 
@@ -111,6 +116,7 @@ function initShootingsCalendar() {
       };
     }
 
+    // --- Drawing: SVG, legend gradient, year label ---
     const svg = d3.select("#chart")
       .append("svg")
       .attr("width", panelWidth)
@@ -150,6 +156,7 @@ function initShootingsCalendar() {
       .attr("rx", 2)
       .attr("fill", "url(#year-legend-gradient)");
 
+    // --- Year animation loop ---
     let displayedYearIndex = 0;
     const yearInterval = 900;
 
@@ -173,6 +180,7 @@ function initShootingsCalendar() {
       yearLabel.text(year);
       updateLegend(yearColor.color, yearColor.yearMax);
 
+      // Day index maps left-to-right, top-to-bottom through the fixed 366-cell grid.
       calendar.selectAll("rect")
         .data(daysInYear(year), function(d, i) { return i; })
         .join(

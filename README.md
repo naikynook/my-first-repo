@@ -1,0 +1,1 @@
+A collection of web design experiments for Columbia GSAPP's Computational Design Workflows class in Summer 2026.
