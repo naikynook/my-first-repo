@@ -26,21 +26,6 @@ const SYSTEM_PROMPT =
   "When useful, suggest color palettes, motion systems, grid/matrix ideas, shaders-lite approaches, " +
   "and ways to make the sketch feel like generative art rather than a UI demo.";
 
-const ALLOWED_ORIGINS = [
-  "https://naikynook.github.io",
-  "http://localhost",
-  "http://127.0.0.1"
-];
-
-function originAllowed(origin) {
-  if (!origin) {
-    return false;
-  }
-  return ALLOWED_ORIGINS.some(function(allowed) {
-    return origin === allowed || origin.startsWith(allowed + ":") || origin.startsWith(allowed + "/");
-  });
-}
-
 function sanitizeHistory(history) {
   if (!Array.isArray(history)) {
     return [];
@@ -93,6 +78,8 @@ exports.getChatGPTResponse = onCall(
   {
     secrets: [openAiKey],
     region: "us-central1",
+    // Required so the GitHub Pages site (unauthenticated browsers) can call this function
+    invoker: "public",
     cors: [
       "https://naikynook.github.io",
       /https:\/\/naikynook\.github\.io$/,
@@ -102,14 +89,6 @@ exports.getChatGPTResponse = onCall(
     maxInstances: 10
   },
   async function(request) {
-    const origin = request.rawRequest && request.rawRequest.get
-      ? request.rawRequest.get("origin")
-      : "";
-    // Browser callable requests include Origin; reject obvious cross-site callers
-    if (origin && !originAllowed(origin)) {
-      throw new HttpsError("permission-denied", "Origin not allowed.");
-    }
-
     const message = request.data && typeof request.data.message === "string"
       ? request.data.message.trim()
       : "";

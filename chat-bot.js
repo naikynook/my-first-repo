@@ -174,7 +174,18 @@ document.addEventListener("DOMContentLoaded", function() {
       setStatus("synced · projector agent online", false);
     } catch (error) {
       console.error(error);
-      const message = (error && (error.message || (error.details && String(error.details)))) || "request failed";
+      let message = "request failed";
+      if (error) {
+        if (error.code === "functions/not-found") {
+          message = "Cloud Function not deployed yet. Run: firebase deploy --only functions";
+        } else if (error.code === "functions/permission-denied" || /permission/i.test(String(error.message || ""))) {
+          message = "Permission denied — redeploy the function with public invoker, and publish chat rules in Firebase.";
+        } else if (error.code === "PERMISSION_DENIED" || error.code === "permission-denied") {
+          message = "Database permission denied — publish firebase-database-rules.json in Realtime Database → Rules.";
+        } else {
+          message = error.message || (error.details && String(error.details)) || message;
+        }
+      }
       setStatus("error · " + message, true);
       try {
         await saveMessage(
