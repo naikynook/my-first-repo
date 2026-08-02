@@ -182,6 +182,10 @@ document.addEventListener("DOMContentLoaded", function() {
           message = "Permission denied — redeploy the function with public invoker, and publish chat rules in Firebase.";
         } else if (error.code === "PERMISSION_DENIED" || error.code === "permission-denied") {
           message = "Database permission denied — publish firebase-database-rules.json in Realtime Database → Rules.";
+        } else if (error.code === "functions/failed-precondition" || error.code === "failed-precondition") {
+          message = error.message || "Agent backend rejected the request (check OpenAI key/credits).";
+        } else if (error.code === "functions/internal" || /internal/i.test(String(error.message || ""))) {
+          message = "Server error — usually a bad/missing OpenAI secret. Re-set OPENAI_API_KEY and redeploy.";
         } else {
           message = error.message || (error.details && String(error.details)) || message;
         }
