@@ -370,6 +370,19 @@ button:hover {
   border-bottom-left-radius: 4px;
 }
 
+.chat-bubble--pending .chat-bubble-body {
+  color: var(--agent-muted);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  animation: agent-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes agent-pulse {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 1; }
+}
+
 .chat-bubble-meta {
   font-family: "IBM Plex Mono", monospace;
   font-size: 10px;

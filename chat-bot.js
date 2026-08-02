@@ -10,6 +10,10 @@ document.addEventListener("DOMContentLoaded", function() {
   const sendBtn = document.getElementById("chat-send");
   const statusEl = document.getElementById("chat-status");
 
+  // Gen2 HTTP function (not callable) — works reliably from GitHub Pages
+  const AGENT_URL =
+    "https://us-central1-design-workflows-ed79d.cloudfunctions.net/chatAgent";
+
   if (!chatRoot || !messagesEl || !formEl || !inputEl) {
     return;
   }
@@ -25,10 +29,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
   const database = firebase.database();
   const messagesRef = database.ref("chat/messages");
-  const callAgent = firebase.app().functions("us-central1").httpsCallable("getChatGPTResponse");
 
   let busy = false;
   let recentContext = [];
+  let pendingBubble = null;
 
   function setStatus(text, isError) {
     if (!statusEl) {
@@ -52,6 +56,28 @@ document.addEventListener("DOMContentLoaded", function() {
       .replace(/```([\s\S]*?)```/g, '<pre class="chat-code"><code>$1</code></pre>')
       .replace(/`([^`]+)`/g, '<code class="chat-inline">$1</code>')
       .replace(/\n/g, "<br>");
+  }
+
+  function showPending() {
+    removePending();
+    const empty = messagesEl.querySelector(".chat-empty");
+    if (empty) {
+      empty.remove();
+    }
+    pendingBubble = document.createElement("div");
+    pendingBubble.className = "chat-bubble chat-bubble--bot chat-bubble--pending";
+    pendingBubble.innerHTML =
+      '<div class="chat-bubble-meta">agent</div>' +
+      '<div class="chat-bubble-body">composing…</div>';
+    messagesEl.appendChild(pendingBubble);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function removePending() {
+    if (pendingBubble && pendingBubble.parentNode) {
+      pendingBubble.parentNode.removeChild(pendingBubble);
+    }
+    pendingBubble = null;
   }
 
   function renderMessages(messagesObj) {
@@ -82,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function() {
       };
     });
 
-    if (!list.length) {
+    if (!list.length && !busy) {
       messagesEl.innerHTML =
         '<div class="chat-empty">' +
           "<p>Ask about a projection sketch — grids, spheres, waves, shaders-lite, or Three.js scenes.</p>" +
@@ -102,6 +128,12 @@ document.addEventListener("DOMContentLoaded", function() {
         );
       })
       .join("");
+
+    if (busy) {
+      showPending();
+    } else {
+      pendingBubble = null;
+    }
 
     messagesEl.scrollTop = messagesEl.scrollHeight;
   }
@@ -130,18 +162,46 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   async function getChatGPTResponse(userMessage) {
-    // History excludes the message we just saved (last user turn), so drop trailing user dup
     const history = recentContext.slice();
     if (history.length && history[history.length - 1].role === "user") {
       history.pop();
     }
 
-    const result = await callAgent({
-      message: userMessage,
-      history: history
-    });
+    const controller = new AbortController();
+    const timeoutId = setTimeout(function() {
+      controller.abort();
+    }, 110000);
 
-    const reply = result && result.data && result.data.reply;
+    let response;
+    try {
+      response = await fetch(AGENT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: userMessage,
+          history: history
+        }),
+        signal: controller.signal
+      });
+    } finally {
+      clearTimeout(timeoutId);
+    }
+
+    let data = null;
+    try {
+      data = await response.json();
+    } catch (e) {
+      data = null;
+    }
+
+    if (!response.ok) {
+      const detail =
+        (data && data.error) ||
+        ("HTTP " + response.status + " from chatAgent");
+      throw new Error(detail);
+    }
+
+    const reply = data && data.reply;
     if (!reply) {
       throw new Error("Empty response from the agent function.");
     }
@@ -166,6 +226,7 @@ document.addEventListener("DOMContentLoaded", function() {
       sendBtn.disabled = true;
     }
     setStatus("composing visual reply…", false);
+    showPending();
 
     try {
       await saveMessage(text, "user");
@@ -175,20 +236,10 @@ document.addEventListener("DOMContentLoaded", function() {
     } catch (error) {
       console.error(error);
       let message = "request failed";
-      if (error) {
-        if (error.code === "functions/not-found") {
-          message = "Cloud Function not deployed yet. Run: firebase deploy --only functions";
-        } else if (error.code === "functions/permission-denied" || /permission/i.test(String(error.message || ""))) {
-          message = "Permission denied — redeploy the function with public invoker, and publish chat rules in Firebase.";
-        } else if (error.code === "PERMISSION_DENIED" || error.code === "permission-denied") {
-          message = "Database permission denied — publish firebase-database-rules.json in Realtime Database → Rules.";
-        } else if (error.code === "functions/failed-precondition" || error.code === "failed-precondition") {
-          message = error.message || "Agent backend rejected the request (check OpenAI key/credits).";
-        } else if (error.code === "functions/internal" || /internal/i.test(String(error.message || ""))) {
-          message = "Server error — usually a bad/missing OpenAI secret. Re-set OPENAI_API_KEY and redeploy.";
-        } else {
-          message = error.message || (error.details && String(error.details)) || message;
-        }
+      if (error && error.name === "AbortError") {
+        message = "Timed out waiting for the agent (cold start can take a minute). Try again.";
+      } else if (error && error.message) {
+        message = error.message;
       }
       setStatus("error · " + message, true);
       try {
@@ -202,6 +253,7 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     } finally {
       busy = false;
+      removePending();
       inputEl.disabled = false;
       if (sendBtn) {
         sendBtn.disabled = false;

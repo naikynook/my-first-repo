@@ -1,14 +1,13 @@
 /**
  * Agents chatbot backend — keeps the OpenAI secret off GitHub Pages.
  *
- *   firebase functions:secrets:set OPENAI_API_KEY
- *   firebase deploy --only functions
+ *   firebase.cmd functions:secrets:set OPENAI_API_KEY
+ *   firebase.cmd deploy --only functions
  */
 
-const { onCall, HttpsError } = require("firebase-functions/v2/https");
+const { onRequest } = require("firebase-functions/v2/https");
 const { defineSecret } = require("firebase-functions/params");
 const { initializeApp } = require("firebase-admin/app");
-const { getDatabase } = require("firebase-admin/database");
 
 initializeApp();
 
@@ -22,6 +21,23 @@ const SYSTEM_PROMPT =
   "performance, seamless loops, full-bleed canvases). Keep replies focused and practical. " +
   "When useful, suggest color palettes, motion systems, grid/matrix ideas, shaders-lite approaches, " +
   "and ways to make the sketch feel like generative art rather than a UI demo.";
+
+const ALLOWED_ORIGINS = [
+  "https://naikynook.github.io",
+  "http://localhost",
+  "http://127.0.0.1"
+];
+
+function getAllowedOrigin(req) {
+  const origin = req.get("origin") || "";
+  if (!origin) {
+    return "https://naikynook.github.io";
+  }
+  const ok = ALLOWED_ORIGINS.some(function(allowed) {
+    return origin === allowed || origin.startsWith(allowed + ":");
+  });
+  return ok ? origin : null;
+}
 
 function sanitizeHistory(history) {
   if (!Array.isArray(history)) {
@@ -43,80 +59,62 @@ function sanitizeHistory(history) {
     .filter(Boolean);
 }
 
-async function enforceRateLimit(clientKey) {
-  const ref = getDatabase().ref("chat/rateLimits/" + clientKey);
-  const now = Date.now();
-  const windowMs = 60 * 60 * 1000;
-  const maxCalls = 30;
-
-  const result = await ref.transaction(function(current) {
-    const state = current || { count: 0, windowStart: now };
-    if (now - (state.windowStart || 0) > windowMs) {
-      return { count: 1, windowStart: now };
-    }
-    if ((state.count || 0) >= maxCalls) {
-      return; // abort
-    }
-    return {
-      count: (state.count || 0) + 1,
-      windowStart: state.windowStart || now
-    };
-  });
-
-  if (!result.committed) {
-    throw new HttpsError(
-      "resource-exhausted",
-      "Too many chat requests from this client. Try again later."
-    );
-  }
+function setCors(res, origin) {
+  res.set("Access-Control-Allow-Origin", origin);
+  res.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.set("Access-Control-Allow-Headers", "Content-Type");
+  res.set("Access-Control-Max-Age", "3600");
 }
 
-exports.getChatGPTResponse = onCall(
+exports.chatAgent = onRequest(
   {
     secrets: [openAiKey],
     region: "us-central1",
     invoker: "public",
-    cors: [
-      "https://naikynook.github.io",
-      /https:\/\/naikynook\.github\.io$/,
-      /http:\/\/localhost(:\d+)?$/,
-      /http:\/\/127\.0\.0\.1(:\d+)?$/
-    ],
+    timeoutSeconds: 120,
+    memory: "256MiB",
+    cors: false,
     maxInstances: 10
   },
-  async function(request) {
+  async function(req, res) {
+    const origin = getAllowedOrigin(req);
+    if (!origin) {
+      res.status(403).json({ error: "Origin not allowed." });
+      return;
+    }
+    setCors(res, origin);
+
+    if (req.method === "OPTIONS") {
+      res.status(204).send("");
+      return;
+    }
+
+    if (req.method !== "POST") {
+      res.status(405).json({ error: "POST only" });
+      return;
+    }
+
     try {
-      const message = request.data && typeof request.data.message === "string"
-        ? request.data.message.trim()
-        : "";
+      const body = req.body || {};
+      const message = typeof body.message === "string" ? body.message.trim() : "";
       if (!message) {
-        throw new HttpsError("invalid-argument", "Message is required.");
+        res.status(400).json({ error: "Message is required." });
+        return;
       }
       if (message.length > 2000) {
-        throw new HttpsError("invalid-argument", "Message is too long.");
+        res.status(400).json({ error: "Message is too long." });
+        return;
       }
 
       const key = openAiKey.value();
       if (!key || !String(key).trim()) {
-        throw new HttpsError(
-          "failed-precondition",
-          "OPENAI_API_KEY secret is missing. Run: firebase functions:secrets:set OPENAI_API_KEY"
-        );
+        res.status(500).json({
+          error: "OPENAI_API_KEY secret is missing on the server."
+        });
+        return;
       }
 
-      // Rate limit is best-effort — don't fail the whole chat if RTDB rate path errors
-      try {
-        const ip = (request.rawRequest && (request.rawRequest.ip || request.rawRequest.headers["x-forwarded-for"])) || "unknown";
-        const clientKey = String(ip).split(",")[0].trim().replace(/[.#$/\[\]]/g, "_").slice(0, 80) || "unknown";
-        await enforceRateLimit(clientKey);
-      } catch (rateError) {
-        if (rateError instanceof HttpsError) {
-          throw rateError;
-        }
-        console.warn("Rate limit skipped:", rateError && rateError.message);
-      }
-
-      const history = sanitizeHistory(request.data && request.data.history);
+      const history = sanitizeHistory(body.history);
       const messages = [{ role: "system", content: SYSTEM_PROMPT }]
         .concat(history)
         .concat([{ role: "user", content: message }]);
@@ -144,8 +142,8 @@ exports.getChatGPTResponse = onCall(
         } catch (e) {
           // ignore
         }
-        // Do NOT use "internal" — Firebase hides those messages from the browser
-        throw new HttpsError("failed-precondition", detail);
+        res.status(502).json({ error: detail });
+        return;
       }
 
       const data = await response.json();
@@ -154,19 +152,16 @@ exports.getChatGPTResponse = onCall(
         : null;
 
       if (!content || !String(content).trim()) {
-        throw new HttpsError("failed-precondition", "Empty response from the model.");
+        res.status(502).json({ error: "Empty response from the model." });
+        return;
       }
 
-      return { reply: String(content).trim() };
+      res.status(200).json({ reply: String(content).trim() });
     } catch (error) {
-      if (error instanceof HttpsError) {
-        throw error;
-      }
-      console.error("getChatGPTResponse failed:", error);
-      throw new HttpsError(
-        "failed-precondition",
-        (error && error.message) ? String(error.message).slice(0, 300) : "Unexpected server error"
-      );
+      console.error("chatAgent failed:", error);
+      res.status(500).json({
+        error: (error && error.message) ? String(error.message).slice(0, 300) : "Unexpected server error"
+      });
     }
   }
 );
