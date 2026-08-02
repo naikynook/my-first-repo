@@ -1,9 +1,6 @@
 /**
  * Agents chatbot backend — keeps the OpenAI secret off GitHub Pages.
  *
- * Deploy once (Blaze plan required for outbound OpenAI calls):
- *   cd functions && npm install
- *   firebase login
  *   firebase functions:secrets:set OPENAI_API_KEY
  *   firebase deploy --only functions
  */
@@ -78,7 +75,6 @@ exports.getChatGPTResponse = onCall(
   {
     secrets: [openAiKey],
     region: "us-central1",
-    // Required so the GitHub Pages site (unauthenticated browsers) can call this function
     invoker: "public",
     cors: [
       "https://naikynook.github.io",
@@ -89,60 +85,88 @@ exports.getChatGPTResponse = onCall(
     maxInstances: 10
   },
   async function(request) {
-    const message = request.data && typeof request.data.message === "string"
-      ? request.data.message.trim()
-      : "";
-    if (!message) {
-      throw new HttpsError("invalid-argument", "Message is required.");
-    }
-    if (message.length > 2000) {
-      throw new HttpsError("invalid-argument", "Message is too long.");
-    }
-
-    const ip = (request.rawRequest && (request.rawRequest.ip || request.rawRequest.headers["x-forwarded-for"])) || "unknown";
-    const clientKey = String(ip).split(",")[0].trim().replace(/[.#$/\[\]]/g, "_").slice(0, 80) || "unknown";
-    await enforceRateLimit(clientKey);
-
-    const history = sanitizeHistory(request.data && request.data.history);
-    const messages = [{ role: "system", content: SYSTEM_PROMPT }]
-      .concat(history)
-      .concat([{ role: "user", content: message }]);
-
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + openAiKey.value()
-      },
-      body: JSON.stringify({
-        model: "gpt-4o-mini",
-        temperature: 0.7,
-        messages: messages
-      })
-    });
-
-    if (!response.ok) {
-      let detail = "OpenAI request failed (" + response.status + ")";
-      try {
-        const errBody = await response.json();
-        if (errBody && errBody.error && errBody.error.message) {
-          detail = errBody.error.message;
-        }
-      } catch (e) {
-        // ignore
+    try {
+      const message = request.data && typeof request.data.message === "string"
+        ? request.data.message.trim()
+        : "";
+      if (!message) {
+        throw new HttpsError("invalid-argument", "Message is required.");
       }
-      throw new HttpsError("internal", detail);
+      if (message.length > 2000) {
+        throw new HttpsError("invalid-argument", "Message is too long.");
+      }
+
+      const key = openAiKey.value();
+      if (!key || !String(key).trim()) {
+        throw new HttpsError(
+          "failed-precondition",
+          "OPENAI_API_KEY secret is missing. Run: firebase functions:secrets:set OPENAI_API_KEY"
+        );
+      }
+
+      // Rate limit is best-effort — don't fail the whole chat if RTDB rate path errors
+      try {
+        const ip = (request.rawRequest && (request.rawRequest.ip || request.rawRequest.headers["x-forwarded-for"])) || "unknown";
+        const clientKey = String(ip).split(",")[0].trim().replace(/[.#$/\[\]]/g, "_").slice(0, 80) || "unknown";
+        await enforceRateLimit(clientKey);
+      } catch (rateError) {
+        if (rateError instanceof HttpsError) {
+          throw rateError;
+        }
+        console.warn("Rate limit skipped:", rateError && rateError.message);
+      }
+
+      const history = sanitizeHistory(request.data && request.data.history);
+      const messages = [{ role: "system", content: SYSTEM_PROMPT }]
+        .concat(history)
+        .concat([{ role: "user", content: message }]);
+
+      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + key
+        },
+        body: JSON.stringify({
+          model: "gpt-4o-mini",
+          temperature: 0.7,
+          messages: messages
+        })
+      });
+
+      if (!response.ok) {
+        let detail = "OpenAI request failed (HTTP " + response.status + ")";
+        try {
+          const errBody = await response.json();
+          if (errBody && errBody.error && errBody.error.message) {
+            detail = errBody.error.message;
+          }
+        } catch (e) {
+          // ignore
+        }
+        // Do NOT use "internal" — Firebase hides those messages from the browser
+        throw new HttpsError("failed-precondition", detail);
+      }
+
+      const data = await response.json();
+      const content = data && data.choices && data.choices[0] && data.choices[0].message
+        ? data.choices[0].message.content
+        : null;
+
+      if (!content || !String(content).trim()) {
+        throw new HttpsError("failed-precondition", "Empty response from the model.");
+      }
+
+      return { reply: String(content).trim() };
+    } catch (error) {
+      if (error instanceof HttpsError) {
+        throw error;
+      }
+      console.error("getChatGPTResponse failed:", error);
+      throw new HttpsError(
+        "failed-precondition",
+        (error && error.message) ? String(error.message).slice(0, 300) : "Unexpected server error"
+      );
     }
-
-    const data = await response.json();
-    const content = data && data.choices && data.choices[0] && data.choices[0].message
-      ? data.choices[0].message.content
-      : null;
-
-    if (!content || !String(content).trim()) {
-      throw new HttpsError("internal", "Empty response from the model.");
-    }
-
-    return { reply: String(content).trim() };
   }
 );
