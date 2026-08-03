@@ -1,5 +1,6 @@
 # Secrets and local install artifacts — never commit these
 openai-config.js
+mapbox-config.js
 .env
 .env.local
 functions/node_modules/
