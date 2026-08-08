@@ -20,9 +20,9 @@ function initRelationalChord() {
 
   // --- Data loading ---
   Promise.all([
-    d3.csv("Shootings_(2006-Present)_20260711.csv"),
-    d3.csv("Shooting_Victims_(2006-Present)_20260716.csv"),
-    d3.csv("Shooting_Offenders_(2006-Present)_20260716.csv")
+    d3.csv("data/Shootings_(2006-Present)_20260711.csv"),
+    d3.csv("data/Shooting_Victims_(2006-Present)_20260716.csv"),
+    d3.csv("data/Shooting_Offenders_(2006-Present)_20260716.csv")
   ]).then(function(files) {
     try {
       buildChord(container, files[0], files[1], files[2]);

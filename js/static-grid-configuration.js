@@ -1,5 +1,5 @@
 // static-grid-configuration.js
-// Fixed 10×10 white grid on black — drawn once with p5 (noLoop)
+// Fixed 10×10 white grid on black - drawn once with p5 (noLoop)
 
 var sketch1 = function(p) {
   const cols = 10;          // Number of columns

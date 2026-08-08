@@ -1,4 +1,6 @@
-# Secrets and local install artifacts — never commit these
+# Secrets and local install artifacts - never commit these
+config/openai-config.js
+config/mapbox-config.js
 openai-config.js
 mapbox-config.js
 .env

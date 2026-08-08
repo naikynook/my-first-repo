@@ -1,5 +1,5 @@
 /**
- * Agents chatbot backend — keeps the OpenAI secret off GitHub Pages.
+ * Agents chatbot backend - keeps the OpenAI secret off GitHub Pages.
  *
  * Deploy:
  *   firebase.cmd functions:secrets:set OPENAI_API_KEY
@@ -12,13 +12,13 @@ const { initializeApp } = require("firebase-admin/app");
 
 initializeApp();
 
-// Secret is injected at runtime — never put sk- keys in client JS
+// Secret is injected at runtime - never put sk- keys in client JS
 const openAiKey = defineSecret("OPENAI_API_KEY");
 
 // Personality / domain for the projector-art assistant
 const SYSTEM_PROMPT =
   "You are Agents, a creative coding collaborator for projector art. " +
-  "Help the user invent, debug, and refine visuals in p5.js and Three.js meant for large-scale projection — " +
+  "Help the user invent, debug, and refine visuals in p5.js and Three.js meant for large-scale projection - " +
   "installations, live visuals, dark rooms, high contrast, and immersive fields. " +
   "Prefer concrete code sketches, short explanations, and projector-aware tips (aspect ratios, brightness, " +
   "performance, seamless loops, full-bleed canvases). Keep replies focused and practical. " +
@@ -35,7 +35,7 @@ const ALLOWED_ORIGINS = [
 // Return a matching allowlisted origin, or null to reject
 function getAllowedOrigin(req) {
   const origin = req.get("origin") || "";
-  // No Origin header (e.g. some tools) — treat as the live site
+  // No Origin header (e.g. some tools) - treat as the live site
   if (!origin) {
     return "https://naikynook.github.io";
   }

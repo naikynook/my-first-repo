@@ -14,7 +14,7 @@ function initShootingsCalendar() {
   chart.innerHTML = "<p>Loading shootings data...</p>";
 
   // --- Data loading & transform: aggregate incidents by calendar day ---
-  d3.csv("Shootings_(2006-Present)_20260711.csv").then(function(data) {
+  d3.csv("data/Shootings_(2006-Present)_20260711.csv").then(function(data) {
     chart.innerHTML = "";
 
     const parseDate = d3.timeParse("%m/%d/%Y");

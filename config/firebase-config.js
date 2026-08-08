@@ -1,4 +1,4 @@
-// Public Firebase client config — identifies the project in the browser (not secret credentials).
+// Public Firebase client config - identifies the project in the browser (not secret credentials).
 // Access is enforced by Realtime Database rules and API key referrer restrictions.
 window.FIREBASE_CONFIG = {
   apiKey: "AIzaSyA5-TO8Ztzqk0idxSzXeNRQd2I2-4flTao",

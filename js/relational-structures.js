@@ -1,5 +1,5 @@
 // relational-structures.js
-// D3 relational network of NYC shootings, victims, and offenders (2006–Present)
+// D3 relational network of NYC shootings, victims, and offenders (2006-Present)
 // Three Open Data tables joined on INCIDENT_KEY
 
 function initRelationalStructures() {
@@ -16,9 +16,9 @@ function initRelationalStructures() {
 
   // --- Data loading: three tables joined later on INCIDENT_KEY ---
   Promise.all([
-    d3.csv("Shootings_(2006-Present)_20260711.csv"),
-    d3.csv("Shooting_Victims_(2006-Present)_20260716.csv"),
-    d3.csv("Shooting_Offenders_(2006-Present)_20260716.csv")
+    d3.csv("data/Shootings_(2006-Present)_20260711.csv"),
+    d3.csv("data/Shooting_Victims_(2006-Present)_20260716.csv"),
+    d3.csv("data/Shooting_Offenders_(2006-Present)_20260716.csv")
   ]).then(function(files) {
     buildVisualization(container, files[0], files[1], files[2]);
   }).catch(function() {
@@ -208,7 +208,7 @@ function buildVisualization(container, incidents, victims, offenders) {
     .attr("fill", "#f2f2f2")
     .attr("font-size", 14)
     .attr("font-family", "Roboto, sans-serif")
-    .text("NYC Shootings · Offenders → Boroughs → Victims (2006–Present)");
+    .text("NYC Shootings · Offenders → Boroughs → Victims (2006-Present)");
 
   svg.append("text")
     .attr("x", 24)

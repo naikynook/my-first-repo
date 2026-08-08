@@ -1,4 +1,4 @@
-// Firebase FRT Survey — five yes/no questions with live counts
+// Firebase FRT Survey - five yes/no questions with live counts
 // Answers sync through Firebase Realtime Database for everyone on the page.
 
 document.addEventListener('DOMContentLoaded', function() {

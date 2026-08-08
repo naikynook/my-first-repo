@@ -1,5 +1,5 @@
 // geospatial-structures.js
-// Mapbox NYC shootings map — hex bins + incident points (incident fields only)
+// Mapbox NYC shootings map - hex bins + incident points (incident fields only)
 
 function initGeospatialStructures() {
   // --- Setup / guards ---
@@ -20,7 +20,7 @@ function initGeospatialStructures() {
 
   if (!window.MAPBOX_ACCESS_TOKEN || window.MAPBOX_ACCESS_TOKEN.indexOf("YOUR_MAPBOX") === 0) {
     container.innerHTML =
-      "<p>Mapbox token missing. Copy <code>mapbox-config.example.js</code> to <code>mapbox-config.js</code> and add your token (that file is gitignored).</p>";
+      "<p>Mapbox token missing. Copy <code>config/mapbox-config.example.js</code> to <code>config/mapbox-config.js</code> and add your token (that file is gitignored).</p>";
     return;
   }
 
@@ -49,7 +49,7 @@ function initGeospatialStructures() {
   ];
   const hexBbox = [-74.28, 40.48, -73.68, 40.93];
 
-  // Dark basemap via Carto tiles — avoids Mapbox style API / token URL-restriction failures
+  // Dark basemap via Carto tiles - avoids Mapbox style API / token URL-restriction failures
   const darkBasemapStyle = {
     version: 8,
     name: "Dark NYC",
@@ -140,7 +140,7 @@ function initGeospatialStructures() {
 
     addBoroughLayers(map);
 
-    d3.csv("Shootings_(2006-Present)_20260711.csv").then(function(rows) {
+    d3.csv("data/Shootings_(2006-Present)_20260711.csv").then(function(rows) {
       addShootingLayers(map, rows, hexBbox, status);
     }).catch(function(err) {
       console.error(err);
@@ -154,7 +154,7 @@ function initGeospatialStructures() {
 
 // Reference borough polygons + labels; fade out once user zooms into hex detail.
 function addBoroughLayers(map) {
-  d3.json("nyc-boroughs.geojson").then(function(geo) {
+  d3.json("data/nyc-boroughs.geojson").then(function(geo) {
     if (!geo || !geo.features) {
       return;
     }
@@ -183,7 +183,7 @@ function addBoroughLayers(map) {
       data: labels
     });
 
-    // Subtle borough shapes — only when zoomed out (hide as you zoom into neighborhood detail)
+    // Subtle borough shapes - only when zoomed out (hide as you zoom into neighborhood detail)
     const underHexes = map.getLayer("hex-fill") ? "hex-fill" : undefined;
 
     map.addLayer({

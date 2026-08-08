@@ -30,8 +30,8 @@
   <!-- This loads display + mono fonts for the Agents chat and page type -->
   
   <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260802f">
-  <!-- This links our CSS file to style the page - the href points to our style.css file -->
+  <link rel="stylesheet" href="css/style.css?v=20260808a">
+  <!-- Site styles live in css/style.css -->
 </head>
 
 <body>
@@ -110,7 +110,7 @@
     <div class="object-stage">
       <div class="object-panel is-active" role="tabpanel" id="panel-agents" aria-labelledby="tab-agents" data-panel="agents">
         <div class="section-title">Digital Object: Agents</div>
-        <p>An AI collaborator for projector art. Ask it for p5.js and Three.js sketches tuned to large-scale projection — grids, waves, spheres, loops, and installation-minded performance tips. Messages sync live through Firebase while replies come from ChatGPT.</p>
+        <p>An AI collaborator for projector art. Ask it for p5.js and Three.js sketches tuned to large-scale projection - grids, waves, spheres, loops, and installation-minded performance tips. Messages sync live through Firebase while replies come from ChatGPT.</p>
 
         <!-- Canvas container for Agents chatbot (chat-bot.js) -->
         <div id="canvas-container-8">
@@ -144,12 +144,12 @@
 
       <div class="object-panel" role="tabpanel" id="panel-survey" aria-labelledby="tab-survey" data-panel="survey" hidden>
         <div class="section-title">Engagement Components: Facial Recognition Survey</div>
-        <p>A five-question yes/no survey about facial recognition technology (FRT) in cities. Answers are stored in a Firebase Realtime Database, so the live counts update for everyone on the page at the same time — no refresh required.</p>
+        <p>A five-question yes/no survey about facial recognition technology (FRT) in cities. Answers are stored in a Firebase Realtime Database, so the live counts update for everyone on the page at the same time - no refresh required.</p>
 
         <!-- Canvas container for the Firebase FRT survey (poll-app.js) -->
         <div id="canvas-container-7">
           <div class="poll-app" id="frt-survey">
-            <p class="poll-intro">Facial recognition in the city — five quick questions</p>
+            <p class="poll-intro">Facial recognition in the city - five quick questions</p>
 
             <div class="poll-question-block" data-question="q1">
               <p class="poll-question">1. Do you think facial recognition technology makes cities safer overall?</p>
@@ -268,7 +268,7 @@
 
       <div class="object-panel" role="tabpanel" id="panel-geospatial" aria-labelledby="tab-geospatial" data-panel="geospatial" hidden>
         <div class="section-title">Digital Object 4: Geospatial Structures</div>
-        <p>Geospatial structures locate data in place — coordinates, neighborhoods, and the uneven surfaces of a city. This section will explore how maps and spatial layouts can turn location into a visual field, asking what becomes visible when incidents are read through geography rather than only through time or relationship.</p>
+        <p>Geospatial structures locate data in place - coordinates, neighborhoods, and the uneven surfaces of a city. This section will explore how maps and spatial layouts can turn location into a visual field, asking what becomes visible when incidents are read through geography rather than only through time or relationship.</p>
 
         <!-- Canvas container for geospatial sketch (geospatial-structures.js) -->
         <div id="canvas-container-6"></div>
@@ -276,7 +276,7 @@
 
       <div class="object-panel" role="tabpanel" id="panel-relational" aria-labelledby="tab-relational" data-panel="relational" hidden>
         <div class="section-title">Digital Object 3: Relational Structures</div>
-        <p>NYPD publishes shootings as three related tables — incidents, victims, and offenders — joined by a shared incident key. This D3 network makes those relationships visible: offenders flow into boroughs, boroughs into victims. Node size shows volume; link thickness shows how often a path appears; redder links carry a higher share of statistical murders. Hover any node or edge for counts, and drag nodes to inspect the structure. The goal is to bring in other datasets related to inequality to contextualize the distribution within a broader context related to class divisions and disparities.</p>
+        <p>NYPD publishes shootings as three related tables - incidents, victims, and offenders - joined by a shared incident key. This D3 network makes those relationships visible: offenders flow into boroughs, boroughs into victims. Node size shows volume; link thickness shows how often a path appears; redder links carry a higher share of statistical murders. Hover any node or edge for counts, and drag nodes to inspect the structure. The goal is to bring in other datasets related to inequality to contextualize the distribution within a broader context related to class divisions and disparities.</p>
 
         <!-- Canvas container for D3 relational network (relational-structures.js) -->
         <div id="canvas-container-4"></div>
@@ -290,7 +290,7 @@
 
       <div class="object-panel" role="tabpanel" id="panel-temporal" aria-labelledby="tab-temporal" data-panel="temporal" hidden>
         <div class="section-title">Digital Object 2: Temporal Structures</div>
-        <p>Temporal structures organize change over time, turning sequences of days and years into something you can see at once. Rather than treating data as a static table, this section asks how a calendar can become a matrix panel — a surface where time itself is the layout.</p>
+        <p>Temporal structures organize change over time, turning sequences of days and years into something you can see at once. Rather than treating data as a static table, this section asks how a calendar can become a matrix panel - a surface where time itself is the layout.</p>
 
         <!-- Section for D3 sketch (blank-canvas.js) -->
         <div class="section-title">Shootings Calendar</div>
@@ -342,138 +342,25 @@
 
   <!-- ------------------------------------------------------------ -->
 
-  <!-- LOAD EACH NEW P5.JS SCRIPT HERE -->
-
+  <!-- App scripts: config → features → spatial sketches → site UI -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-  <script src="firebase-config.js"></script>
-  <script src="chat-bot.js?v=20260802e"></script>
-  <script src="poll-app.js?v=20260725b"></script>
+  <script src="config/firebase-config.js"></script>
+  <script src="js/chat-bot.js?v=20260808a"></script>
+  <script src="js/poll-app.js?v=20260808a"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
   <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6.5.0/turf.min.js"></script>
-  <script src="mapbox-config.js"></script>
-  <script src="geospatial-structures.js?v=20260721o"></script>
-  <script src="relational-structures.js?v=20260718o"></script>
-  <script src="relational-chord.js?v=20260718d"></script>
-  <script src="blank-canvas.js?v=20260711q"></script>
-  <script src="orbiting-grid-sphere.js"></script>
-  <script src="static-grid-configuration.js"></script>
-  <script src="2d-matrix-wave.js"></script>
-  <script src="interactive-sphere-matrix.js"></script>
-
-  <!-- About modal: open/close + Escape to dismiss -->
-  <script>
-    (function() {
-      const trigger = document.getElementById("about-trigger");
-      const modal = document.getElementById("about-modal");
-      if (!trigger || !modal) {
-        return;
-      }
-
-      function openAbout() {
-        modal.hidden = false;
-        document.body.classList.add("about-open");
-      }
-
-      function closeAbout() {
-        modal.hidden = true;
-        document.body.classList.remove("about-open");
-      }
-
-      trigger.addEventListener("click", openAbout);
-      modal.querySelectorAll("[data-about-close]").forEach(function(el) {
-        el.addEventListener("click", closeAbout);
-      });
-      // Close on Escape while the dialog is open
-      document.addEventListener("keydown", function(event) {
-        if (event.key === "Escape" && !modal.hidden) {
-          closeAbout();
-        }
-      });
-    })();
-  </script>
-
-  <!-- Object tabs: activateTab, keyboard nav, hash routing, resize for hidden canvases -->
-  <script>
-    (function() {
-      const tabs = Array.prototype.slice.call(document.querySelectorAll(".object-tab"));
-      const panels = Array.prototype.slice.call(document.querySelectorAll(".object-panel"));
-      if (!tabs.length || !panels.length) {
-        return;
-      }
-
-      // Show one panel, sync ARIA/tabIndex, update URL hash, then nudge Mapbox/D3/Three to relayout
-      function activateTab(tabId, focusTab) {
-        tabs.forEach(function(tab) {
-          const selected = tab.getAttribute("data-tab") === tabId;
-          tab.classList.toggle("is-active", selected);
-          tab.setAttribute("aria-selected", selected ? "true" : "false");
-          tab.tabIndex = selected ? 0 : -1;
-          if (selected && focusTab) {
-            tab.focus();
-          }
-        });
-
-        panels.forEach(function(panel) {
-          const selected = panel.getAttribute("data-panel") === tabId;
-          panel.classList.toggle("is-active", selected);
-          if (selected) {
-            panel.hidden = false;
-          } else {
-            panel.hidden = true;
-          }
-        });
-
-        // Mapbox (and other libs) need a resize after a panel becomes visible
-        window.requestAnimationFrame(function() {
-          window.dispatchEvent(new Event("resize"));
-          setTimeout(function() {
-            window.dispatchEvent(new Event("resize"));
-          }, 80);
-        });
-
-        // Keep #agents, #survey, etc. in the address bar for shareable deep links
-        try {
-          history.replaceState(null, "", "#" + tabId);
-        } catch (e) {
-          // ignore
-        }
-      }
-
-      tabs.forEach(function(tab) {
-        tab.addEventListener("click", function() {
-          activateTab(tab.getAttribute("data-tab"), false);
-        });
-
-        tab.addEventListener("keydown", function(event) {
-          // Arrow keys, Home, and End move focus between tabs (WAI-ARIA tablist pattern)
-          const index = tabs.indexOf(tab);
-          let next = null;
-          if (event.key === "ArrowRight" || event.key === "ArrowDown") {
-            next = tabs[(index + 1) % tabs.length];
-          } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
-            next = tabs[(index - 1 + tabs.length) % tabs.length];
-          } else if (event.key === "Home") {
-            next = tabs[0];
-          } else if (event.key === "End") {
-            next = tabs[tabs.length - 1];
-          }
-          if (next) {
-            event.preventDefault();
-            activateTab(next.getAttribute("data-tab"), true);
-          }
-        });
-      });
-
-      // Open the tab named in the URL hash, or default to Agents
-      const hash = (location.hash || "").replace(/^#/, "");
-      const valid = tabs.some(function(tab) {
-        return tab.getAttribute("data-tab") === hash;
-      });
-      activateTab(valid ? hash : "agents", false);
-    })();
-  </script>
+  <script src="config/mapbox-config.js"></script>
+  <script src="js/geospatial-structures.js?v=20260808a"></script>
+  <script src="js/relational-structures.js?v=20260808a"></script>
+  <script src="js/relational-chord.js?v=20260808a"></script>
+  <script src="js/blank-canvas.js?v=20260808a"></script>
+  <script src="js/orbiting-grid-sphere.js"></script>
+  <script src="js/static-grid-configuration.js"></script>
+  <script src="js/2d-matrix-wave.js"></script>
+  <script src="js/interactive-sphere-matrix.js"></script>
+  <script src="js/site-ui.js"></script>
 
   <!-- ------------------------------------------------------------ -->
 

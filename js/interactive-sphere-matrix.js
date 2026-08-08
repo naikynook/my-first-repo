@@ -119,7 +119,7 @@
     drawGridTexture();
   }
 
-  // Convert sphere UV (0–1) into pixel coords on the grid canvas
+  // Convert sphere UV (0-1) into pixel coords on the grid canvas
   function uvToGridPoint(u, v) {
     return {
       x: u * gridCanvas.width,
