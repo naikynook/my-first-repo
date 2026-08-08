@@ -1,5 +1,5 @@
 // 2d-matrix-wave.js
-// Flat p5 grid - click starts a rainbow wave that radiates cell by cell
+// Flat p5 grid. Click starts a rainbow wave that radiates cell by cell.
 
 var sketch2 = function(p) {
   const cols = 30;

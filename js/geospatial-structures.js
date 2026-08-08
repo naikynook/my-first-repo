@@ -1,5 +1,5 @@
 // geospatial-structures.js
-// Mapbox NYC shootings map - hex bins + incident points (incident fields only)
+// Mapbox NYC shootings map with hex bins and incident points (incident fields only)
 
 function initGeospatialStructures() {
   // --- Setup / guards ---
@@ -49,7 +49,7 @@ function initGeospatialStructures() {
   ];
   const hexBbox = [-74.28, 40.48, -73.68, 40.93];
 
-  // Dark basemap via Carto tiles - avoids Mapbox style API / token URL-restriction failures
+  // Dark basemap via Carto tiles (avoids Mapbox style API / token URL-restriction failures)
   const darkBasemapStyle = {
     version: 8,
     name: "Dark NYC",
@@ -183,7 +183,7 @@ function addBoroughLayers(map) {
       data: labels
     });
 
-    // Subtle borough shapes - only when zoomed out (hide as you zoom into neighborhood detail)
+    // Subtle borough shapes, only when zoomed out (hide as you zoom into neighborhood detail)
     const underHexes = map.getLayer("hex-fill") ? "hex-fill" : undefined;
 
     map.addLayer({

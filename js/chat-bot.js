@@ -1,4 +1,4 @@
-// Agents chatbot - p5.js / Three.js projector-art assistant
+// Agents chatbot for p5.js / Three.js projector-art assistance
 // Firebase syncs messages; OpenAI runs only on a Cloud Function (key never in the browser).
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (!list.length && !busy) {
       messagesEl.innerHTML =
         '<div class="chat-empty">' +
-          "<p>Ask about a projection sketch - grids, spheres, waves, shaders-lite, or Three.js scenes.</p>" +
+          "<p>Ask about a projection sketch: grids, spheres, waves, shaders-lite, or Three.js scenes.</p>" +
           '<p class="chat-empty-hint">try: “p5 full-bleed pulse grid for a dark gallery wall”</p>' +
         "</div>";
       return;

@@ -1,41 +1,46 @@
 # Web Design Exploration
 
-A collection of web design experiments for Columbia GSAPP's Computational Design Workflows class (Summer 2026).
+Studio site for Computational Design Workflows at Columbia GSAPP, Summer 2026.
 
-**Author:** Kody Naiker  
-**Advisor:** Catherine Griffiths  
-**Live site:** [naikynook.github.io/my-first-repo](https://naikynook.github.io/my-first-repo/)
+Kody Naiker  
+Advisor: Catherine Griffiths
+
+Live: https://naikynook.github.io/my-first-repo/
 
 ## Docs
 
-- [Project description](docs/PROJECT.md) - what each digital object explores
-- [Style guide](docs/STYLE.md) - visual system, tokens, and UI patterns
+- [Project description](docs/PROJECT.md)
+- [Style guide](docs/STYLE.md)
 
-## Folder structure
+## Folders
 
 ```
-├── index.html          # Page shell + tabbed digital objects
-├── css/                # Site styles
-├── js/                 # Feature scripts (chat, survey, maps, sketches)
-├── data/               # CSVs + GeoJSON used by visualizations
-├── config/             # Firebase / Mapbox client config (examples + rules)
-├── assets/             # Static images
-├── docs/               # Project + style markdown
-└── functions/          # Firebase Cloud Function (OpenAI proxy for Agents)
+index.html     page shell and tabs
+css/           styles
+js/            chat, survey, maps, sketches
+data/          CSVs and GeoJSON
+config/        Firebase and Mapbox setup
+assets/        images
+docs/          written notes
+functions/     Cloud Function for the Agents chat
 ```
 
-## Local preview
+## Preview locally
 
-Serve the repo root over HTTP (file:// will block CSV/GeoJSON fetches):
+CSV and GeoJSON will not load from a raw `file://` open, so serve the folder:
 
 ```bash
 npx serve .
 ```
 
-Then open the printed localhost URL.
+## Setup
 
-## Setup notes
+**Mapbox.** Copy `config/mapbox-config.example.js` to `config/mapbox-config.js` and put in your public `pk.` token. Restrict it by URL in the Mapbox dashboard.
 
-1. **Mapbox** - copy `config/mapbox-config.example.js` → `config/mapbox-config.js` and add your public `pk.` token (URL-restricted).
-2. **Firebase** - `config/firebase-config.js` is public client config. Publish `config/firebase-database-rules.json` in the Firebase console under Realtime Database → Rules.
-3. **Agents chat** - OpenAI key lives only as a Firebase secret (`OPENAI_API_KEY`). Deploy with `firebase.cmd deploy --only functions` from the repo root.
+**Firebase.** `config/firebase-config.js` is the public web config. Paste `config/firebase-database-rules.json` into Realtime Database → Rules in the Firebase console.
+
+**Agents chat.** Keep the OpenAI key as a Firebase secret (`OPENAI_API_KEY`), not in client files. From the repo root:
+
+```bash
+firebase.cmd deploy --only functions
+```

@@ -17,7 +17,7 @@
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   document.getElementById('threejs-container-1').appendChild(renderer.domElement);
 
-  // Drag to orbit, scroll to zoom - sphere itself stays still
+  // Drag to orbit, scroll to zoom. The sphere itself stays still.
   const controls = new THREE.OrbitControls(camera, renderer.domElement);
   controls.target.set(0, 0, 0);
   controls.enableDamping = true;
@@ -80,7 +80,7 @@
   );
   scene.add(globe);
 
-  // Render loop - only controls.update() for damping; no object rotation
+  // Render loop. Only controls.update() for damping; no object rotation.
   function animate() {
     requestAnimationFrame(animate);
     controls.update();
