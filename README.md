@@ -1,6 +1,6 @@
 # Web Design Exploration
 
-Studio site for Computational Design Workflows at Columbia GSAPP, Summer 2026.
+Collection of experiments for Computational Design Workflows at Columbia GSAPP, Summer 2026. 
 
 Kody Naiker  
 Advisor: Catherine Griffiths
@@ -35,7 +35,7 @@ npx serve .
 
 ## Setup
 
-**Mapbox.** Copy `config/mapbox-config.example.js` to `config/mapbox-config.js` and put in your public `pk.` token. Restrict it by URL in the Mapbox dashboard.
+**Mapbox.** `config/mapbox-config.js` holds the public `pk.` token. Restrict it by URL in the Mapbox dashboard (include your GitHub Pages origin).
 
 **Firebase.** `config/firebase-config.js` is the public web config. Paste `config/firebase-database-rules.json` into Realtime Database → Rules in the Firebase console.
 
